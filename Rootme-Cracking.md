@@ -68,7 +68,7 @@ open it up with radare2
 0x004017fc call sub.Usage:__s_pass_700
 0x00401853 call sub.KERNEL32.dll_InitializeCriticalSection_5e0
 ```
-seek to wring pass function and disassemble it
+seek to sub.Wrong_password_726 function and disassemble it
 
 ```asemmbly
 [0x004017b8]> s sub.Wrong_password_726
