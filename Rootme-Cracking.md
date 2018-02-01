@@ -1,6 +1,6 @@
 # ELF - 0 protection
 run the binary
-```
+```assembly
 ┌─[✗]─[root@parrot]─[~/Downloads]
 └──╼ #./ch1.bin 
 ############################################################
@@ -11,7 +11,7 @@ Veuillez entrer le mot de passe : ^C
 
 ```
 search for strings that maybe the password
-```
+```assembly
 └──╼ #strings ch1.bin | grep passe -B 4
 123456789
 ############################################################
@@ -23,7 +23,7 @@ Flag is : 123456789
 
 # ELF - x86 Basic
 use the same technique
-```
+```assembly
 └──╼ #strings ch2.bin  | grep ^username -B 5 -A 2
 john
 the ripper
@@ -36,14 +36,14 @@ password:
 ```
 username : John
 password : the ripper
-```
+```assembly
 Bien joue, vous pouvez valider l'epreuve avec le mot de passe : 987654321 !
 ```
 Flag : 987654321 
 
 # PE - 0 protection
 run it using wine
-```
+```assembly
 ┌─[root@parrot]─[~/Downloads]
 └──╼ #wine ch15.exe
 Usage: Z:\root\Downloads\ch15.exe pass
@@ -127,7 +127,7 @@ seek to sub.Wrong_password_726 function and disassemble it
 ```
 as you can see we have some random characters, bind them together: 'SPaCIoS'
 let's try it as a password
-```
+```assembly
 └──╼ #wine ch15.exe SPaCIoS
 Gratz man :)
 ```  
@@ -164,7 +164,7 @@ take a look at the stack:
 .......
 ```
 try ```Here_you_have_to_understand_a_little_C++_stuffs``` as a password:
-```
+```assembly
 └──╼ #./ch25.bin Here_you_have_to_understand_a_little_C++_stuffs
 Bravo, tu peux valider en utilisant ce mot de passe...
 Congratz. You can validate with this password...
@@ -431,7 +431,7 @@ Good password !!!
 
 ```
 convert hex to ascii and you will get 'easy'.
-```
+```assembly
 └──╼ #./ch3.bin 
 ############################################################
 ##        Bienvennue dans ce challenge de cracking        ##
