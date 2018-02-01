@@ -1,6 +1,6 @@
 # PYC - ByteCode
 Here we have a .pyc file, decompile it to python source code
-using Easy python decompiler * works with wine on linux * 
+using Easy python decompiler ``` works with wine on linux ```
 you will have a python file looks like this after replacing the fisrt line
 with ``` !/bin/python ```
 ```python
@@ -37,9 +37,9 @@ if __name__ == '__main__':
         print('Try Again !')
 
 ``` 
-here we have an ugly algorithm that have 16 characters inside
-all we have to do is reversing this algorithm then take the result will be our flag !
-so i deleted some parts of the previous script remame it to c.py to look like this:
+here we have a some sort of ugly algorithms with 16 characters inside
+all we need to do to get the flag is reversing this algorithm.
+so, i deleted some parts of the previous script then rename it to c.py to look like this:
 
 ```python
 PASS = input('Enter the Flag: ')
