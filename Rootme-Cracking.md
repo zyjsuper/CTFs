@@ -1,3 +1,46 @@
+# ELF - 0 protection
+run the binary
+```
+┌─[✗]─[root@parrot]─[~/Downloads]
+└──╼ #./ch1.bin 
+############################################################
+##        Bienvennue dans ce challenge de cracking        ##
+############################################################
+
+Veuillez entrer le mot de passe : ^C
+
+```
+search for strings that maybe the password
+```
+└──╼ #strings ch1.bin | grep passe -B 4
+123456789
+############################################################
+##        Bienvennue dans ce challenge de cracking        ##
+############################################################
+Veuillez entrer le mot de passe : 
+```
+Flag is : 123456789
+
+
+use the same technique
+```
+└──╼ #strings ch2.bin  | grep ^username -B 5 -A 2
+john
+the ripper
+############################################################
+##        Bienvennue dans ce challenge de cracking        ##
+############################################################
+username: 
+password: 
+987654321
+```
+username : John
+password : the ripper
+```
+Bien joue, vous pouvez valider l'epreuve avec le mot de passe : 987654321 !
+```
+Flag : 987654321 
+
 # PYC - ByteCode
 Here we have a .pyc file, decompile it to python source code
 using Easy python decompiler ``` works with wine on linux ```
