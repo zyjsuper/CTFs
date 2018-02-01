@@ -41,7 +41,39 @@ Bien joue, vous pouvez valider l'epreuve avec le mot de passe : 987654321 !
 ```
 Flag : 987654321 
 
+# PE - 0 protection
+run it using wine
+```
+┌─[root@parrot]─[~/Downloads]
+└──╼ #wine ch15.exe
+Usage: Z:\root\Downloads\ch15.exe pass
+```
+open it up with radare2 
+```
+└──╼ #radare2 ch15.exe 
+[0x004014e0]> aaaa
+[x] Analyze all flags starting with sym. and entry0 (aa)
+[x] Analyze len bytes of instructions for references (aar)
+[x] Analyze function calls (aac)
+[x] Emulate code to find computed references (aae)
+[x] Analyze consecutive function (aat)
+[x] Constructing a function name for fcn.* and sym.func.* functions (aan)
+[x] Type matching analysis for all functions (afta)
+[0x004014e0]> s main
+[0x004017b8]> pds
+0x004017c1 call fcn.00402540
+0x004017d4 const char * s
+0x004017d7 call sub.msvcrt.dll_strlen_870
+0x004017ed call sub.Wrong_password_726
+0x004017fc call sub.Usage:__s_pass_700
+0x00401853 call sub.KERNEL32.dll_InitializeCriticalSection_5e0
+```
+seek to wring pass function and disassemble it
+
 ```asemmbly
+[0x004017b8]> s sub.Wrong_password_726
+[0x00401726]> pdf
+.......
  0x00401729      83ec28         sub esp, 0x28                         ; '('
  0x0040172c      c745f4000000.  mov dword [local_ch], 0
  0x00401733      837d0c07       cmp dword [ebp + 0xc], 7              ; [0x7:4]=-1 ; 7
@@ -91,7 +123,16 @@ Flag : 987654321
  0x00401791      b853404000     mov eax, str.Gratz_man_:_             ; 0x404053 ; "Gratz man :)"
  0x00401796      890424         mov dword [esp], eax                  ; const char * format
  0x00401799      e812110000     call sub.msvcrt.dll_printf_8b0        ; int printf(const char *format)
+.....
 ```
+as you can see we have some random characters, bind them together: 'SPaCIoS'
+let's try it as a password
+```
+└──╼ #wine ch15.exe SPaCIoS
+Gratz man :)
+```  
+Flag : SPaCIoS
+
 
 # PYC - ByteCode
 Here we have a .pyc file, decompile it to python source code
