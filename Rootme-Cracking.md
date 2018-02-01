@@ -170,6 +170,126 @@ Bravo, tu peux valider en utilisant ce mot de passe...
 Congratz. You can validate with this password...
 ```
 Flag : Here_you_have_to_understand_a_little_C++_stuffs
+
+# ELF - Fake Instructions
+```
+└──╼ #radare2 -d crackme 123456
+[0xf7ed8b20]> aaaa
+[0xf7ed8b20]> afl 
+......
+0x08048554    7 368          sym.main
+0x080486c4    3 104          sym.WPA
+0x0804872c    5 215          sym.blowfish
+0x08048803    1 30           sym.RS4
+0x08048821    1 5            sym.AES
+......
+```
+now let's disassemble the main function, we will see that there is no functions calls for any of these functions ubove, but there is a call to the edx register value.
+```
+|           0x0804869a      89442404       mov dword [local_4h], eax
+|           0x0804869e      8d45d6         lea eax, dword [local_2ah]
+|           0x080486a1      890424         mov dword [esp], eax
+|           0x080486a4      ffd2           call edx
+|           0x080486a6      8b55f4         mov edx, dword [local_ch]
+|           0x080486a9      653315140000.  xor edx, dword gs:[0x14]
+```
+let's set a break point on it and show what inside.
+```
+[0x08048554]> db 0x080486a4
+[0xf7ed8b20]> dc
+hit breakpoint at: 80486a4
+[0x080486a4]> dr edx
+0x080486c4
+```
+seek to the ```0x080486c4``` address
+```
+[0x080486a4]> s 0x080486c4
+[0x080486c4]> pdf
+            ;-- edx:
+/ (fcn) sym.WPA 104
+|   sym.WPA (int arg_8h, int arg_ch);
+|           ; arg int arg_8h @ ebp+0x8
+|           ; arg int arg_ch @ ebp+0xc
+|           ; var int local_4h @ esp+0x4
+|           0x080486c4      55             push ebp
+|           0x080486c5      89e5           mov ebp, esp
+|           0x080486c7      83ec08         sub esp, 8
+|           0x080486ca      8b450c         mov eax, dword [arg_ch]     ; [0xc:4]=-1 ; 12
+|           0x080486cd      83c00b         add eax, 0xb
+|           0x080486d0      c6000d         mov byte [eax], 0xd         ; [0xd:1]=255 ; 13
+|           0x080486d3      8b450c         mov eax, dword [arg_ch]     ; [0xc:4]=-1 ; 12
+|           0x080486d6      83c00c         add eax, 0xc
+|           0x080486d9      c6000a         mov byte [eax], 0xa
+|           0x080486dc      c704243c8904.  mov dword [esp], str.V__rification_de_votre_mot_de_passe.. ; [0x804893c:4]=0x72a9c356 ; "V\u00e9rification de votre mot de passe.." ; const char * s
+|           0x080486e3      e884fdffff     call sym.imp.puts           ; int puts(const char *s)
+|           0x080486e8      8b450c         mov eax, dword [arg_ch]     ; [0xc:4]=-1 ; 12
+|           0x080486eb      89442404       mov dword [local_4h], eax
+|           0x080486ef      8b4508         mov eax, dword [arg_8h]     ; [0x8:4]=-1 ; 8
+|           0x080486f2      890424         mov dword [esp], eax        ; const char * s2
+|           0x080486f5      e882fdffff     call sym.imp.strcmp         ; int strcmp(const char *s1, const char *s2)
+|           0x080486fa      85c0           test eax, eax
+|       ,=< 0x080486fc      7511           jne 0x804870f
+|       |   0x080486fe      e829000000     call sym.blowfish
+|       |   0x08048703      c70424000000.  mov dword [esp], 0          ; int status
+|       |   0x0804870a      e87dfdffff     call sym.imp.exit           ; void exit(int status)
+|       `-> 0x0804870f      e8ef000000     call sym.RS4
+|           0x08048714      c70424648904.  mov dword [esp], str.____L_authentification_a___chou__._n_Try_again____r ; [0x8048964:4]=0x20292128 ; "(!) L'authentification a \u00e9chou\u00e9.\n Try again ! \r" ; const char * s
+|           0x0804871b      e84cfdffff     call sym.imp.puts           ; int puts(const char *s)
+|           0x08048720      c70424010000.  mov dword [esp], 1          ; int status
+\           0x08048727      e860fdffff     call sym.imp.exit           ; void exit(int status)
+```
+here we can see that we are inside WPA function, and there is a conditional jump located at ```0x080486fc``` address
+```
+|       ,=< 0x080486fc      7511           jne 0x804870f
+|       |   0x080486fe      e829000000     call sym.blowfish
+|       |   0x08048703      c70424000000.  mov dword [esp], 0          ; int status
+|       |   0x0804870a      e87dfdffff     call sym.imp.exit           ; void exit(int status)
+|       `-> 0x0804870f      e8ef000000     call sym.RS4
+```
+let's show if this jump is taken...
+```
+[0x080486c4]> db 0x080486fa
+[0x080486c4]> dc
+Vérification de votre mot de passe..
+hit breakpoint at: 80486fa
+[0x080486c4]> dr eax
+0xffffffff
+[0x080486c4]> 
+```
+conditional jump is jump-if-not-eqaul one, eax value is ```0xffffffff``` so if we want to imagine how will code looks like in language like bash, it will be like the following:
+```bash
+eax="0xffffffff"
+if [[ eax != 0 ]] ; then
+   RS4
+else
+   blowfish
+fi
+```
+now all we have to do is to redirect this jump to execute  blowfish instead of RS4 like the following:
+```
+[0x080486c4]> s 0x080486fc
+[0x080486fc]> wa jmp 0x080486fe
+Written 2 bytes (jmp 0x080486fe) = wx eb00
+[0x080486fc]> pdf 
+.....
+|           ;-- eip:
+|           0x080486fa b    85c0           test eax, eax
+|       ,=< 0x080486fc      eb00           jmp 0x80486fe
+|       `-> 0x080486fe      e829000000     call sym.blowfish
+|           0x08048703      c70424000000.  mov dword [esp], 0          ; int status
+.....
+```
+now resume the execution...
+```
+[0x080486fc]> dc
+'+) Authentification réussie...
+ U'r root! 
+
+ sh 3.0 # password: liberté!
+```
+Flag: liberté!
+
+
 # PYC - ByteCode
 Here we have a .pyc file, decompile it to python source code
 using Easy python decompiler ``` works with wine on linux ```
