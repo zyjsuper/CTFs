@@ -314,7 +314,7 @@ SYNOPSIS
 
 ```
 so, we can tell using patrice any attempts to debug or crack the program
-will be detected and then we can execute certain number of actions like exit from the entire program, here is a simple example for how can code look like.
+will be detected and then we can execute a certain number of actions like exit from the entire program, here is a simple example on how can code look like.
 ```C
 #include <stdio.h>
 #include <sys/ptrace.h>
@@ -398,7 +398,7 @@ gdb-peda$
 
 ```
 If we keep stepping over you will notice that the dl register will contain the characters from the string we entered and the al register will contain the characters of the real password. Each time the cmp is comparing the 2 characters and if the comparison is true it will return which will set the zero flag. In case cmp fails the JNE instruction will jump to 0x80484e4 which means wrong password.
-There are 4 comparisons going on which means the password is of length 4 so first let's set a break point on
+There are 4 comparisons going on which means the password is of length 4 so first, let's set a break point on
 ```
 0x080484a3 <+179>:   cmp    dl,al
 ```
@@ -431,6 +431,16 @@ Good password !!!
 
 ```
 convert hex to ascii and you will get 'easy'.
+```
+└──╼ #./ch3.bin 
+############################################################
+##        Bienvennue dans ce challenge de cracking        ##
+############################################################
+
+Password : easy
+
+Good password !!!
+```
 Flag : easy
 
 
