@@ -49,7 +49,7 @@ run it using wine
 Usage: Z:\root\Downloads\ch15.exe pass
 ```
 open it up with radare2 
-```
+```assembly
 └──╼ #radare2 ch15.exe 
 [0x004014e0]> aaaa
 [x] Analyze all flags starting with sym. and entry0 (aa)
@@ -135,7 +135,7 @@ Flag : SPaCIoS
 
 # ELF C++ - 0 protection
 seek to the main function and set a break point at the bottom 
-```
+```assembly
 [0xf7ed8b20]> aaaa
 [0xf7ed8b20]> s main
 [0xf7ed8b20]> s main
@@ -152,13 +152,13 @@ seek to the main function and set a break point at the bottom
 |           0x08048c97      5d             pop ebp
 
 ```
-```
+```assembly
 [0x08048a86]> pdf
 |       `-> 0x08048c92 b    8d65f8         lea esp, dword [local_8h_2]
 
 ```
 take a look at the stack:
-```
+```assembly
 [0x08048c92]> pxr @ esp
 0xff7fa2e0  0xff7fa2f4  .... @esp stack R W 0xa04fc8c -->  (Here_you_have_to_understand_a_little_C++_stuffs)
 .......
@@ -172,7 +172,7 @@ Congratz. You can validate with this password...
 Flag : Here_you_have_to_understand_a_little_C++_stuffs
 
 # ELF - Fake Instructions
-```
+```assembly
 └──╼ #radare2 -d crackme 123456
 [0xf7ed8b20]> aaaa
 [0xf7ed8b20]> afl 
@@ -185,7 +185,7 @@ Flag : Here_you_have_to_understand_a_little_C++_stuffs
 ......
 ```
 now let's disassemble the main function, we will see that there is no function calls for any of these functions ubove, but there is a call to the edx register value.
-```
+```assembly
 |           0x0804869a      89442404       mov dword [local_4h], eax
 |           0x0804869e      8d45d6         lea eax, dword [local_2ah]
 |           0x080486a1      890424         mov dword [esp], eax
@@ -194,7 +194,7 @@ now let's disassemble the main function, we will see that there is no function c
 |           0x080486a9      653315140000.  xor edx, dword gs:[0x14]
 ```
 let's set a break point on it and show what inside.
-```
+```assembly
 [0x08048554]> db 0x080486a4
 [0xf7ed8b20]> dc
 hit breakpoint at: 80486a4
@@ -202,7 +202,7 @@ hit breakpoint at: 80486a4
 0x080486c4
 ```
 seek to the ```0x080486c4``` address
-```
+```assembly
 [0x080486a4]> s 0x080486c4
 [0x080486c4]> pdf
             ;-- edx:
@@ -239,7 +239,7 @@ seek to the ```0x080486c4``` address
 \           0x08048727      e860fdffff     call sym.imp.exit           ; void exit(int status)
 ```
 here we can see that we are inside WPA function, and there is a conditional jump located at ```0x080486fc``` address
-```
+```assembly
 |       ,=< 0x080486fc      7511           jne 0x804870f
 |       |   0x080486fe      e829000000     call sym.blowfish
 |       |   0x08048703      c70424000000.  mov dword [esp], 0          ; int status
@@ -247,7 +247,7 @@ here we can see that we are inside WPA function, and there is a conditional jump
 |       `-> 0x0804870f      e8ef000000     call sym.RS4
 ```
 let's show if this jump is taken...
-```
+```assembly
 [0x080486c4]> db 0x080486fa
 [0x080486c4]> dc
 Vérification de votre mot de passe..
@@ -266,7 +266,7 @@ else
 fi
 ```
 now all we have to do is redirecting this jump to execute  blowfish instead of RS4 like the following:
-```
+```assembly
 [0x080486c4]> s 0x080486fc
 [0x080486fc]> wa jmp 0x080486fe
 Written 2 bytes (jmp 0x080486fe) = wx eb00
@@ -280,7 +280,7 @@ Written 2 bytes (jmp 0x080486fe) = wx eb00
 .....
 ```
 now resume the execution...
-```
+```assembly
 [0x080486fc]> dc
 '+) Authentification réussie...
  U'r root! 
@@ -291,7 +291,7 @@ Flag: liberté!
 
 # ELF - Ptrace
 First of all you have to know that we can't debug this binary directly.
-```
+```assembly
 └──╼ #gdb ch3.bin 
 gdb-peda$ break main
 Breakpoint 1 at 0x80483fe
@@ -302,7 +302,7 @@ Debugger detecté ... Exit
 [Inferior 1 (process 4841) exited with code 01]
 ```
 But we are hackers and we love breaking rules, so let's figure out what is going on.. from ``` man ptrace ``` comamand:
-```
+```C
 NAME
        ptrace - process trace
 
@@ -332,7 +332,7 @@ int main(){
 ```
 But, radare2 is a hexadecimal editor and disassembler, we still can use it to remove detection !.
 open it up in writing mode ..
-```
+```assembly
 └──╼ #radare2 -w ch3.bin 
 [0x080482f0]> aaaa
 [x] Analyze all flags starting with sym. and entry0 (aa)
@@ -341,14 +341,14 @@ open it up in writing mode ..
 ````
 seek to the main function, here we can see a conditional jump at ```0x0804841a```.
 replace it with ```jmp 0x8048436```.
-```
+```assembly
 [0x080483f0]> s 0x0804841a
 [0x0804841a]> wa jmp 0x8048436
 Written 2 bytes (jmp 0x8048436) = wx eb1a
 ```
 and now we can debug the binary using gdb..
 fire up gdb, break main and disassemble it
-```
+```assembly
 gdb-peda$ set disassembly-flavor intel
 gdb-peda$ break main
 Breakpoint 1 at 0x80483fe
@@ -399,11 +399,11 @@ gdb-peda$
 ```
 If we keep stepping over you will notice that the dl register will contain the characters from the string we entered and the al register will contain the characters of the real password. Each time the cmp is comparing the 2 characters and if the comparison is true it will return which will set the zero flag. In case cmp fails the JNE instruction will jump to 0x80484e4 which means wrong password.
 There are 4 comparisons going on which means the password is of length 4 so first, let's set a break point on
-```
+```assembly
 0x080484a3 <+179>:   cmp    dl,al
 ```
 then  define a hook to print the 8-bit al register value and set dl value to al.
-```
+```assembly
 gdb-peda$ break *0x080484a3
 gdb-peda$ define hook-stop
 >print/x $al
@@ -412,7 +412,7 @@ gdb-peda$ define hook-stop
 gdb-peda$ 
 ```
 now step over using ```n``` then keep press enter unless you get good password meesage
-```
+```assembly
 gdb-peda$ n
 $45 = 0x65
 0x080484aa in main ()
