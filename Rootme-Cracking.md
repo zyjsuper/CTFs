@@ -70,7 +70,7 @@ open it up with radare2
 ```
 seek to sub.Wrong_password_726 function and disassemble it
 
-```asemmbly
+```assembly
 [0x004017b8]> s sub.Wrong_password_726
 [0x00401726]> pdf
 .......
