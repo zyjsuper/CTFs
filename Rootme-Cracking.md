@@ -289,6 +289,150 @@ now resume the execution...
 ```
 Flag: liberté!
 
+# ELF - Ptrace
+First of all you have to know that we can't debug this binary directly.
+```
+└──╼ #gdb ch3.bin 
+gdb-peda$ break main
+Breakpoint 1 at 0x80483fe
+gdb-peda$ run
+gdb-peda$ c
+Continuing.
+Debugger detecté ... Exit
+[Inferior 1 (process 4841) exited with code 01]
+```
+But we are hackers and we love breaking rules, so let's figure out what is going on.. from ``` man ptrace ``` comamand:
+```
+NAME
+       ptrace - process trace
+
+SYNOPSIS
+       #include <sys/ptrace.h>
+
+       long ptrace(enum __ptrace_request request, pid_t pid,
+                   void *addr, void *data);
+
+```
+so, we can tell using patrice any attempts to debug or crack the program
+will be detected and then we can execute certain number of actions like exit from the entire program, here is a simple example for how can code look like.
+```C
+#include <stdio.h>
+#include <sys/ptrace.h>
+
+int main(){
+
+    if (ptrace(PTRACE_TRACEME, 0, 1, 0)) {
+        puts("Debugger Detected");
+        return 1;
+    }
+
+    puts("Exited Normally");
+    return 0;
+}
+```
+But, radare2 is a hexadecimal editor and disassembler, we still can use it to remove detection !.
+open it up in writing mode ..
+```
+└──╼ #radare2 -w ch3.bin 
+[0x080482f0]> aaaa
+[x] Analyze all flags starting with sym. and entry0 (aa)
+[x] Analyze len bytes of instructions for references (aar)
+....
+````
+seek to the main function, here we can see a conditional jump at ```0x0804841a```.
+replace it with ```jmp 0x8048436```.
+```
+[0x080483f0]> s 0x0804841a
+[0x0804841a]> wa jmp 0x8048436
+Written 2 bytes (jmp 0x8048436) = wx eb1a
+```
+and now we can debug the binary using gdb..
+fire up gdb, break main and disassemble it
+```
+gdb-peda$ set disassembly-flavor intel
+gdb-peda$ break main
+Breakpoint 1 at 0x80483fe
+gdb-peda$ run
+gdb-peda$ disassemble main
+Dump of assembler code for function main:
+.....
+   0x0804849d <+173>:	hlt    
+   0x0804849e <+174>:	add    eax,0x4
+   0x080484a1 <+177>:	mov    al,BYTE PTR [eax]
+   0x080484a3 <+179>:	cmp    dl,al
+   0x080484a5 <+181>:	jne    0x80484e4 <main+244>
+   0x080484a7 <+183>:	mov    dl,BYTE PTR [ebp-0x15]
+   0x080484aa <+186>:	mov    eax,DWORD PTR [ebp-0xc]
+   0x080484ad <+189>:	add    eax,0x5
+   0x080484b0 <+192>:	mov    al,BYTE PTR [eax]
+   0x080484b2 <+194>:	cmp    dl,al
+   0x080484b4 <+196>:	jne    0x80484e4 <main+244>
+   0x080484b6 <+198>:	mov    dl,BYTE PTR [ebp-0x14]
+   0x080484b9 <+201>:	mov    eax,DWORD PTR [ebp-0xc]
+   0x080484bc <+204>:	inc    eax
+   0x080484bd <+205>:	mov    al,BYTE PTR [eax]
+   0x080484bf <+207>:	cmp    dl,al
+   0x080484c1 <+209>:	jne    0x80484e4 <main+244>
+   0x080484c3 <+211>:	mov    dl,BYTE PTR [ebp-0x13]
+   0x080484c6 <+214>:	mov    eax,DWORD PTR [ebp-0xc]
+   0x080484c9 <+217>:	add    eax,0xa
+   0x080484cc <+220>:	mov    al,BYTE PTR [eax]
+   0x080484ce <+222>:	cmp    dl,al
+   0x080484d0 <+224>:	jne    0x80484e4 <main+244>
+   0x080484d2 <+226>:	sub    esp,0xc
+   0x080484d5 <+229>:	push   0x80c297a
+   0x080484da <+234>:	call   0x80492d0 <puts>
+   0x080484df <+239>:	add    esp,0x10
+   0x080484e2 <+242>:	jmp    0x80484f4 <main+260>
+   0x080484e4 <+244>:	sub    esp,0xc
+   0x080484e7 <+247>:	push   0x80c298e
+   0x080484ec <+252>:	call   0x80492d0 <puts>
+   0x080484f1 <+257>:	add    esp,0x10
+   0x080484f4 <+260>:	mov    eax,0x0
+   0x080484f9 <+265>:	mov    ecx,DWORD PTR [ebp-0x4]
+   0x080484fc <+268>:	leave  
+   0x080484fd <+269>:	lea    esp,[ecx-0x4]
+   0x08048500 <+272>:	ret    
+End of assembler dump.
+gdb-peda$ 
+
+```
+If we keep stepping over you will notice that the dl register will contain the characters from the string we entered and the al register will contain the characters of the real password. Each time the cmp is comparing the 2 characters and if the comparison is true it will return which will set the zero flag. In case cmp fails the JNE instruction will jump to 0x80484e4 which means wrong password.
+There are 4 comparisons going on which means the password is of length 4 so first let's set a break point on
+```
+0x080484a3 <+179>:   cmp    dl,al
+```
+then  define a hook to print the 8-bit al register value and set dl value to al.
+```
+gdb-peda$ break *0x080484a3
+gdb-peda$ define hook-stop
+>print/x $al
+>set $dl = $al 
+>end
+gdb-peda$ 
+```
+now step over using ```n``` then keep press enter unless you get good password meesage
+```
+gdb-peda$ n
+$45 = 0x65
+0x080484aa in main ()
+gdb-peda$ 
+$51 = 0x61
+0x080484b9 in main ()
+gdb-peda$ 
+$57 = 0x73
+0x080484c6 in main ()
+gdb-peda$ 
+$64 = 0x79
+0x080484da in main ()
+gdb-peda$ 
+
+Good password !!!
+
+```
+convert hex to ascii and you will get 'easy'.
+Flag : easy
+
 
 # PYC - ByteCode
 Here we have a .pyc file, decompile it to python source code
