@@ -184,7 +184,7 @@ Flag : Here_you_have_to_understand_a_little_C++_stuffs
 0x08048821    1 5            sym.AES
 ......
 ```
-now let's disassemble the main function, we will see that there is no functions calls for any of these functions ubove, but there is a call to the edx register value.
+now let's disassemble the main function, we will see that there is no function calls for any of these functions ubove, but there is a call to the edx register value.
 ```
 |           0x0804869a      89442404       mov dword [local_4h], eax
 |           0x0804869e      8d45d6         lea eax, dword [local_2ah]
@@ -265,7 +265,7 @@ else
    blowfish
 fi
 ```
-now all we have to do is to redirect this jump to execute  blowfish instead of RS4 like the following:
+now all we have to do is redirecting this jump to execute  blowfish instead of RS4 like the following:
 ```
 [0x080486c4]> s 0x080486fc
 [0x080486fc]> wa jmp 0x080486fe
