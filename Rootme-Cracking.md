@@ -41,6 +41,58 @@ Bien joue, vous pouvez valider l'epreuve avec le mot de passe : 987654321 !
 ```
 Flag : 987654321 
 
+```asemmbly
+ 0x00401729      83ec28         sub esp, 0x28                         ; '('
+ 0x0040172c      c745f4000000.  mov dword [local_ch], 0
+ 0x00401733      837d0c07       cmp dword [ebp + 0xc], 7              ; [0x7:4]=-1 ; 7
+ 0x00401737      7571           jne 0x4017aa
+ ----------- true: 0x004017aa  false: 0x00401739
+ 0x00401739      8b4508         mov eax, dword [arg_8h]               ; [0x8:4]=-1 ; 8
+ 0x0040173c      0fb600         movzx eax, byte [eax]
+ 0x0040173f      3c53           cmp al, 0x53                          ; 'S' ; 83
+ 0x00401741      7567           jne 0x4017aa
+ ----------- true: 0x004017aa  false: 0x00401743
+ 0x00401743      8b4508         mov eax, dword [arg_8h]               ; [0x8:4]=-1 ; 8
+ 0x00401746      83c001         add eax, 1
+ 0x00401749      0fb600         movzx eax, byte [eax]
+ 0x0040174c      3c50           cmp al, 0x50                          ; 'P' ; 80
+ 0x0040174e      755a           jne 0x4017aa
+ ----------- true: 0x004017aa  false: 0x00401750
+ 0x00401750      8b4508         mov eax, dword [arg_8h]               ; [0x8:4]=-1 ; 8
+ 0x00401753      83c002         add eax, 2
+ 0x00401756      0fb600         movzx eax, byte [eax]
+ 0x00401759      3c61           cmp al, 0x61                          ; 'a' ; 97
+ 0x0040175b      754d           jne 0x4017aa
+ ----------- true: 0x004017aa  false: 0x0040175d
+ 0x0040175d      8b4508         mov eax, dword [arg_8h]               ; [0x8:4]=-1 ; 8
+ 0x00401760      83c003         add eax, 3
+ 0x00401763      0fb600         movzx eax, byte [eax]
+ 0x00401766      3c43           cmp al, 0x43                          ; 'C' ; 67
+ 0x00401768      7540           jne 0x4017aa
+ ----------- true: 0x004017aa  false: 0x0040176a
+ 0x0040176a      8b4508         mov eax, dword [arg_8h]               ; [0x8:4]=-1 ; 8
+ 0x0040176d      83c004         add eax, 4
+ 0x00401770      0fb600         movzx eax, byte [eax]
+ 0x00401773      3c49           cmp al, 0x49                          ; 'I' ; 73
+ 0x00401775      7533           jne 0x4017aa
+ ----------- true: 0x004017aa  false: 0x00401777
+ 0x00401777      8b4508         mov eax, dword [arg_8h]               ; [0x8:4]=-1 ; 8
+ 0x0040177a      83c005         add eax, 5
+ 0x0040177d      0fb600         movzx eax, byte [eax]
+ 0x00401780      3c6f           cmp al, 0x6f                          ; 'o' ; 111
+ 0x00401782      7526           jne 0x4017aa
+ ----------- true: 0x004017aa  false: 0x00401784
+ 0x00401784      8b4508         mov eax, dword [arg_8h]               ; [0x8:4]=-1 ; 8
+ 0x00401787      83c006         add eax, 6
+ 0x0040178a      0fb600         movzx eax, byte [eax]
+ 0x0040178d      3c53           cmp al, 0x53                          ; 'S' ; 83
+ 0x0040178f      7519           jne 0x4017aa
+ ----------- true: 0x004017aa  false: 0x00401791
+ 0x00401791      b853404000     mov eax, str.Gratz_man_:_             ; 0x404053 ; "Gratz man :)"
+ 0x00401796      890424         mov dword [esp], eax                  ; const char * format
+ 0x00401799      e812110000     call sub.msvcrt.dll_printf_8b0        ; int printf(const char *format)
+```
+
 # PYC - ByteCode
 Here we have a .pyc file, decompile it to python source code
 using Easy python decompiler ``` works with wine on linux ```
