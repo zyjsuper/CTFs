@@ -133,7 +133,43 @@ Gratz man :)
 ```  
 Flag : SPaCIoS
 
+# ELF C++ - 0 protection
+seek to the main function and set a break point at the bottom 
+```
+[0xf7ed8b20]> aaaa
+[0xf7ed8b20]> s main
+[0xf7ed8b20]> s main
+[0x08048a86]> db 0x08048c92
+.....
+        |   0x08048c88      89d8           mov eax, ebx
+        |   0x08048c8a      890424         mov dword [esp], eax
+        |   0x08048c8d      e8eefbffff     call sym.imp._Unwind_Resume
+|       `-> ;-- eip:
+|       |      ; JMP XREF from 0x08048c1b (main)
+|       `-> 0x08048c92      8d65f8         lea esp, dword [local_8h_2]
+|           0x08048c95      59             pop ecx
+|           0x08048c96      5b             pop ebx
+|           0x08048c97      5d             pop ebp
 
+```
+```
+[0x08048a86]> pdf
+|       `-> 0x08048c92 b    8d65f8         lea esp, dword [local_8h_2]
+
+```
+take a look at the stack:
+```
+[0x08048c92]> pxr @ esp
+0xff7fa2e0  0xff7fa2f4  .... @esp stack R W 0xa04fc8c -->  (Here_you_have_to_understand_a_little_C++_stuffs)
+.......
+```
+try ```Here_you_have_to_understand_a_little_C++_stuffs``` as a password:
+```
+└──╼ #./ch25.bin Here_you_have_to_understand_a_little_C++_stuffs
+Bravo, tu peux valider en utilisant ce mot de passe...
+Congratz. You can validate with this password...
+```
+Flag : Here_you_have_to_understand_a_little_C++_stuffs
 # PYC - ByteCode
 Here we have a .pyc file, decompile it to python source code
 using Easy python decompiler ``` works with wine on linux ```
