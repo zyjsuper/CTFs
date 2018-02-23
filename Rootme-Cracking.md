@@ -753,7 +753,7 @@ else
 ````
 we can tell that the algorithm will take our input, hashing it, then compare it to our four hashes, then it will choose the answer depend on the hash number inside it's array so it some how looks like this
 ```bash
-input=$(python -c "import hashlib ; print(hashlib.sha256(\"MayTheF0rceB3W1thU\").hexdigest())")
+input=$(python -c "import hashlib ; print(hashlib.sha256(\"$1\").hexdigest())")
 arr=("622a751d6d12b46ad74049cf50f2578b871ca9e9447a98b06c21a44604cab0b4" "301c4cd0097640bdbfe766b55924c0d5c5cc28b9f2bdab510e4eb7c442ca0c66" "d09e1fe7c97238c68e4be7b3cd64230c638dde1d08c656a1c9eaae30e49c4caf" "4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2")
 ans=("Congrats from the FortiGuard team :)" "Nice try, but that would be too easy" "Ha! Ha! FortiGuard grin ;)" "Are you implying we are n00bs?" "Come on, this is a DEFCON conference!")
 for i in {0..3};do
