@@ -636,6 +636,8 @@ But, they want us to do it using an exploit so here is our payload.
 Flag is : 25260060504_VE_T25_*t*_
 
 
+### APK - Anti-debug
+
 first of all we have to convert the apk file into a jar file which will make the code more readable.
 ```assembly
 ┌─[root@parrot]─[~/Downloads]
@@ -765,3 +767,94 @@ echo ${ans[4]}
 to print ```"Congrats from the FortiGuard team :)"``` all we have to do is decode the first hash ```"622a751d6d12b46ad74049cf50f2578b871ca9e9447a98b06c21a44604cab0b4"``` which will be the flag !
 
 Flag : MayTheF0rceB3W1thU
+
+### ELF - Random Crackme
+our binary is broken for some reason, extract the binary itself using ```binwalk``` will solve this issue.
+```asseembly
+┌─[root@parrot]─[~/Downloads]
+└──╼ #./crackme_wtf 
+./crackme_wtf: line 1: syntax error near unexpected token `newline'
+./crackme_wtf: line 1: `!<arch>'
+┌─[✗]─[root@parrot]─[~/Downloads]
+└──╼ #binwalk -e crackme_wtf  ; cd _crackme_wtf.extracted/
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+424           0x1A8           ELF, 32-bit LSB executable, Intel 80386, version 1 (SYSV)
+9286          0x2446          Unix path: /build-tree/i386-libc/csu/crti.S
+
+┌─[root@parrot]─[~/Downloads/_crackme_wtf.extracted]
+└──╼ #chmod +x 1A8.elf 
+┌─[root@parrot]─[~/Downloads/_crackme_wtf.extracted]
+└──╼ #./1A8.elf 
+
+    ** Bienvenue dans ce challenge de cracking **    
+
+[+] Password :12345
+
+[!]Access Denied !  
+[-] Try again 
+```
+Now we are ready!
+I treid to keep everything simple so i just played with conditional jumps.
+
+```assembly
+┌─[root@parrot]─[~/Downloads/_crackme_wtf.extracted]
+└──╼ #radare2 -d 1A8.elf 
+Process with PID 3683 started...
+= attach 3683 3683
+bin.baddr 0x08048000
+Using 0x8048000
+Unknown DW_FORM 0x06
+asm.bits 32
+[0xf7f4bb20]> aaaa
+[x] Analyze all flags starting with sym. and entry0 (aa)
+TODO: esil-vm not initialized
+[x] Analyze len bytes of instructions for references (aar)
+[x] Analyze function calls (aac)
+[x] Emulate code to find computed references (aae)
+[Cannot find section boundaries in here
+[x] Analyze consecutive function (aat)
+[x] Constructing a function name for fcn.* and sym.func.* functions (aan)
+[x] Type matching analysis for all functions (afta)
+
+[0x080488d5]> s 0x08048a89
+[0x08048a89]> wa jmp 0x08048ad3
+Written 2 bytes (jmp 0x08048ad3) = wx eb48
+[0x08048a89]> 
+[0x08048a89]> s 0x08048af9
+[0x08048af9]> wa jmp 0x8048b2c
+Written 2 bytes (jmp 0x8048b2c) = wx eb31
+[0x08048af9]> 
+[0x08048af9]> s 0x08048b84
+[0x08048b84]> wa jmp 0x8048bce
+Written 2 bytes (jmp 0x8048bce) = wx eb48
+[0x08048b84]> 
+[0x08048b84]> s 0x08048c1a
+[0x08048c1a]> wa jmp 0x8048c50
+Written 2 bytes (jmp 0x8048c50) = wx eb34
+[0x08048c1a]> 
+[0x08048c1a]> s 0x08048c57
+[0x08048c57]> wa jmp 0x8048c8d
+Written 2 bytes (jmp 0x8048c8d) = wx eb34
+[0x08048c57]> 
+[0x08048c57]> s 0x08048c94
+[0x08048c94]> wa jmp 0x8048c9a
+Written 2 bytes (jmp 0x8048c9a) = wx eb04
+[0x08048c94]> 
+[0x08048c94]> s 0x08048ca6
+[0x08048ca6]> wa jmp 0x8048cac
+Written 2 bytes (jmp 0x8048cac) = wx eb04
+[0x08048ca6]> dc
+
+    ** Bienvenue dans ce challenge de cracking **    
+
+[+] Password :dasdasd
+
+[+]Good password  
+[+] Clee de validation du crack-me : _VQLG1160_VTEPI_AVTG_3093_
+
+[0xf7fb8dc9]> 
+```
+Flag : _VQLG1160_VTEPI_AVTG_3093_
+
