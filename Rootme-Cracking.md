@@ -538,3 +538,95 @@ done
 
 ```
 Flag is : I_hate_RUBY_!!!
+
+#ELF - CrackPass
+first open it up with radare2
+
+```assembly
+┌─[root@parrot]─[~/Downloads]
+└──╼ #radare2 -d Crack 5555
+Process with PID 3224 started...
+= attach 3224 3224
+bin.baddr 0x08048000
+Using 0x8048000
+asm.bits 32
+[0xf7fb1b20]> aaaa
+[x] Analyze all flags starting with sym. and entry0 (aa)
+TODO: esil-vm not initialized
+[x] Analyze len bytes of instructions for references (aar)
+[x] Analyze function calls (aac)
+[x] Emulate code to find computed references (aae)
+[Cannot find section boundaries in here
+[x] Analyze consecutive function (aat)
+[x] Constructing a function name for fcn.* and sym.func.* functions (aan)
+[x] Type matching analysis for all functions (afta)
+```
+bypass the antidebugger
+
+```assembly
+[0xf7fb1b20]>  s 0x0804868c
+[0x0804868c]>  wa jmp 0x804869f
+Written 2 bytes (jmp 0x804869f) = wx eb11
+```
+change the execution flow to print the password.
+
+```assembly
+[0x0804868c]> s 0x0804861e
+[0x0804861e]> wa je 0x8048632
+Written 2 bytes (je 0x8048632) = wx 7412
+```
+run.
+
+```assembly
+[0x0804861e]> dc
+Good work, the password is : 
+
+ff07031d6fb052490149f44b1d5e94f1592b6bac93c06ca9
+ 
+```
+
+### ELF - ExploitMe
+
+first open it up with radare2
+
+```assembly
+┌─[root@parrot]─[~/Downloads]
+└──╼ #radare2 -d Exploit_Me 123456
+
+Process with PID 2958 started...
+= attach 2958 2958
+bin.baddr 0x08048000
+Using 0x8048000
+Unknown DW_FORM 0x06
+asm.bits 32
+[0xf7f9fb20]> aaaa
+[x] Analyze all flags starting with sym. and entry0 (aa)
+TODO: esil-vm not initialized
+[x] Analyze len bytes of instructions for references (aar)
+[x] Analyze function calls (aac)
+[x] Emulate code to find computed references (aae)
+[Cannot find section boundaries in here
+[x] Analyze consecutive function (aat)
+[x] Constructing a function name for fcn.* and sym.func.* functions (aan)
+[x] Type matching analysis for all functions (afta)
+```
+```change the program flow
+[0xf7f9fb20]> s 0x0804871a
+[0x0804871a]> wa jmp 0x0804871c
+Written 2 bytes (jmp 0x0804871c) = wx eb00
+[0x0804871a]> s 0x08048831
+[0x08048831]> wa jmp 0x804887b
+Written 2 bytes (jmp 0x804887b) = wx eb48
+[0x08048831]> dc
+VÃ©rification de votre mot de passe..
+[+] Felicitation password de validation de l'épreuve:: 25260060504_VE_T25_*t*_
+```
+But, they want us to do it using an exploit so here is our payload.
+
+```assembly
+┌─[✗]─[root@parrot]─[~/Downloads]
+└──╼ #./Exploit_Me\(if_you_can\) $(python -c 'print("A"*148+"\x31\x87\x04\x08")')
+[+] Felicitation password de validation de l'épreuve:: 25260060504_VE_T25_*t*_
+
+``` 
+
