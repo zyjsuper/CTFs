@@ -630,4 +630,4 @@ But, they want us to do it using an exploit so here is our payload.
 [+] Felicitation password de validation de l'épreuve:: 25260060504_VE_T25_*t*_
 
 ``` 
-
+```\x31\x87\x04\x08``` is the _asm_ function address ```0x08048731```
