@@ -770,7 +770,7 @@ Flag : MayTheF0rceB3W1thU
 
 ### ELF - Random Crackme
 our binary is broken for some reason, extract the binary itself using ```binwalk``` will solve this issue.
-```asseembly
+```assembly
 ┌─[root@parrot]─[~/Downloads]
 └──╼ #./crackme_wtf 
 ./crackme_wtf: line 1: syntax error near unexpected token `newline'
