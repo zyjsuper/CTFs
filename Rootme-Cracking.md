@@ -584,6 +584,7 @@ Good work, the password is :
 ff07031d6fb052490149f44b1d5e94f1592b6bac93c06ca9
  
 ```
+Flag is : ff07031d6fb052490149f44b1d5e94f1592b6bac93c06ca9
 
 ### ELF - ExploitMe
 
@@ -631,3 +632,137 @@ But, they want us to do it using an exploit so here is our payload.
 
 ``` 
 ```\x31\x87\x04\x08``` is the _asm_ function address ```0x08048731```
+
+Flag is : 25260060504_VE_T25_*t*_
+
+
+first of all we have to convert the apk file into a jar file which will make the code more readable.
+```assembly
+┌─[root@parrot]─[~/Downloads]
+└──╼ #dex2jar ch16.apk 
+this cmd is deprecated, use the d2j-dex2jar if possible
+dex2jar version: translator-0.0.9.15
+dex2jar ch16.apk -> ch16_dex2jar.jar
+Done.
+```
+```ch16_dex2jar.jar``` in ```JD-GUI``` then select ```Validate.class``` and here is our code.
+```java
+package com.fortiguard.challenge.hashdays2012.challengeapp;
+
+import android.content.Context;
+import android.util.Log;
+import java.lang.reflect.Array;
+import java.security.MessageDigest;
+import java.util.Arrays;
+
+public class Validate
+{
+  private static final String[] answers;
+  private static byte[][] bh;
+  private static boolean computed = false;
+  private static final String[] hashes = { "622a751d6d12b46ad74049cf50f2578b871ca9e9447a98b06c21a44604cab0b4", "301c4cd0097640bdbfe766b55924c0d5c5cc28b9f2bdab510e4eb7c442ca0c66", "d09e1fe7c97238c68e4be7b3cd64230c638dde1d08c656a1c9eaae30e49c4caf", "4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2" };
+  public static String[] hexArray;
+  private Context context;
+  
+  static
+  {
+    answers = new String[] { "Congrats from the FortiGuard team :)", "Nice try, but that would be too easy", "Ha! Ha! FortiGuard grin ;)", "Are you implying we are n00bs?", "Come on, this is a DEFCON conference!" };
+    hexArray = new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "0A", "0B", "0C", "0D", "0E", "0F", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "1A", "1B", "1C", "1D", "1E", "1F", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2A", "2B", "2C", "2D", "2E", "2F", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "3A", "3B", "3C", "3D", "3E", "3F", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "4A", "4B", "4C", "4D", "4E", "4F", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "5A", "5B", "5C", "5D", "5E", "5F", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "6A", "6B", "6C", "6D", "6E", "6F", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "7A", "7B", "7C", "7D", "7E", "7F", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "8A", "8B", "8C", "8D", "8E", "8F", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "9A", "9B", "9C", "9D", "9E", "9F", "A0", "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "AA", "AB", "AC", "AD", "AE", "AF", "B0", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "BA", "BB", "BC", "BD", "BE", "BF", "C0", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "CA", "CB", "CC", "CD", "CE", "CF", "D0", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "DA", "DB", "DC", "DD", "DE", "DF", "E0", "E1", "E2", "E3", "E4", "E5", "E6", "E7", "E8", "E9", "EA", "EB", "EC", "ED", "EE", "EF", "F0", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "FA", "FB", "FC", "FD", "FE", "FF" };
+    int[] arrayOfInt = { 4, 32 };
+    bh = (byte[][])Array.newInstance(Byte.TYPE, arrayOfInt);
+  }
+  
+  public Validate(Context paramContext)
+  {
+    this.context = paramContext;
+  }
+  
+  public static String checkSecret(String paramString)
+  {
+    for (;;)
+    {
+      int i;
+      try
+      {
+        MessageDigest localMessageDigest = MessageDigest.getInstance("SHA-256");
+        localMessageDigest.reset();
+        arrayOfByte = localMessageDigest.digest(paramString.getBytes());
+        if (computed) {
+          break label110;
+        }
+        convert2bytes();
+      }
+      catch (Exception localException)
+      {
+        byte[] arrayOfByte;
+        String str;
+        Log.w("Hashdays", "checkSecret: " + localException.toString());
+      }
+      if (i < hashes.length)
+      {
+        if (Arrays.equals(arrayOfByte, bh[i]))
+        {
+          str = answers[i];
+          return str;
+        }
+        i++;
+      }
+      else
+      {
+        return answers[4];
+        label110:
+        i = 0;
+      }
+    }
+  }
+  
+  public static void convert2bytes()
+  {
+    for (int i = 0; i < hashes.length; i++) {
+      bh[i] = hexStringToByteArray(hashes[i]);
+    }
+    computed = true;
+  }
+  
+  public static byte[] hexStringToByteArray(String paramString)
+  {
+    int i = -1 + paramString.length();
+    byte[] arrayOfByte = new byte[1 + i / 2];
+    for (int j = 0; j < i; j += 2) {
+      arrayOfByte[(j / 2)] = ((byte)((Character.digit(paramString.charAt(j), 16) << 4) + Character.digit(paramString.charAt(j + 1), 16)));
+    }
+    return arrayOfByte;
+  }
+  
+  public static boolean isEmulator()
+  {
+    return true;
+  }
+}
+```
+we can clearly see that we have four SHA-256 hashes,and asnwers array which contains five strings, so logically after seeing this.. 
+```java
+else
+{
+   return answers[4];
+   label110:
+   i = 0;
+}
+````
+we can tell that the algorithm will take our input, hashing it, then compare it to out four hashes, then it will choose the answer depented on the hash number 
+so it some how looks like this 
+```bash
+input=$(python -c "import hashlib ; print(hashlib.sha256(\"MayTheF0rceB3W1thU\").hexdigest())")
+arr=("622a751d6d12b46ad74049cf50f2578b871ca9e9447a98b06c21a44604cab0b4" "301c4cd0097640bdbfe766b55924c0d5c5cc28b9f2bdab510e4eb7c442ca0c66" "d09e1fe7c97238c68e4be7b3cd64230c638dde1d08c656a1c9eaae30e49c4caf" "4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2")
+ans=("Congrats from the FortiGuard team :)" "Nice try, but that would be too easy" "Ha! Ha! FortiGuard grin ;)" "Are you implying we are n00bs?" "Come on, this is a DEFCON conference!")
+for i in {0..3};do
+  if [[ $input == ${arr[$i]} ]] ; then
+      echo "${ans[$i]}"
+      exit 0;
+  fi
+done
+echo ${ans[4]}
+```
+to print ```"Congrats from the FortiGuard team :)"``` all we have to do is decode the first hash ```"622a751d6d12b46ad74049cf50f2578b871ca9e9447a98b06c21a44604cab0b4"``` which will be the flag !
+
+Flag : MayTheF0rceB3W1thU
