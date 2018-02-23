@@ -610,7 +610,8 @@ TODO: esil-vm not initialized
 [x] Constructing a function name for fcn.* and sym.func.* functions (aan)
 [x] Type matching analysis for all functions (afta)
 ```
-```change the program flow
+change the program flow
+```assembly
 [0xf7f9fb20]> s 0x0804871a
 [0x0804871a]> wa jmp 0x0804871c
 Written 2 bytes (jmp 0x0804871c) = wx eb00
