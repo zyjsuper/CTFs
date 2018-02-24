@@ -14,11 +14,9 @@ int main(void)
 ```
 Solve
 ```assembly
-app-script-ch11@challenge02:/tmp/tmp1$ mkdir /tmp/tmp1/
-mkdir: cannot create directory ‘/tmp/tmp1/’: File exists
+app-script-ch11@challenge02:~$ mkdir /tmp/tmp1/ ; cd /tmp/tmp1
 app-script-ch11@challenge02:/tmp/tmp1$ export PATH="/tmp/tmp1:${PATH}"
 app-script-ch11@challenge02:/tmp/tmp1$ ln -s /bin/cat ls
-ln: failed to create symbolic link ‘ls’: File exists
 app-script-ch11@challenge02:/tmp/tmp1$ ~/ch11
 !oPe96a/.s8d5
 ```
