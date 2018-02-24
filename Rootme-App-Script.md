@@ -175,6 +175,7 @@ PerlCanDoBetterThanYouThink
 ```
 Flag is : ```PerlCanDoBetterThanYouThink```
 
+#python - exploit me 1
 Source :
 ```python
 #!/usr/bin/python2
