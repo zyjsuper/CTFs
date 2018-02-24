@@ -13,7 +13,7 @@ int main(void)
 }
 ```
 Solve
-```assembly
+```shell
 app-script-ch11@challenge02:/tmp/tmp1$ mkdir /tmp/tmp1/
 mkdir: cannot create directory ‘/tmp/tmp1/’: File exists
 app-script-ch11@challenge02:/tmp/tmp1$ export PATH="/tmp/tmp1:${PATH}"
