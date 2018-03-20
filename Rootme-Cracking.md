@@ -858,3 +858,6 @@ Written 2 bytes (jmp 0x8048cac) = wx eb04
 ```
 Flag : _VQLG1160_VTEPI_AVTG_3093_
 
+
+### PE DotNet - 0 protection
+![pe 0 protection](https://user-images.githubusercontent.com/22657154/37649751-7852c0be-2c3b-11e8-8dba-2fddf03409c8.png)
