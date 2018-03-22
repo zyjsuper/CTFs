@@ -1,5 +1,5 @@
 # CTFs
-This repository is just for fun, for me and for anyone who wants to learn RE.
+This repository is just for fun, for me and for anyone who wants to learn.
 ```assembly
      
                                      ██▒ ▒██░    
