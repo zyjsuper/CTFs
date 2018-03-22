@@ -43,7 +43,25 @@ I opened wireshark and searched for ``` llllllllllllllllllllllllllllllllllllllll
 ``` Flag : 	flag{Hello_again_:D} ```
 
 ### ADSL Modem [100p]
+```
+┌─[root@parrot]─[~]
+└──╼ #file Adsl-modem.bin 
+Adsl-modem.bin: RAR archive data, v4, os: Win32
+┌─[root@parrot]─[~]
+└──╼ #unrar e Adsl-modem.bin
 
+UNRAR 5.50 freeware      Copyright (c) 1993-2017 Alexander Roshal
+
+
+Extracting from Adsl-modem.bin
+
+Flag{reversing_FW_is_interesting_but_this_is_for_fun}
+
+Extracting  TL-MR3220 V2 _FW.bin                                      OK 
+All OK
+┌─[root@parrot]─[~]
+└──╼ #
+```
 ``` Flag : Flag{reversing_FW_is_interesting_but_this_is_for_fun} ```
 
 ### Cypher Anxiety [50p]
