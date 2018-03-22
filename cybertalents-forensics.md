@@ -108,3 +108,33 @@ Then open a netcat client on localhost: ```netcat localhost 7070 < crypted.file`
 And open a cryptcat listener on localhost: ```cryptcat -l -k P@ssawordaya -p 7070 > decrypted.file```.
 
 ``` Flag : 3beef06be834f3151309037dde4714ec ```
+
+### G&P List [25]
+![screenshot at 2018-03-22 12-52-45](https://user-images.githubusercontent.com/22657154/37766646-f2d3ad86-2d9d-11e8-8baf-0d373bb216f6.png)
+
+``` Flag : 877c1fa0445adaedc5365d9c139c5219 ```
+
+### Lost Files [100]
+```
+┌─[root@parrot]─[~/Downloads]
+└──╼ #strings lost_files.mem.001 | grep -i flag | head 
+B.j.YFlag(You_Get_It_2)
+...Flag(You_Get_It_2)
+Local\{C15730E2-145C-4c5e-B005-3BC753F42475}-once-flag
+Adobe APP14 marker: version %d, flags 0x%04x 0x%04x, transform %d
+unknown header flags set
+GlobalFlags
+?GetFlags@CxImage@@QBEKXZ
+?SetFlags@CxImage@@QAEXK_N@Z
+U_REGEX_INVALID_FLAG
+TMenuItemAutoFlag
+```
+``` Flag : Flag(You_Get_It_2) ```
+
+### Partition Lost [50]
+```
+┌─[✗]─[root@parrot]─[~/Downloads]
+└──╼ #strings partition-lost.img  | grep flag -i | tail  -n 1 | sed 's/fM//g'
+FLAG(701_L@b$_DR_DFIR)
+```
+``` Flag : FLAG(701_L@b$_DR_DFIR) ```
