@@ -67,7 +67,7 @@ All OK
 
 ### Cypher Anxiety [50p]
 
-the flag was sent and captured inside the pcap file, but there is binwalk and foremost couldn't find anything !
+the flag was sent and captured inside the pcap file, but binwalk and foremost couldn't find anything !
 ```
 ┌─[root@parrot]─[~]
 └──╼ #binwalk find\ the\ image.pcap 
