@@ -138,3 +138,11 @@ TMenuItemAutoFlag
 FLAG(701_L@b$_DR_DFIR)
 ```
 ``` Flag : FLAG(701_L@b$_DR_DFIR) ```
+
+### Hidden message [25]
+```
+┌─[root@parrot]─[~/Downloads]
+└──╼ #strings hidden_message.jpg | grep "[0-9a-f]\{32\}"
+ b1a1f2855d2428930e0c9c4ce10500d5
+```
+``` Flag : b1a1f2855d2428930e0c9c4ce10500d5 ```
