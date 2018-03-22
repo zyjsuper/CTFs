@@ -20,3 +20,5 @@
 ``` flag : ransomware ``` 
 ### Japanese Warrior
 ``` flag : SamuraiSTFU ```
+### Scan 
+``` flag : nmap ```
