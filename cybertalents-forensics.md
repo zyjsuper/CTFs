@@ -109,12 +109,12 @@ And open a cryptcat listener on localhost: ```cryptcat -l -k P@ssawordaya -p 707
 
 ``` Flag : 3beef06be834f3151309037dde4714ec ```
 
-### G&P List [25]
+### G&P List [25p]
 ![screenshot at 2018-03-22 12-52-45](https://user-images.githubusercontent.com/22657154/37766646-f2d3ad86-2d9d-11e8-8baf-0d373bb216f6.png)
 
 ``` Flag : 877c1fa0445adaedc5365d9c139c5219 ```
 
-### Lost Files [100]
+### Lost Files [100p]
 ```
 ┌─[root@parrot]─[~/Downloads]
 └──╼ #strings lost_files.mem.001 | grep -i flag | head 
@@ -131,7 +131,7 @@ TMenuItemAutoFlag
 ```
 ``` Flag : Flag(You_Get_It_2) ```
 
-### Partition Lost [50]
+### Partition Lost [50p]
 ```
 ┌─[✗]─[root@parrot]─[~/Downloads]
 └──╼ #strings partition-lost.img  | grep flag -i | tail  -n 1 | sed 's/fM//g'
@@ -139,7 +139,7 @@ FLAG(701_L@b$_DR_DFIR)
 ```
 ``` Flag : FLAG(701_L@b$_DR_DFIR) ```
 
-### Hidden message [25]
+### Hidden message [25p]
 ```
 ┌─[root@parrot]─[~/Downloads]
 └──╼ #strings hidden_message.jpg | grep "[0-9a-f]\{32\}"
