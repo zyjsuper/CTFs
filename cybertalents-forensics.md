@@ -1,4 +1,4 @@
-### Packet abomination
+### Packet abomination [100p]
 we have to extract the hash here, after doing a simple attempt i got a hash but it wasn't what we want
 ```
 root@DESKTOP-NS9V6J9:~# strings Packet-abomination.pcap | grep -e "[0-9a-f]\{32\}" -w  -o | sort -u
@@ -32,4 +32,20 @@ zwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwe
 ```
 I opened wireshark and searched for ``` lllllllllllllllllllllllllllllllllllllllllllllll0 ``` string to find 32 unknown packets, which was interesting because the length of the md5 hashes is 32 too, so I filtered and sorted them and I took each char at the end then combiend them together to get the flag
 ![packet-abomination-solve](https://user-images.githubusercontent.com/22657154/37759323-ed14f6a2-2dbb-11e8-933f-03a5286f8ffc.png)
-```flag : 5a365f92d8c7f2e2c109974f5fc85ed5 ```
+``` Flag: 5a365f92d8c7f2e2c109974f5fc85ed5 ```
+
+### JTAG Dump [100p]
+
+``` Flag : Flag{Remember_header_then_footer} ```
+
+### Raw Disk [100p]
+
+``` Flag : 	flag{Hello_again_:D} ```
+
+### ADSL Modem [100p]
+
+``` Flag : Flag{reversing_FW_is_interesting_but_this_is_for_fun} ```
+
+### Cypher Anxiety [50p]
+
+``` Flag : 3beef06be834f3151309037dde4714ec ```
