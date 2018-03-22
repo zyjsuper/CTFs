@@ -35,11 +35,12 @@ I opened wireshark and searched for ``` llllllllllllllllllllllllllllllllllllllll
 ``` Flag: 5a365f92d8c7f2e2c109974f5fc85ed5 ```
 
 ### JTAG Dump [100p]
+![screenshot at 2018-03-22 12-20-33](https://user-images.githubusercontent.com/22657154/37764874-2a2c8dca-2d99-11e8-91a1-6718c177f7d4.png)
 
 ``` Flag : Flag{Remember_header_then_footer} ```
 
 ### Raw Disk [100p]
-
+![screenshot at 2018-03-22 12-16-23](https://user-images.githubusercontent.com/22657154/37764704-b9db15f0-2d98-11e8-8f82-804854f83a64.png)
 ``` Flag : 	flag{Hello_again_:D} ```
 
 ### ADSL Modem [100p]
@@ -65,5 +66,45 @@ All OK
 ``` Flag : Flag{reversing_FW_is_interesting_but_this_is_for_fun} ```
 
 ### Cypher Anxiety [50p]
+
+the flag was sent and captured inside the pcap file, but there is binwalk and foremost couldn't find anything !
+```
+┌─[root@parrot]─[~]
+└──╼ #binwalk find\ the\ image.pcap 
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+
+┌─[root@parrot]─[~]
+└──╼ #foremost find\ the\ image.pcap 
+Processing: find the image.pcap
+|*|
+┌─[root@parrot]─[~]
+└──╼ #ls -R output/
+output/:
+audit.txt
+
+```
+so i took a look at strings inside the pcap ...
+```
+┌─[root@parrot]─[~]
+└──╼ #strings find\ the\ image.pcap  -n 10 | head -n 8
+Sup supp, are we ready
+yeah, u got the files?
+yes but i think the channel is not secured
+the UTM will block the file transfer as the DLP module is active
+ok we can use cryptcat
+ok what the password then
+let it be P@ssawordaya
+listen on 7070 and ill send you the file , bye
+
+````
+So they use cryptcat over the port ```7070``` with the secret key ```P@ssawordaya```.
+With wireshark let's filter ```tcp.port == 7070```, then flow TCP stream and save it as raw file.
+
+![screenshot at 2018-03-22 11-26-29](https://user-images.githubusercontent.com/22657154/37764924-4e83b25c-2d99-11e8-8782-f167a71b2737.png)
+
+Then open a netcat client on localhost: ```netcat localhost 7070 < crypted.file```.
+And open a cryptcat listener on localhost: ```cryptcat -l -k P@ssawordaya -p 7070 > decrypted.file```.
 
 ``` Flag : 3beef06be834f3151309037dde4714ec ```
