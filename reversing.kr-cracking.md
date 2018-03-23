@@ -104,7 +104,7 @@ for i in char:
    if ord(i) ^ 0x32 == 124:
       print("[+] 0x804a022 " + i)
       key.append(i)
-   if ord(i) ^ 0xffffff88 == 4294967261 :
+   if ord(i) ^ 0xffffff88 == 4294967261 : # \xdd\xff\xff\xff
       print("[+] 0x804a023 " + i)
       key.append(i)
    if ord(i) ^ 0x58 == 0:
