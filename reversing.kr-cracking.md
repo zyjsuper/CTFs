@@ -161,7 +161,7 @@ for i in range(len(input)):
        x=0
 
 ```
-Based on this, we implemented an inverse operation algorithm to obtain the input value.
+Based on this, i implemented an inverse operation algorithm to obtain the input value.
 ```python
 #!/bin/python
 
