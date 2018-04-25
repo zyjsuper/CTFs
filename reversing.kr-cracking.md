@@ -131,3 +131,58 @@ L1NUX
 Correct!
 ```
 Flag : L1NUX
+
+# Easy Keygen [100p]
+The problem is to find the Name value whose serial value is ```5B134977135E7D13```.
+there is a routine that accepts a string and then generates a specific value. This routine produces the serial value.
+
+![25 35png](https://user-images.githubusercontent.com/22657154/39252679-77a09b82-48a6-11e8-9c1f-8f89328a4c2f.png)
+
+As you can see in the analysis, we take the input string one by one and do xor operation with 16 32 48 and compare the hex value to the string as it is.
+![how_does_it_work_1](https://user-images.githubusercontent.com/22657154/39252905-efe4154c-48a6-11e8-887e-8207bfb105cf.png)
+
+![how_does_it_work_counter_ecx_ebp](https://user-images.githubusercontent.com/22657154/39252960-1502394e-48a7-11e8-8f9e-eb10088add7b.png)
+
+![how_does_it_work_counter_ecx_ebp2](https://user-images.githubusercontent.com/22657154/39252963-17051162-48a7-11e8-8dd0-1aaec6ba8233.png)
+And after the serial value is stored in the ESI part, it is compared with the inputted serial value, and it is outputted as correct or wrong.
+
+I have implemented a routine in Python to generate serial values.
+```python
+#!/bin/python
+
+input  = "K3yg3nm3"
+input  = list(input)
+xor    = [16,32,48]
+x      = 0
+for i in range(len(input)):
+   print input[i] + " => " + hex(ord(input[i]) ^ xor[x])
+   x+=1
+   if x == 2:
+       x=0
+
+```
+Based on this, we implemented an inverse operation algorithm to obtain the input value.
+```python
+#!/bin/python
+
+encode = [16,32,48]
+I =0
+dic = "ABCDEFGHIJKLMNOPQRSTUVWXYZ[]^_`!abcdefghijklmnopqrstuvwxyz0123456789"
+Ser =  ''
+Sercmp ='5B,13,49,77,13,5E,7D,13'
+Sercmp = Sercmp.split(',')
+
+for S in Sercmp:      # loop 8 times
+    for d in dic:     # loop 68 times
+        if encode[I]^ord(d) == int(S,16): # if 1..3^ord(d) == S.HexTOInt
+            print S + " => " + d
+            Ser+=d
+            I+=1
+            if I >= 3:
+               I=0
+            break
+print "Flag : " + Ser
+```
+![encdec](https://user-images.githubusercontent.com/22657154/39253192-907f2e1a-48a7-11e8-9c75-62435c5bb0c5.png)
+
+``` Flag : K3yg3nm3 ```
