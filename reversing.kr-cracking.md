@@ -186,3 +186,9 @@ print "Flag : " + Ser
 ![encdec](https://user-images.githubusercontent.com/22657154/39253192-907f2e1a-48a7-11e8-9c75-62435c5bb0c5.png)
 
 ``` Flag : K3yg3nm3 ```
+
+# Easy Unpack
+we have to find the OEP, using IDA pro PE universal unpacker ..
+![unpack](https://user-images.githubusercontent.com/22657154/39267247-989a1b6c-48cc-11e8-9074-3178a1f9c430.png)
+
+``` Flag : 00401150```
