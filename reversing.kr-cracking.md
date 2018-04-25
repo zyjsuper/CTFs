@@ -188,7 +188,7 @@ print "Flag : " + Ser
 ``` Flag : K3yg3nm3 ```
 
 # Easy Unpack
-we have to find the OEP, using IDA pro PE universal unpacker ..
+we have to find the OEP (original entry point), using IDA pro PE universal unpacker ..
 ![unpack](https://user-images.githubusercontent.com/22657154/39267247-989a1b6c-48cc-11e8-9074-3178a1f9c430.png)
 
 ``` Flag : 00401150```
