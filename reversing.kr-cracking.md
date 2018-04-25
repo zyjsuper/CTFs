@@ -136,7 +136,7 @@ Flag : L1NUX
 The problem is to find the Name value whose serial value is ```5B134977135E7D13```.
 there is a routine that accepts a string and then generates a specific value. This routine produces the serial value.
 
-![25 35png](https://user-images.githubusercontent.com/22657154/39252679-77a09b82-48a6-11e8-9c1f-8f89328a4c2f.png)
+![25 35png](https://user-images.githubusercontent.com/22657154/39253485-42b26fe8-48a8-11e8-95ff-ce9f8a661c40.png)
 
 As you can see in the analysis, we take the input string one by one and do xor operation with 16 32 48 and compare the hex value to the string as it is.
 ![how_does_it_work_1](https://user-images.githubusercontent.com/22657154/39252905-efe4154c-48a6-11e8-887e-8207bfb105cf.png)
