@@ -207,7 +207,7 @@ back to function calls -> search for check word -> break all commands
 
 ![3](https://user-images.githubusercontent.com/22657154/42222006-47afbb1a-7ed4-11e8-9ed8-0c37fa6388e8.png)
 
-now run again, you will clearly see the conditional jump looking for, flip it and run 
+now run again, you will clearly see the conditional jump we're looking for, flip it and run 
 
 ![4](https://user-images.githubusercontent.com/22657154/42222116-7f5ec718-7ed4-11e8-9d5d-f637703f8043.png)
 
