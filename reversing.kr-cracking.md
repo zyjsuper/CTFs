@@ -215,3 +215,43 @@ now run again, you will clearly see the conditional jump we're looking for, flip
 
 ```Flag : LIstenCare ```
 
+# ImagePRC
+When you run the program, you can draw a picture, and if you click the check button, a message box called wrong is displayed.
+
+![1](https://user-images.githubusercontent.com/22657154/42239478-5779b9f8-7f04-11e8-9d70-d06fc46cf16c.png)
+
+
+![2015-10-07 15_54_23-assembly manifest - chrome](https://user-images.githubusercontent.com/22657154/42239837-72735434-7f05-11e8-9baa-3075ef27dc52.png)
+
+![2-ida](https://user-images.githubusercontent.com/22657154/42239676-ef025fe6-7f04-11e8-99d1-0aed4022175d.png)
+
+
+The above code is executed when the check button is pressed.
+<br>
+Looking at the code, I get the images I currently have drawn and the images stored in the resources and compare them on a byte-by-byte.
+<br>
+In other words, you have to draw the picture equal to the byte unit so that the wrong message will not appear.
+<br>
+The first thing I thought was to pull out the resource used and make it in a real image.
+<br>
+
+![3-ida](https://user-images.githubusercontent.com/22657154/42239906-b18ef56a-7f05-11e8-9e22-72722f8beb3d.png)
+
+so the image scale is 150hx200w, and since the resource file consists only FF and lower number
+<br>
+we can guess this image extension is BMP, so save the image we created in BMP format
+<br>
+then open it inside a hex editor like HXD and copy the header to the very first of the resource file.
+
+![4-header_create](https://user-images.githubusercontent.com/22657154/42240123-91b54374-7f06-11e8-91a1-0cfbd4e55907.png)
+
+![5-save_resource](https://user-images.githubusercontent.com/22657154/42240135-9470db14-7f06-11e8-93fa-a55fd795e6c5.png)
+
+![5-copy-header-1](https://user-images.githubusercontent.com/22657154/42240142-9d767caa-7f06-11e8-8085-0c8b00ec9ae9.png)
+
+save and you'll get the flag.
+
+
+![5-copy-header-2](https://user-images.githubusercontent.com/22657154/42240159-b0a2e5d4-7f06-11e8-8b96-476f8408b7bd.png)
+
+```FLAG : GOT ```
