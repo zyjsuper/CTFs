@@ -254,3 +254,34 @@ then open it inside a hex editor like HXD and copy the header to the very first 
 ![5-copy-header-2](https://user-images.githubusercontent.com/22657154/42240159-b0a2e5d4-7f06-11e8-8b96-476f8408b7bd.png)
 
 ```FLAG : GOT ```
+
+# Replace
+The program crashes upon entering a number and hitting “Check”.
+
+![run_program](https://user-images.githubusercontent.com/22657154/42244379-187ef8ce-7f15-11e8-9fb5-1b9b3fb8f322.png)
+
+if we followed the program flow we will see that the correct message it not callable
+
+![correct_is_not_callable](https://user-images.githubusercontent.com/22657154/42244428-4c38b9ca-7f15-11e8-803a-119798290505.png)
+
+so let's just run the program without any inputs and see why does he crash..
+
+![eip_in_eax](https://user-images.githubusercontent.com/22657154/42244514-9e2cf0fc-7f15-11e8-91de-001cb0f0631b.png)
+
+the EIP has not a valid address and the EIP was taken from EAX with the value ```0x601605CB```
+
+now let's try to use ```1234``` as an input
+
+![eip_eax_plus_input](https://user-images.githubusercontent.com/22657154/42244608-fb40c390-7f15-11e8-9d0a-aee27ca9a57f.png)
+
+the EAX now have the value ```0x60160A9D``` which is ```0x601605CB + HEX(input)```
+<br>
+and since the correct message is located in the address ```0x401072```
+<br>
+
+the simple math behind the solution..
+
+
+![get_the_flag](https://user-images.githubusercontent.com/22657154/42244747-7b02f1f2-7f16-11e8-80fd-86be7494d680.png)
+
+```FLAG : 2687109798 ```
