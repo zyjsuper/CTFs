@@ -197,6 +197,8 @@ we have to find the OEP (original entry point), using IDA pro PE universal unpac
 # Music Player
 The MP3 player, which can only run for one minute, gets a flag if it skips all the routines that exit when it reaches one minute, When you execute one minute, a message box will open and the song will stop .. bypass it.
 
+``` Note, i tried to use dnspy since it is a visual basic program but it didn't work, at least i could know how functions will look like ```
+
 ![prefirst](https://user-images.githubusercontent.com/22657154/42221835-bc77d104-7ed3-11e8-949b-a3c0d961b673.png)
 
 ![first](https://user-images.githubusercontent.com/22657154/42221836-bd57ad9c-7ed3-11e8-9097-73ad1eb26138.png)
