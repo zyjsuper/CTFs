@@ -276,11 +276,10 @@ now let's try to use ```1234``` as an input
 
 the EAX now have the value ```0x60160A9D``` which is ```0x601605CB + HEX(input)```
 <br>
-and since the correct message is located in the address ```0x401072```
+and since the correct message is located in the address ```0x401072``` we can calculate the flag.
 <br>
 
-the simple math behind the solution..
-
+The simple math behind the solution..
 
 ![get_the_flag](https://user-images.githubusercontent.com/22657154/42244747-7b02f1f2-7f16-11e8-80fd-86be7494d680.png)
 
