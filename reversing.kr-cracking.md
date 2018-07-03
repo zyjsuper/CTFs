@@ -281,6 +281,7 @@ and since the correct message is located in the address ```0x401072``` we can ca
 
 The simple math behind the solution..
 
-![get_the_flag](https://user-images.githubusercontent.com/22657154/42244747-7b02f1f2-7f16-11e8-80fd-86be7494d680.png)
+![untitled](https://user-images.githubusercontent.com/22657154/42244961-520ffa5a-7f17-11e8-9671-6f73e554bf8f.png)
+
 
 ```FLAG : 2687109798 ```
