@@ -241,16 +241,15 @@ so the image scale is 150hx200w, and since the resource file consists only FF an
 <br>
 we can guess this image extension is BMP, so save the image we created in BMP format
 <br>
-then open it inside a hex editor like HXD and copy the header to the very first of the resource file.
-
 ![4-header_create](https://user-images.githubusercontent.com/22657154/42240123-91b54374-7f06-11e8-91a1-0cfbd4e55907.png)
+
+Extract the resource file.
 
 ![5-save_resource](https://user-images.githubusercontent.com/22657154/42240135-9470db14-7f06-11e8-93fa-a55fd795e6c5.png)
 
+then open it inside a hex editor like HXD and copy the header to the very first of the resource file.
+
 ![5-copy-header-1](https://user-images.githubusercontent.com/22657154/42240142-9d767caa-7f06-11e8-8085-0c8b00ec9ae9.png)
-
-save and you'll get the flag.
-
 
 ![5-copy-header-2](https://user-images.githubusercontent.com/22657154/42240159-b0a2e5d4-7f06-11e8-8b96-476f8408b7bd.png)
 
