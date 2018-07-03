@@ -193,3 +193,23 @@ we have to find the OEP (original entry point), using IDA pro PE universal unpac
 ![unpack](https://user-images.githubusercontent.com/22657154/39267247-989a1b6c-48cc-11e8-9074-3178a1f9c430.png)
 
 ``` Flag : 00401150```
+
+# Music Player
+The MP3 player, which can only run for one minute, gets a flag if it skips all the routines that exit when it reaches one minute, When you execute one minute, a message box will open and the song will stop .. bypass it.
+
+![prefirst](https://user-images.githubusercontent.com/22657154/42221835-bc77d104-7ed3-11e8-949b-a3c0d961b673.png)
+
+![first](https://user-images.githubusercontent.com/22657154/42221836-bd57ad9c-7ed3-11e8-9097-73ad1eb26138.png)
+
+save patches and run, there is a ```run time error``` message box
+<br>
+back to function calls -> search for check word -> break all commands
+
+![3](https://user-images.githubusercontent.com/22657154/42222006-47afbb1a-7ed4-11e8-9ed8-0c37fa6388e8.png)
+
+now run again, you will clearly see the conditional jump looking for, flip it and run 
+
+![4](https://user-images.githubusercontent.com/22657154/42222116-7f5ec718-7ed4-11e8-9d5d-f637703f8043.png)
+
+```Flag : LIstenCare ```
+
