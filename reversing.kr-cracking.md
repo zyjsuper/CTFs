@@ -285,3 +285,72 @@ The simple math behind the solution..
 
 
 ```FLAG : 2687109798 ```
+# Direct3D FPS
+
+When you start the game, you can kill a strange doll while walking around in a gun.
+<br>
+when I kill everything, there is no window.
+<br>
+instead, HP collapses with the doll and dies when it reaches zero.
+<br>
+first, when you look at the reference string, there is a string 'game clear'
+<br>
+after tracing it change the EIP to its location
+
+![1_mod_the_eip](https://user-images.githubusercontent.com/22657154/42283615-47081640-7faa-11e8-99b8-5ede40158e2d.png)
+
+step until the message box call and follow fps.1f7028 in DWORD in dump
+
+![2_follow_encrypted_flag_in_dump](https://user-images.githubusercontent.com/22657154/42283783-cc017d50-7faa-11e8-859f-d00e234189cd.png)
+
+you will see an obfuscated value of 50 chars that will apper in the MessageBox when you resum the execution
+<br>
+save it for later and run.
+
+![run_with_encrypted_flag](https://user-images.githubusercontent.com/22657154/42284040-96434972-7fab-11e8-8b62-23607c536b0b.png)
+
+now let's open ida and follow the X-references for fps.1f7028
+
+![xrefs_to_game_over](https://user-images.githubusercontent.com/22657154/42284131-da5f6d5c-7fab-11e8-9940-d7c28d752b60.png)
+
+![goto_flag_array](https://user-images.githubusercontent.com/22657154/42284133-dbbd8b5c-7fab-11e8-9aed-c874eab0fc93.png)
+
+![xrefs_to_flag](https://user-images.githubusercontent.com/22657154/42284170-f958def0-7fab-11e8-95a0-316418e70ea1.png)
+
+now lets decompile this function.
+
+![understand_the_code](https://user-images.githubusercontent.com/22657154/42284212-18f8287e-7fac-11e8-8f18-c192e68950aa.png)
+
+i spent sometime debugging and redirecting the execution flow
+<br>
+before i could get that the CL value will be incremented by 4 to decode the flag successfully each with each character
+<br>
+after this step i could easily write a C++ program to solve the problem and reveal the flag.
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main(){
+
+   int i,j=0;
+   int flagarray[50] = {0x43 ,0x6B ,0x66 ,0x6B ,0x62 ,0x75,
+            0x6C ,0x69 ,0x4C ,0x45 ,0x5C ,0x45 ,0x5F ,0x5A,
+            0x46 ,0x1C ,0x07 ,0x25 ,0x25 ,0x29 ,0x70 ,0x17,
+            0x34 ,0x39 ,0x01 ,0x16 ,0x49 ,0x4C ,0x20 ,0x15,
+            0x0B ,0x0F ,0xF7 ,0xEB ,0xFA ,0xE8 ,0xB0 ,0xFD,
+            0xEB ,0xBC ,0xF4 ,0xCC ,0xDA ,0x9F ,0xF5 ,0xF0,
+            0xE8 ,0xCE ,0xF0 ,0xA9}; // 50 entries
+
+   for(i=0; i<50; i++){
+      printf("%c",flagarray[i]^j);
+      j += 4;
+   }
+   cout << endl;
+   return 0;
+}
+```
+
+![write_the_script](https://user-images.githubusercontent.com/22657154/42284485-edba4ff6-7fac-11e8-915e-c901d11c9bea.png)
+
+```Flag : Thr3EDPr0m ```
