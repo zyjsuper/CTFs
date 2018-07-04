@@ -323,7 +323,7 @@ now lets decompile this function.
 
 i spent sometime debugging and redirecting the execution flow
 <br>
-before i could get that the CL value will be incremented by 4 to decode the flag successfully each with each character
+before i could get that the CL value will be incremented by 4 to decode the flag successfully with each character
 <br>
 after this step i could easily write a C++ program to solve the problem and reveal the flag.
 
