@@ -390,4 +390,52 @@ after about two minutes i got the flag.
 
 ```FLAG : bump```
 
+# Ransomware
+First of all, the program adds an upx shell, which is easy to take off and does not explain
+<br>
+i want to load ida, but I found the analysis to be very slow
+<br>
+using x64dbg i found that there is a function called ```401000``` full of garbage code with the same pattern
+<br>
+so i created a simple python script to read and replace the pattern with NOPs
+<br>
+first copy the offsets and use 'search -> goto' in HXD to see the bytes or just copy them from the debugger
 
+![copy_offset](https://user-images.githubusercontent.com/22657154/42307501-eeed4262-8032-11e8-8449-4929ba57bb61.png)
+
+the write the script..
+
+```python
+#!/bin/python
+data = open('run.exe','rb').read()
+data = data.replace('\x50\x58\x53\x5B\x60\x61','\x90\x90\x90\x90\x90\x90')
+open('run_clean.exe','wb').write(data)
+print("[+] FILE CLEANED")
+```
+
+![goto_offset_and_clean_the_file](https://user-images.githubusercontent.com/22657154/42307592-38be332e-8033-11e8-9fa9-848140f27e8d.png)
+
+load it into ida, we're not ready yet.
+<br>
+you have to change the start and the end of the main function to be able to decompile [ fix the SP positive value ERR ] and to use the graph without the annoying sorry error.
+
+```
+start  :   .text:0044A775
+end    :   .text:0044A983
+```
+
+![function_start_end_mod](https://user-images.githubusercontent.com/22657154/42308023-a147fbe0-8034-11e8-9c80-32f3fb522934.png)
+
+now we're ready...
+
+![ida_is_beuty_2](https://user-images.githubusercontent.com/22657154/42308078-d4846be2-8034-11e8-9432-69dc6a838d07.png)
+
+open any PE file and the file we have to decrypt, copy the common offsets of ```this program can not be run in dos mode``` sentence
+<br>
+and recover the key..
+
+![unpack_it](https://user-images.githubusercontent.com/22657154/42308324-7f246228-8035-11e8-9491-6be9c2bbcfc6.png)
+
+after enter the key you'll successfully decrypt the PE file which will reval the flag.
+
+```FLAG : Colle System```
