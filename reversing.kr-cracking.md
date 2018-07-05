@@ -365,7 +365,7 @@ so when we hit the right username the program will frezz
 
 ![pb](https://user-images.githubusercontent.com/22657154/42297005-e7735c2e-7ffb-11e8-994f-91c31d5ec8c5.png)
 
-i used pyautogui and itertools to create a bruteforce script [youtu.be/1RE5tSPO2RI]
+i used pyautogui and itertools to create a bruteforce script [ youtu.be/1RE5tSPO2RI ]
 
 ```python 
 import pyautogui
