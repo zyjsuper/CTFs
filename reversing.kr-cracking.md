@@ -354,3 +354,40 @@ int main(){
 ![write_the_script](https://user-images.githubusercontent.com/22657154/42284485-edba4ff6-7fac-11e8-915e-c901d11c9bea.png)
 
 ```Flag : Thr3EDPr0m ```
+
+# Position 
+
+they gave us the challenge title as a hint to bruteforce username field
+<br>
+go to the debugger the set a break point before the return located after 'correct' string
+<br>
+so when we hit the right username the program will frezz
+
+![pb](https://user-images.githubusercontent.com/22657154/42297005-e7735c2e-7ffb-11e8-994f-91c31d5ec8c5.png)
+
+i used pyautogui and itertools to create a bruteforce script.
+
+```python 
+import pyautogui
+import itertools
+import string
+
+# pyautogui.position() -> get mouse position
+
+pyautogui.click(1034, 335)
+
+chrs = string.ascii_lowercase
+
+for xs in itertools.product(chrs, repeat=3):
+    pyautogui.typewrite(''.join(xs)+"p") # bruteforce the username
+    pyautogui.hotkey("ctrl","a")         # select the entire line
+    pyautogui.typewrite(["backspace"])   # delete it
+```
+
+after about two minutes i got the flag.
+
+![flag](https://user-images.githubusercontent.com/22657154/42297135-5fa066dc-7ffd-11e8-9b5c-6a5946174d08.png)
+
+```FLAG : bump```
+
+
