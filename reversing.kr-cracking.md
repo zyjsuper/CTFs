@@ -434,6 +434,23 @@ open any PE file and the file we have to decrypt, copy the common offsets of ```
 <br>
 and recover the key..
 
+```python
+#!/bi/python
+
+dec = "CD 21 54 68 69 73 20 70 72 6F 67 72 61 6D 20 63 61 6E 6E 6F 74 20 62 65 20 72 75 6E 20 69 6E 20 44 4F 53 20 6D 6F 64 65".replace(" ", "").decode("hex")
+enc = "41 AD C7 F2 E2 FF AF E3 EC E9 FB E5 FB E1 AC F0 FB E5 E2 E0 E7 BE E4 F9 B7 E8 F9 E2 B3 F3 E5 AC CB DC CD A6 F1 F8 FE E9".replace(" ", "").decode("hex")
+
+dec = list(dec)
+enc = list(enc)
+
+key=""
+
+for i in range(len(enc)): # or len(dec) it doesn't matter
+   enc [i] = (~ ord(enc[i])) & 255
+   key += chr(ord(dec[i])^enc[i])
+print key
+```
+
 ![unpack_it](https://user-images.githubusercontent.com/22657154/42308324-7f246228-8035-11e8-9491-6be9c2bbcfc6.png)
 
 after enter the key you'll successfully decrypt the PE file which will reval the flag.
