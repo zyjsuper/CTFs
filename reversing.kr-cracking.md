@@ -456,3 +456,28 @@ print key
 after enter the key you'll successfully decrypt the PE file which will reval the flag.
 
 ```FLAG : Colle System```
+
+# CSHOP
+i'm not kidding if i say you can get the flag by open the file and hit enter XD
+<br>
+there is a hidden button that will show up the flag and we have to show it up in the first place
+<br>
+so let's assume that we can't press enter and start reversing.. 
+<br>
+first we have to deobfsucate the program using ```de4dot``` after this step open it up with ```dnspy```
+<br>
+go to ```InitializeComponent``` and change the button size from 0,0 to 50,50
+<br>
+then ```file -> save all``` 
+
+![mod](https://user-images.githubusercontent.com/22657154/42322423-c2e70cfa-805c-11e8-839f-95bdf84c1fa3.png)
+
+now just run..
+
+
+![get_flag](https://user-images.githubusercontent.com/22657154/42322430-cb624c6e-805c-11e8-8b6d-3f32ba947d6a.png)
+
+```FLAG : P4W6RP6SES```
+
+
+
