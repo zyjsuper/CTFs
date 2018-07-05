@@ -479,5 +479,17 @@ now just run..
 
 ```FLAG : P4W6RP6SES```
 
+# Flash Encrypt
 
+This problem can be done as long as the tool is good.
+
+Download ```ffdec``` and ```flash player debug```
+
+open the file in ```ffdec```, look at the action scripts source
+<br>
+the passowrds pattern is ```1456 -> 25 -> 44 -> 8 -> 88 -> 20546```
+
+![mod](https://user-images.githubusercontent.com/22657154/42325362-55f518e4-8066-11e8-8aa9-f32747dd775b.png)
+
+```FLAG : 16876```
 
