@@ -493,3 +493,72 @@ the passowrds pattern is ```1456 -> 25 -> 44 -> 8 -> 88 -> 20546```
 
 ```FLAG : 16876```
 
+# CSharp
+
+our algorithm  is located inside the obfuscated method ```MetMett```
+<br>
+the ```btnCheck_Click``` pass input string to ```sss``` variable of ```MetMetMet```
+<br>
+```sss``` string is converted to ```Base64``` String and saved into bytes
+<br>
+Then i see the comparison to show ```Wrong``` or ```Correct!!``` Nag
+
+![couldnt_be_decompiled](https://user-images.githubusercontent.com/22657154/42353493-033fb482-80c1-11e8-93e1-d2d9f38c1e38.png)
+
+i can confirm that the original bytes of MetMett method will be replaced at runtime to decode the method body
+<br>
+so we need to use dnSpy to debug this challenge to find the bb values at original and after calculate
+<br>
+Open dnSpy, load challenge, set breakpoints same as the picture bellow..
+
+![go_to_ ctor_dec_metmett](https://user-images.githubusercontent.com/22657154/42353504-1c15085e-80c1-11e8-89fe-238e7aac7d99.png)
+
+Press F5 to start, stop at the 1st bp, press F10 to step over. Go to locals window and find the value of bb (these values is the original bytes of MetMett method), and show bb array in the ```Memory Window```:
+
+![follow_in_mem1](https://user-images.githubusercontent.com/22657154/42353514-2db21246-80c1-11e8-8e88-503294b9d55b.png)
+
+
+Copy and Save all these bytes
+
+![follow_in_mem2](https://user-images.githubusercontent.com/22657154/42353564-8caf53a8-80c1-11e8-8b65-771df07f1465.png)
+
+Then, press F5 to continue and stop at the 2nd bp then refresh and save..
+
+![follow_in_mem3_right_click_refresh_save](https://user-images.githubusercontent.com/22657154/42353588-bdd82e6e-80c1-11e8-8708-cec9e778df88.png)
+
+now go to ```HxD```, find the original bytes offsets and replace them with the bytes from the second dump.
+
+
+![hex1](https://user-images.githubusercontent.com/22657154/42353623-fe60173a-80c1-11e8-905a-c7781c4e1e59.png)
+
+![hex2](https://user-images.githubusercontent.com/22657154/42353625-ff2f69f4-80c1-11e8-8d72-9b5a85f8a06b.png)
+
+![hex3](https://user-images.githubusercontent.com/22657154/42353631-04752750-80c2-11e8-9b68-43048b5b6dd0.png)
+
+![hex4](https://user-images.githubusercontent.com/22657154/42353632-04b621a6-80c2-11e8-8807-bcae2c199d09.png)
+
+open the new file with ```dnspy``` and the function should me decompiled normaly..
+<br>
+you know what to do from this point.
+
+```python
+#!/bin/python
+
+byte1 = [16, 17, 33, 51, 68, 102, 51, 160, 144, 181, 238, 17];
+byte2 = [74, 87, 77, 70, 29, 49, 117, 238, 241, 226, 163, 44];
+flag  = ""
+
+for i in range(len(byte1)):
+	print str(byte1[i]) + "^" + str(byte2[i]) + "\t = " + chr(byte1[i] ^ byte2[i])
+	flag += chr(byte1[i] ^ byte2[i])
+
+print("\n[+] ENCODED FLAG : " + flag)
+print("[+] FLAG : " + flag.decode("base64"))
+```
+
+![get_the_flag](https://user-images.githubusercontent.com/22657154/42353679-632559c8-80c2-11e8-87dc-0a9ae615afe2.png)
+
+``` FLAG : dYnaaMic ```
+
+
+
