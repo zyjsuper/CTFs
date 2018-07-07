@@ -560,5 +560,49 @@ print("[+] FLAG : " + flag.decode("base64"))
 
 ``` FLAG : dYnaaMic ```
 
+# HateIntel
 
+It's like an executable running on mac, and there's no mac, so there's only static analysis.
+<br>
+fortunately, there is no packing, and the routines are made public in IDA.
+<br>
+these are functions with important routines.
 
+![ida_code](https://user-images.githubusercontent.com/22657154/42413152-944b1728-821a-11e8-92e1-0d071fb9a2c7.png)
+
+To summarize, we give the input and the program runs the sub_232C function, where we executes the sub_2494 function
+<br>
+and if the result is the same as byte_3004 then the key is correct.
+<br>
+here are some references for better understanding the code
+
+![bitwise](https://user-images.githubusercontent.com/22657154/42413219-1e3f6e2e-821c-11e8-8f6e-a3e69660ea3e.png)
+
+![ascii_char_set](https://user-images.githubusercontent.com/22657154/42413222-1f73940a-821c-11e8-80fa-4b1574875bf0.gif)
+
+```python
+import string
+
+byte_3004 = "\x44\xF6\xF5\x57\xF5\xC6\x96\xB6\x56\xF5\x14\x25\xD4\xF5\x96\xE6\x37\x47\x27\x57\x36\x47\x96\x03\xE6\xF3\xA3\x92" 
+flag = '' 
+for i in range(0, len(byte_3004)):
+  for j in range(0, 127): # All the ASCII characters 
+    x = j 
+    for z in range(0, 4):
+       x *= 2
+       if x & 256:
+       	  v = x
+          x |= 1
+       x = x & 0xff       # Correction of values
+    if x == ord(byte_3004[i]):
+       print "[+] " + str(v) + " " + bin(v) + "  & 0xff 0b11111111\t->\t" + str(x) + "\t" + bin(x)
+       flag += chr(j)
+
+print ""
+print "- " + flag
+print "- NO"
+```
+
+![get_flag](https://user-images.githubusercontent.com/22657154/42413236-7ce808c8-821c-11e8-9faa-636614f22db8.png)
+
+```FLAG : Do_u_like_ARM_instructi0n?:)```
