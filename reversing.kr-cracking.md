@@ -607,12 +607,6 @@ print "- NO"
 
 ```FLAG : Do_u_like_ARM_instructi0n?:)```
 
-
-# WindowsKernel
-# AutoHotkey1
-# PEPassword
-# AutoHotkey2
-
 # x64 Lotto
 This question requires inputting 6 numbers. When it is equal to the randomly generated 6 numbers, it will output the flag
 <br>
@@ -623,3 +617,10 @@ since it has no relationship with the input we can change ```JNE``` to ```JE``` 
 ![get_flag](https://user-images.githubusercontent.com/22657154/42422704-899bf9d8-82eb-11e8-9b13-fcacb2ead30c.png)
 
 ```FLAG : from_GHL2_-_!````
+
+
+# WindowsKernel
+# AutoHotkey1
+# PEPassword
+# AutoHotkey2
+# CRC1
