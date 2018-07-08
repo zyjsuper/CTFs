@@ -616,7 +616,7 @@ since it has no relationship with the input we can change ```JNE``` to ```JE``` 
 
 ![get_flag](https://user-images.githubusercontent.com/22657154/42422704-899bf9d8-82eb-11e8-9b13-fcacb2ead30c.png)
 
-```FLAG : from_GHL2_-_!````
+```FLAG : from_GHL2_-_!```
 
 
 # WindowsKernel
