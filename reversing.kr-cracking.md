@@ -611,3 +611,4 @@ print "- NO"
 # WindowsKernel
 # AutoHotkey1
 # PEPassword
+# AutoHotkey2
