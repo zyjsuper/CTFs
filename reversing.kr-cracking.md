@@ -618,9 +618,63 @@ since it has no relationship with the input we can change ```JNE``` to ```JE``` 
 
 ```FLAG : from_GHL2_-_!```
 
+# Multiplicative
+Other java decompilers returned an empty class, jad was the only decompiler to do this job..
+```java
+import java.io.PrintStream;
+
+public class JavaCrackMe
+{
+
+    public JavaCrackMe()
+    {
+    }
+
+    public static final synchronized volatile transient void main(String args[])
+    {
+        try
+        {
+            System.out.println("Reversing.Kr CrackMe!!");
+            System.out.println("-----------------------------");
+            System.out.println("The idea came out of the warsaw's crackme");
+            System.out.println("-----------------------------\n");
+            long l = Long.decode(args[0]).longValue();
+            l *= 26729L;
+            if(l == 0xeaaeb43e477b8487L)
+                System.out.println("Correct!");
+            else
+                System.out.println("Wrong");
+        }
+        catch(Exception exception)
+        {
+            System.out.println("Please enter a 64bit signed int");
+        }
+    }
+}
+```
+solve
+```python
+from ctypes import *
+
+i = 1L
+while True:
+   temp = ((2 ** 64) * i + 0xeaaeb43e477b8487L) / 26729
+   if ((temp * 26729) % (2 ** 64)) == 0xeaaeb43e477b8487L:
+     print c_int64(temp)
+     break
+   i += 1
+```
+
+![fff](https://user-images.githubusercontent.com/22657154/42424207-856b227c-8308-11e8-813d-52b0981c6574.png)
+
+```Flag : -8978084842198767761```
 
 # WindowsKernel
 # AutoHotkey1
 # PEPassword
 # AutoHotkey2
 # CRC1
+# MetroApp
+# CRC2
+# Adventure
+# CustomShell
