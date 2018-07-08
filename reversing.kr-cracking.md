@@ -458,7 +458,7 @@ after enter the key you'll successfully decrypt the PE file which will reval the
 ```FLAG : Colle System```
 
 # CSHOP
-i'm not kidding if i say you can get the flag by open the file and hit enter XD
+i'm not kidding if i said you can get the flag by open the file and hit enter XD
 <br>
 there is a hidden button that will show up the flag and we have to show it up in the first place
 <br>
