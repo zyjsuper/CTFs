@@ -612,3 +612,14 @@ print "- NO"
 # AutoHotkey1
 # PEPassword
 # AutoHotkey2
+
+# x64 Lotto
+This question requires inputting 6 numbers. When it is equal to the randomly generated 6 numbers, it will output the flag
+<br>
+since it has no relationship with the input we can change ```JNE``` to ```JE``` or ```NOP``` and the flag will be outputed.
+
+![nop](https://user-images.githubusercontent.com/22657154/42422705-8ac04ada-82eb-11e8-8d2e-ac9dd98883b1.png)
+
+![get_flag](https://user-images.githubusercontent.com/22657154/42422704-899bf9d8-82eb-11e8-9b13-fcacb2ead30c.png)
+
+```FLAG : from_GHL2_-_!````
