@@ -606,3 +606,8 @@ print "- NO"
 ![get_flag](https://user-images.githubusercontent.com/22657154/42413236-7ce808c8-821c-11e8-9faa-636614f22db8.png)
 
 ```FLAG : Do_u_like_ARM_instructi0n?:)```
+
+
+# WindowsKernel
+# AutoHotkey1
+# PEPassword
