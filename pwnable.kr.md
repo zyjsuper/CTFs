@@ -147,6 +147,9 @@ to get the right key we have to xor ```random``` with ```0xdeadbeef```
 ```
 so to get the random generated value just set a break point on the instruction after it and see the ```EAX``` value.
 
+```Note
+since the rand function has no seed the value will be generated statically to 1804289383
+```
 ![randm](https://user-images.githubusercontent.com/22657154/42652718-ecced984-861b-11e8-879c-80c54a0c8d60.png)
 
 ```Flag : Mommy, I thought libc random is unpredictable...```
