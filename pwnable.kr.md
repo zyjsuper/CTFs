@@ -106,3 +106,10 @@ using IDA pro..
 
 ```Flag : UPX...? sounds like a delivery service :)```
 
+# bof
+It was a classic & easy to exploit buffer overflow, nothing to explain 
+
+![buf_at_u](https://user-images.githubusercontent.com/22657154/42649325-15a1da6e-8612-11e8-92ff-2ec8bf0f2d10.png)
+![get_flag](https://user-images.githubusercontent.com/22657154/42649329-16da19be-8612-11e8-878a-686fc643550b.png)
+
+```Flag : daddy, I just pwned a buFFer :) ```
