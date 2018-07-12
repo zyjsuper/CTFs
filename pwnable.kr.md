@@ -74,4 +74,35 @@ fd@ubuntu:~$
 ```
 ```Flag : mommy! I think I know what a file descriptor is!! ```
 
+# flag
+UPX packed, unpack it..
+```assembly 
+┌─[root@parrot]─[~]
+└──╼ #strings flag | tail
+;dl]tpR
+c3Rh
+2B)=	
+1\a}
+_M]h
+Upbrk
+makBN
+su`"]R
+UPX!
+UPX!
+┌─[root@parrot]─[~]
+└──╼ #upx -d flag
+                       Ultimate Packer for eXecutables
+                          Copyright (C) 1996 - 2017
+UPX 3.94        Markus Oberhumer, Laszlo Molnar & John Reiser   May 12th 2017
+
+        File size         Ratio      Format      Name
+   --------------------   ------   -----------   -----------
+    883745 <-    335288   37.94%   linux/amd64   flag
+
+Unpacked 1 file.
+```
+using IDA pro..
+![screenshot_20180712_180941](https://user-images.githubusercontent.com/22657154/42645760-893ca7ac-8607-11e8-8af8-c2501d4b0742.png)
+
+```Flag : UPX...? sounds like a delivery service :)```
 
