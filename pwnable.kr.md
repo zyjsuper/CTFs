@@ -113,3 +113,42 @@ It was a classic & easy to exploit buffer overflow, nothing to explain
 ![get_flag](https://user-images.githubusercontent.com/22657154/42649329-16da19be-8612-11e8-878a-686fc643550b.png)
 
 ```Flag : daddy, I just pwned a buFFer :) ```
+
+# random 
+```C
+#include <stdio.h>
+
+int main(){
+  unsigned int random;
+  random = rand();	// random value!
+
+  unsigned int key=0;
+  scanf("%d", &key);
+
+  if( (key ^ random) == 0xdeadbeef ){
+     printf("Good!\n");
+     system("/bin/cat flag");
+     return 0;
+  }
+
+  printf("Wrong, maybe you should try 2^32 cases.\n");
+  return 0;
+}
+```
+the program is generating a random value then do xor using it with our key
+<br>
+if the result was equal to ```0xdeadbeef``` we will get the flag
+<br>
+to get the right key we have to xor ```random``` with ```0xdeadbeef```
+<br>
+```assembly
+0x5557cf4ae747      e8c4feffff     call sym.imp.rand       ; int rand(void)
+0x5557cf4ae74c b    8945fc         mov dword [local_4h], eax               
+```
+so to get the random generated value just set a break point on the instruction after it and see the ```EAX``` value.
+
+![randm](https://user-images.githubusercontent.com/22657154/42652718-ecced984-861b-11e8-879c-80c54a0c8d60.png)
+
+```Flag : Mommy, I thought libc random is unpredictable...```
+
+
