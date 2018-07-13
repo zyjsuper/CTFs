@@ -275,8 +275,6 @@ i used pwntools to get the flag.
 ```python
 from pwn import *
 proc = process("./lotto")
-Starting local process './lotto'
-Starting local process './lotto': Done
 proc.recv()
 while True:
    proc.sendline("1")
