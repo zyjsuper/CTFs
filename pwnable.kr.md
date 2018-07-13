@@ -156,4 +156,79 @@ so to get the random generated value just set a break point on the instruction a
 
 ```Flag : Mommy, I thought libc random is unpredictable...```
 
+# mistake
+```C
+#include <stdio.h>
+#include <fcntl.h>
 
+#define PW_LEN 10
+#define XORKEY 1
+
+void xor(char* s, int len){
+	int i;
+	for(i=0; i<len; i++){
+		s[i] ^= XORKEY;
+	}
+}
+
+int main(int argc, char* argv[]){
+
+	int fd;
+	if(fd=open("password",O_RDONLY,0400) < 0){
+		printf("can't open password %d\n", fd);
+		return 0;
+	} // fd = 0 [STDIN]
+
+	printf("do not bruteforce...\n");
+	sleep(time(0)%20);
+
+	char pw_buf[PW_LEN+1]; // 10 chrs
+	int len;       
+	if(!(len=read(fd,pw_buf,PW_LEN) > 0)){ // read from STDIN and store input inside pw_buf
+		printf("read error\n");
+		close(fd);
+		return 0;
+	}
+
+	char pw_buf2[PW_LEN+1]; // 10 chrs
+	printf("input password : ");
+	scanf("%10s", pw_buf2);
+
+	// xor your input
+	xor(pw_buf2, 10);
+
+	if(!strncmp(pw_buf, pw_buf2, PW_LEN)){ // cmp first input to second input after being xored
+		printf("Password OK\n");
+		system("/bin/cat flag\n");
+	}
+	else{
+		printf("Wrong Password\n");
+	}
+
+	close(fd);
+	return 0;
+}
+
+
+```
+As the hint suggested, there’s a mistake in operator priority. We know that comparision operator < is given higher priority than assignment operator =. 
+<br>
+And as we know, that open will return a non-negative integer representing the lowest numbered unused file descriptor, comparision will always fail and return 0. Then 0 is assigned to the fd variable. In addition, from the previous challenges, we know that file descriptor with value 0 is reserved for stdin.
+<br>
+program will copy the input from stdin to the ````pw_buf```. After that every character from the second input ```pw_buf2``` will be xored with ```1```, and lastly ```pw_buf``` will be compared with ```pw_buf2``` 
+<br>
+So if we find out combination where first character xored with the 1 will result in the second, we will be able to bypass the password check. I picked 1 and 0.
+```assembly
+>>> 1 ^ 1
+0
+```
+```assembly
+mistake@ubuntu:~$ ./mistake
+do not bruteforce...
+0000000000
+input password : 1111111111
+Password OK
+```
+![screenshot_20180713_145429](https://user-images.githubusercontent.com/22657154/42693293-5e9a7f5a-86b7-11e8-9bfa-5e3d4e0da3ed.png)
+
+```Flag : Mommy, the operator priority always confuses me :(```
