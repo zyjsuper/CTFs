@@ -320,7 +320,7 @@ mommy now I get what PATH environment is for :)
 ```Flag : mommy now I get what PATH environment is for :)```
 
 # cmd2
-```copied from here : https://github.com/victor-li/pwnable.kr-write-ups/blob/master/cmd2.md```
+```Copied from : https://github.com/victor-li/pwnable.kr-write-ups/blob/master/cmd2.md```
 ```assembly
 In this challenge, we have an updated blacklist of words and symbols. Setting the PATH variable is not an option anymore, because the = character is blacklisted. The most problematic blacklisted character is the forward slash /, because we need that character to execute programs ('./program'), if they are not defined in the PATH variable. This also includes the execution of self-written scripts, where you can execute whatever you want without words being blacklisted. Therefore it is important to somehow insert the / symbol in our command.
 
