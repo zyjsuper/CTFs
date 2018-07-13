@@ -319,3 +319,19 @@ mommy now I get what PATH environment is for :)
 
 ```Flag : mommy now I get what PATH environment is for :)```
 
+# cmd2
+```copied from here : https://github.com/victor-li/pwnable.kr-write-ups/blob/master/cmd2.md```
+```assembly
+In this challenge, we have an updated blacklist of words and symbols. Setting the PATH variable is not an option anymore, because the = character is blacklisted. The most problematic blacklisted character is the forward slash /, because we need that character to execute programs ('./program'), if they are not defined in the PATH variable. This also includes the execution of self-written scripts, where you can execute whatever you want without words being blacklisted. Therefore it is important to somehow insert the / symbol in our command.
+
+There are only a few commands available when the PATH is empty and when you cannot use the forward-slash. One of those commands is pwd. pwd return the absolute path of the current directory. The idea is to cd to the root folder, and execute pwd, which returns /. That is also exactly the character that we need in our command! $(pwd) will insert the result of executing the pwd command in place.
+
+To solve this challenge, we navigate to the root directory and execute our self-constructed command with / replaced with $(pwd). Because we want that the shell executes $(pwd) on the moment that the working directory is set to the root directory, we need to escape the $ symbol to prevent that $(pwd) will be executed before entering ./cmd2
+```
+
+```assembly
+Payload : ./cmd2 "cd .. ; cd .. ; \$(pwd)bin\$(pwd)cat \$(pwd)home\$(pwd)cmd2\$(pwd)* | \$(pwd)usr\$(pwd)bin\$(pwd)tail -n 1"
+```
+![screenshot at 2018-07-13 18-38-45](https://user-images.githubusercontent.com/22657154/42703285-d53d00d4-86d4-11e8-87fc-1f3f6681efe9.png)
+
+```Flag : FuN_w1th_5h3ll_v4riabl3s_haha```
