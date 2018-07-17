@@ -385,7 +385,7 @@ little
 >>> 5* struct.pack('<i', 113626824) # '<' means that the bytes need to be in little-endian order, and 'i' means that it needs to be converted to the size of an int.
 '\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06'
 ```
-after debugging i found that we're missing 4 after calculation so i converted the first```0xe8``` to ```0xcc```
+after debugging i found that there is missing 4 from the calculation so i converted the first```0xe8``` to ```0xcc```
 ```assembly
 [0x55ead5b767e4]> dr rdx
 0x21dd09e8
