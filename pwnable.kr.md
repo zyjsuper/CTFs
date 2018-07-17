@@ -335,3 +335,73 @@ Payload : ./cmd2 "cd .. ; cd .. ; \$(pwd)bin\$(pwd)cat \$(pwd)home\$(pwd)cmd2\$(
 ![screenshot at 2018-07-13 18-38-45](https://user-images.githubusercontent.com/22657154/42703285-d53d00d4-86d4-11e8-87fc-1f3f6681efe9.png)
 
 ```Flag : FuN_w1th_5h3ll_v4riabl3s_haha```
+
+# collision
+
+```C
+#include <stdio.h>
+#include <string.h>
+unsigned long hashcode = 0x21DD09EC;
+unsigned long check_password(const char* p){
+    int* ip = (int*)p;
+    int i;
+    int res=0;
+    for(i=0; i<5; i++){
+        res += ip[i];
+    }
+    return res;
+}
+
+int main(int argc, char* argv[]){
+    if(argc<2){
+        printf("usage : %s [passcode]\n", argv[0]);
+        return 0;
+    }
+    if(strlen(argv[1]) != 20){
+        printf("passcode length should be 20 bytes\n");
+        return 0;
+    }
+
+    if(hashcode == check_password( argv[1] )){
+        system("/bin/cat flag");
+        return 0;
+    }
+    else
+        printf("wrong passcode.\n");
+    return 0;
+}
+```
+As you can see from the code, the password length needs to be ```20 bytes```, which is equal to ```5``` integers ```(1 int = 4 bytes)```. The sum of the 5 integers from the input needs to be equal to ```0x21DD09EC``` to obtain the flag. Let's find ```5``` integers that are in total equal to ```0x21DD09EC```
+
+```assembly
+>>> import struct
+>>> import sys
+>>> print sys.byteorder # print the endianness format
+little
+>>> 0x21DD09EC / 5
+113626824
+>>> hex(0x21DD09EC / 5)
+'0x6c5cec8'
+>>> 5* struct.pack('<i', 113626824) # '<' means that the bytes need to be in little-endian order, and 'i' means that it needs to be converted to the size of an int.
+'\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06'
+```
+after debugging i found that we're missing 4 after calculation so i converted the first```0xe8``` to ```0xcc```
+```assembly
+[0x55ead5b767e4]> dr rdx
+0x21dd09e8
+[0x55ead5b767e4]> dr rax
+0x21dd09ec
+[0x55ead5b767e4]> ? 0xe8 
+232 0xe8 0350 232 0000:00e8 232 "\xe8" 0b11101000 232.0 232.000000f 232.000000 0t22121
+[0x55ead5b767e4]> ? 0xec
+[0x00000000]> ? 0xc8 + 4
+204 0xcc 0314 204 0000:00cc 204 "\xcc" 0b11001100 204.0 204.000000f 204.000000 0t21120
+```
+```assembly
+Payload : '\xcc\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06'
+```
+```assembly
+col@ubuntu:~$ ./col $( echo -en '\xcc\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x06' )
+daddy! I just managed to create a hash collision :)
+```
+```Flag : daddy! I just managed to create a hash collision :) ```
