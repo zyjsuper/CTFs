@@ -71,7 +71,7 @@ found file 'flag.txt', (size cp/uc     41/    29, flags 1, chk 5851)
 PASSWORD FOUND!!!!: pw == testtest
 ```
 
-# 
+# Is it a secure string?
 after googling ```secure strings decrypt``` i found these references
 ```
 https://blogs.msdn.microsoft.com/besidethepoint/2010/09/21/decrypt-secure-strings-in-powershell/
