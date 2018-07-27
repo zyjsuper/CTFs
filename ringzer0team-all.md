@@ -52,3 +52,10 @@ back to terminal..
 LocalRoot!
 ```
 
+# Public key recovery
+
+```
+openssl rsa -in priv.rsa -pubout 2> /dev/null | grep -v "^-" | tr -d '\n' | md5sum | cut -d "-" -f 1
+```
+![screenshot_20180727_164800](https://user-images.githubusercontent.com/22657154/43327881-465c9400-91c5-11e8-9ff1-467fec4cd3ed.png)
+
