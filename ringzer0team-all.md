@@ -35,3 +35,20 @@ print("")
 print(flag)
 
 ```
+
+# I Lost my password can you find it?
+to find the encrypted password
+```
+┌─[root@parrot]─[~/Downloads/Policies]
+└──╼ #grep -R -i "pass" | tr ' ' '\n' | grep -i pass
+cpassword="PCXrmCkYWyRRx3bf+zqEydW9/trbFToMDx6fAvmeCDw"
+```
+i didn't know what is Cpassword at the first time but after googling ```cpassword decrypt``` i found this article : ```https://tools.kali.org/password-attacks/gpp-decrypt``` on a tool called ```gpp-decrypt```
+
+back to terminal..
+```
+┌─[root@parrot]─[~/Downloads]
+└──╼ #gpp-decrypt PCXrmCkYWyRRx3bf+zqEydW9/trbFToMDx6fAvmeCDw 2> /dev/null
+LocalRoot!
+```
+
