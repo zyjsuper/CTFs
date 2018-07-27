@@ -70,3 +70,19 @@ found file 'flag.txt', (size cp/uc     41/    29, flags 1, chk 5851)
 
 PASSWORD FOUND!!!!: pw == testtest
 ```
+
+# 
+after googling ```secure strings decrypt``` i found this reference 
+```
+https://blogs.msdn.microsoft.com/besidethepoint/2010/09/21/decrypt-secure-strings-in-powershell/
+```
+and it was a ```powershell``` task.
+```powershell
+$encrytedFlag = '76492d1116743f0423413b16050a5345MgB8AEEAYQBNAHgAZQAxAFEAVABIAEEAcABtAE4ATgBVAFoAMwBOAFIAagBIAGcAPQA9AHwAZAAyADYAMgA2ADgAMwBlADcANAA3ADIAOQA1ADIAMwA0ADMAMwBlADIAOABmADIAZABlAGMAMQBiAGMANgBjADYANAA4ADQAZgAwADAANwA1AGUAMgBlADYAMwA4AGEAZgA1AGQAYgA5ADIAMgBkAGIAYgA5AGEAMQAyADYAOAA='
+
+$key = (3,4,2,3,56,34,254,222,205,34,2,23,42,64,33,223,1,34,2,7,6,5,35,12)
+
+$SecureFlag = ConvertTo-SecureString -String $encrytedFlag -Key $key
+
+[Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureFlag))
+```
