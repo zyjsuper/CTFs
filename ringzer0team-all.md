@@ -72,9 +72,10 @@ PASSWORD FOUND!!!!: pw == testtest
 ```
 
 # 
-after googling ```secure strings decrypt``` i found this reference 
+after googling ```secure strings decrypt``` i found these references
 ```
 https://blogs.msdn.microsoft.com/besidethepoint/2010/09/21/decrypt-secure-strings-in-powershell/
+https://blogs.msdn.microsoft.com/timid/2009/09/10/powershell-one-liner-decrypt-securestring/
 ```
 and it was a ```powershell``` task.
 ```powershell
