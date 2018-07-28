@@ -184,3 +184,11 @@ With 3 turns we get:
 WELCOMETOTHESCYTALETHEFLAGISBUTTERFLY
 ```
 
+## Time to learn x86 ASM & gdb
+
+![1](https://user-images.githubusercontent.com/22657154/43359576-09b2e228-92ad-11e8-8cb2-b1209b717c63.png)
+
+## I never forget the Nintendo 64
+
+![2](https://user-images.githubusercontent.com/22657154/43359577-09e17a48-92ad-11e8-8386-adcc24991e1c.png)
+
