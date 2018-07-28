@@ -152,3 +152,13 @@ tv.gif[30] GIF 492x360 492x360+0+0 8-bit sRGB 4c 340KB 0.000u 0:00.000
 ```
 ![11](https://user-images.githubusercontent.com/22657154/43357182-4b8962e8-9286-11e8-8be4-787ba3c8c07c.png)
 
+# Hangovers and more: Bacon
+
+```
+┌─[root@parrot]─[~/Downloads]
+└──╼ #echo "VoiCI unE SUpeRbe reCeTtE cONcontee pAR un GrouPe d'ArtistEs culinaiRe, dONT le BOn Gout et lE SeNs de LA cLasSe n'est limIteE qUe par LE nombre DE cAlOries qU'ils PeUVEnt Ingurgiter. Ces virtuoses de la friteuse vous presente ce petit clip plein de gout savoureux" | sed "s/[ .,']//g" | sed "s/[ABCDEFGHIJKLMNOPQRSTUVWXYZ]/B/g" | sed "s/[abcdefghijklmnopqrstuvwxyz]/A/g"
+BAABBAABBBAABAAAABABABABBAAAAAAABBAABAAABAABAAAAABAAAAAAAABAABBBAABBABAAAAAABBABAAABBABAABAAAAAAAABAABABAAAABBAAAAAABBABABAAAAABAAABABBBAABAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+┌─[root@parrot]─[~/Downloads]
+└──╼ #
+```
+Copy / Paste the A&B string into ```https://www.dcode.fr/chiffre-bacon-bilitere```
