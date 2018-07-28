@@ -219,7 +219,19 @@ WELCOMETOTHESCYTALETHEFLAGISBUTTERFLY
 
 ```https://unix.stackexchange.com/questions/351331/how-to-send-a-command-with-arguments-without-spaces```
 ```
-payload hello|cat${IFS%?}/home/level2/flag.txt
+payload hello|cat${IFS%?}/home/level2/flag.txt or just hello|cat<flag.txt
 ```
 
 ![jail2](https://user-images.githubusercontent.com/22657154/43360122-264aa3dc-92b0-11e8-91d3-fc1282eec2a3.png)
+
+## bash jail 3
+We can no longer use cat, But there are other alternatives that will work the same way in this instance.
+<br>
+I opted for uniq, and since we can use spaces again why not just throw it in eval?
+```
+eval uniq flag.txt 
+```
+That passes the filter so all we need to do is figure out a way to actually make it print our result. We
+have three file descriptors: 0,1,2 and only 1 and 2 are blocked!
+
+![jail3](https://user-images.githubusercontent.com/22657154/43360268-1a5cf43c-92b3-11e8-8dc6-b44f63ee5ce8.png)
