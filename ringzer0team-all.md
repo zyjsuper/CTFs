@@ -163,3 +163,21 @@ BAABBAABBBAABAAAABABABABBAAAAAAABBAABAAABAABAAAAABAAAAAAAABAABBBAABBABAAAAAABBAB
 └──╼ #
 ```
 Copy / Paste the A&B string into ```https://www.dcode.fr/chiffre-bacon-bilitere```
+
+
+# Crypto object
+
+The code on the ribbon is:
+```
+GMODCDOOKCDBIOYDRMKDPQLDPVWYOIVRVSEOV
+```
+Which means nothing, so I rot13'd it 'til the letters looked right (Conatins F, L, A and G).
+```
+WCETSTEEASTRYEOTHCATFGBTFLMOEYLHLIUEL
+```
+But that didn't do much, until I stumbled on scytale coding.
+
+With 3 turns we get:
+```
+WELCOMETOTHESCYTALETHEFLAGISBUTTERFLY
+```
