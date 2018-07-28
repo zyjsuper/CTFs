@@ -184,6 +184,8 @@ With 3 turns we get:
 WELCOMETOTHESCYTALETHEFLAGISBUTTERFLY
 ```
 
+# RE
+
 ## Time to learn x86 ASM & gdb
 
 ![1](https://user-images.githubusercontent.com/22657154/43359576-09b2e228-92ad-11e8-8cb2-b1209b717c63.png)
@@ -192,3 +194,27 @@ WELCOMETOTHESCYTALETHEFLAGISBUTTERFLY
 
 ![2](https://user-images.githubusercontent.com/22657154/43359577-09e17a48-92ad-11e8-8386-adcc24991e1c.png)
 
+
+## Can you see through the star
+
+![3](https://user-images.githubusercontent.com/22657154/43360107-edd6e4fc-92af-11e8-9d54-b4aef880fbaa.png)
+
+## Windows x86 reversing is cool
+
+![4-1](https://user-images.githubusercontent.com/22657154/43360108-ef3a0518-92af-11e8-9e67-d6357745139a.png)
+
+![4-2](https://user-images.githubusercontent.com/22657154/43360109-efb11f5e-92af-11e8-8b6d-cc4ea3c75b2f.png)
+
+## Introduction to ARM
+
+![arm](https://user-images.githubusercontent.com/22657154/43360111-f0cc44fe-92af-11e8-9872-0951635796ee.png)
+
+# Jail Escaping
+
+## bash jail 1
+
+![jail1](https://user-images.githubusercontent.com/22657154/43360121-26199ee0-92b0-11e8-97f4-0e92220b8a76.png)
+
+## bash jail 2 
+
+![jail2](https://user-images.githubusercontent.com/22657154/43360122-264aa3dc-92b0-11e8-91d3-fc1282eec2a3.png)
