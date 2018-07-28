@@ -217,4 +217,9 @@ WELCOMETOTHESCYTALETHEFLAGISBUTTERFLY
 
 ## bash jail 2 
 
+```https://unix.stackexchange.com/questions/351331/how-to-send-a-command-with-arguments-without-spaces```
+```
+payload hello|cat${IFS%?}/home/level2/flag.txt
+```
+
 ![jail2](https://user-images.githubusercontent.com/22657154/43360122-264aa3dc-92b0-11e8-91d3-fc1282eec2a3.png)
