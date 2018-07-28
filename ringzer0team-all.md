@@ -153,6 +153,7 @@ tv.gif[30] GIF 492x360 492x360+0+0 8-bit sRGB 4c 340KB 0.000u 0:00.000
 ![11](https://user-images.githubusercontent.com/22657154/43357182-4b8962e8-9286-11e8-8be4-787ba3c8c07c.png)
 
 # Hangovers and more: Bacon
+It is clear from the title of this challenge that this is a bacon cipher.
 
 ```
 ┌─[root@parrot]─[~/Downloads]
