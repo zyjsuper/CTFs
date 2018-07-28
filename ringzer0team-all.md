@@ -210,6 +210,9 @@ WELCOMETOTHESCYTALETHEFLAGISBUTTERFLY
 ![arm](https://user-images.githubusercontent.com/22657154/43360111-f0cc44fe-92af-11e8-9872-0951635796ee.png)
 
 # Jail Escaping
+```
+http://blog.dornea.nu/2016/06/20/ringzer0-ctf-jail-escaping-bash/
+```
 
 ## bash jail 1
 
@@ -235,3 +238,12 @@ That passes the filter so all we need to do is figure out a way to actually make
 have three file descriptors: 0,1,2 and only 1 and 2 are blocked!
 
 ![jail3](https://user-images.githubusercontent.com/22657154/43360268-1a5cf43c-92b3-11e8-8dc6-b44f63ee5ce8.png)
+
+## bash jail 4
+
+![jail5](https://user-images.githubusercontent.com/22657154/43361356-44a3fba6-92d5-11e8-9b73-4d1a5e529000.png)
+
+## bash jail 5 
+
+![screenshot_20180729_011221](https://user-images.githubusercontent.com/22657154/43361354-2b9f7c20-92d5-11e8-928a-c812857a2cd9.png)
+
