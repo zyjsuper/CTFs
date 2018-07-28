@@ -92,4 +92,5 @@ $SecureFlag = ConvertTo-SecureString -String $encrytedFlag -Key $key
 i first tried to do xor check if i can revail a key pattern or something but it was so random
 <br>
 after using ```https://quipqiup.com/``` to solve the puzzle i could get the flag.
+
 ![screenshot_20180728_150205](https://user-images.githubusercontent.com/22657154/43356785-f11fe364-927f-11e8-9921-7eda5a66103e.png)
