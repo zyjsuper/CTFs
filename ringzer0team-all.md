@@ -384,13 +384,11 @@ FLAG-ggmgk05096
 ```
 Find in which city DR Pouce is keeped ! Then find who is the evil man?
 ```
-we have the city and the evil man, 
-<br>
 using ```https://29a.ch/photo-forensics/#geo-tags``` we can exract and map the GEO Tags info inside the image.
 
 ![halifax](https://user-images.githubusercontent.com/22657154/43412861-bd5cdd9c-942e-11e8-9849-d0d6ec112b13.png)
 
-the City is ```Halifax```
+City is ```Halifax```
 <br>
 
 and from the pdf properties we can get the author name ```Steve Finger```
