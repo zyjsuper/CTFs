@@ -397,4 +397,44 @@ and from the pdf properties we can get the author name ```Steve Finger```
 
 so the flag is ```halifaxstevefinger```
 
+## Hide my ass in my home!
+```assembly
+┌─[root@parrot]─[~/Downloads]
+└──╼ #uz 3d1e957be3b4880a4481d193eb563aff.tar.gz 
 
+Extracting from  "3d1e957be3b4880a4481d193eb563aff.tar.gz".
+./
+./.viminfo
+./.bash_profile
+./bob.tar.gz
+./.bashrc
+./.bash_logout
+./.mozilla/
+./.mozilla/extensions/
+./.mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/
+./.mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/.fedora-langpack-install
+./.mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/langpack-fr@firefox.mozilla.org.xpi
+./.mozilla/plugins/
+./index.html
+./.bash_history
+./1601066_559677267463652_942103441_n.jpg
+./Electro - Swing || Jamie Berry Ft. Octavia Rose - Delight.mp3
+./.gnome2/
+./you
+./.me.swp
+┌─[root@parrot]─[~/Downloads]
+└──╼ #strings .me.swp  | grep -i flag
+Flag-1s4g76jk89f
+```
+sorry dude i found your ass 
+
+## Hey Chuck where is the flag?
+
+export all HTTP objects from the pcap file
+
+![screenshot at 2018-07-30 19-43-02](https://user-images.githubusercontent.com/22657154/43413759-33b51822-9431-11e8-9a2c-eea260bcdb42.png)
+
+now use grep recursively to find the flag.
+
+
+![screenshot at 2018-07-30 19-45-57](https://user-images.githubusercontent.com/22657154/43413758-329366f6-9431-11e8-9e25-1ccf094d6c00.png)
