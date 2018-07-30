@@ -557,3 +557,17 @@ using ```vimdiff``` we can easly revail the flag..
 
 ![screenshot_20180729_224009](https://user-images.githubusercontent.com/22657154/43419819-5c911eba-9442-11e8-9be7-34f5c39d7df7.png)
 
+# JavaScript 
+
+## Client side validation is bad!
+
+![screenshot at 2018-07-30 22-45-13](https://user-images.githubusercontent.com/22657154/43422586-6f911fb2-944a-11e8-8ea9-d0dbd4c6d9c5.png)
+
+## Hashing is more secure
+
+![screenshot at 2018-07-30 22-50-45](https://user-images.githubusercontent.com/22657154/43422773-fbc8a004-944a-11e8-82ea-5ab7ea27c04b.png)
+
+## Then obfuscation is more secure
+
+![screenshot at 2018-07-30 23-03-09](https://user-images.githubusercontent.com/22657154/43423430-b6b9a54c-944c-11e8-91bb-80434878814b.png)
+
