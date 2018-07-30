@@ -447,3 +447,48 @@ askldj3lkj234.php:Hey this is a flag FLAG-GehFMsqCeNvof5szVpB2Dmjx
 
 ![screenshot at 2018-07-30 20-00-08](https://user-images.githubusercontent.com/22657154/43414534-53884e42-9433-11e8-9ba2-34b0d0c26366.png)
 
+
+# Steganography
+
+## SigID Level 1
+
+using ```SonicVisualiser```
+
+![screenshot at 2018-07-30 20-13-52](https://user-images.githubusercontent.com/22657154/43415137-142804a2-9435-11e8-9ac3-73bead849852.png)
+
+## You're lost? Use the map
+
+Zoom in on the image and hunting around. You'll find the flag hidden in the image, obscured slightly by another piece of writing in the photo. 
+
+![flagzoomed](https://user-images.githubusercontent.com/22657154/43416282-26a0fb18-9438-11e8-9c01-c620268c973c.png)
+
+## Victor you're hidding me something
+
+![screenshot at 2018-07-30 20-39-06](https://user-images.githubusercontent.com/22657154/43416475-ad64b360-9438-11e8-8554-ae089679d911.png)
+
+## Missing Pieces
+
+![screenshot at 2018-07-30 20-42-58](https://user-images.githubusercontent.com/22657154/43416630-24872126-9439-11e8-932e-0412807001d7.png)
+
+## Brainsick
+
+![screenshot at 2018-07-30 20-46-10](https://user-images.githubusercontent.com/22657154/43416808-9d0a22c4-9439-11e8-98f2-c22cced239cd.png)
+
+## Look inside the house
+
+```assembly
+┌─[root@parrot]─[~/Downloads]
+└──╼ #steghide extract -sf 3e634b3b5d0658c903fc8d42b033fa57.jpg 
+Enter passphrase: 
+wrote extracted data to "flag.txt".
+┌─[root@parrot]─[~/Downloads]
+└──╼ #cat flag.txt
+FLAG-5jk682aqoepoi582r940oow
+```
+
+## Victor reloaded
+the given poem is diffrent from the original ```http://www.lieder.net/lieder/get_text.html?TextId=8562```
+<br>
+using ```vimdiff``` we can easly revail the flag..
+
+![screenshot at 2018-07-30 21-44-24](https://user-images.githubusercontent.com/22657154/43419629-ba088ebc-9441-11e8-98a4-126e29eff870.png)
