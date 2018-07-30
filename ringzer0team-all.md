@@ -143,7 +143,7 @@ openssl rsa -in priv.rsa -pubout 2> /dev/null | grep -v "^-" | tr -d '\n' | md5s
 
 ## I Lost my password can you find it?
 to find the encrypted password
-```
+```assembly
 ┌─[root@parrot]─[~/Downloads/Policies]
 └──╼ #grep -R -i "pass" | tr ' ' '\n' | grep -i pass
 cpassword="PCXrmCkYWyRRx3bf+zqEydW9/trbFToMDx6fAvmeCDw"
@@ -151,7 +151,7 @@ cpassword="PCXrmCkYWyRRx3bf+zqEydW9/trbFToMDx6fAvmeCDw"
 i didn't know what is Cpassword at the first time but after googling ```cpassword decrypt``` i found this article : ```https://tools.kali.org/password-attacks/gpp-decrypt``` on a tool called ```gpp-decrypt```
 
 back to terminal..
-```
+```assembly
 ┌─[root@parrot]─[~/Downloads]
 └──╼ #gpp-decrypt PCXrmCkYWyRRx3bf+zqEydW9/trbFToMDx6fAvmeCDw 2> /dev/null
 LocalRoot!
@@ -216,10 +216,26 @@ BAABBAABBBAABAAAABABABABBAAAAAAABBAABAAABAABAAAAABAAAAAAAABAABBBAABBABAAAAAABBAB
 ```
 Copy / Paste the A&B string into ```https://www.dcode.fr/chiffre-bacon-bilitere```
 
+## Crypto object
+
+The code on the ribbon is:
+```assembly
+GMODCDOOKCDBIOYDRMKDPQLDPVWYOIVRVSEOV
+```
+Which means nothing, so I rot13'd it 'til the letters looked right (Conatins F, L, A and G).
+```assemlby
+WCETSTEEASTRYEOTHCATFGBTFLMOEYLHLIUEL
+```
+But that didn't do much, until I stumbled on scytale coding.
+With 3 turns we get:
+```assembly
+WELCOMETOTHESCYTALETHEFLAGISBUTTERFLY
+```
+
 ## Encrypted ZIP
 we don't have to use known plain text attack, just use rockyou!
 
-```
+```assemlby
 ┌─[✗]─[root@parrot]─[/tmp]
 └──╼ #fcrackzip -v -D -u -p /usr/share/wordlists/rockyou.txt flag.zip 
 found file 'flag.txt', (size cp/uc     41/    29, flags 1, chk 5851)
@@ -232,6 +248,8 @@ PASSWORD FOUND!!!!: pw == testtest
 after googling ```secure strings decrypt``` i found these references
 ```
 https://blogs.msdn.microsoft.com/besidethepoint/2010/09/21/decrypt-secure-strings-in-powershell/
+```
+```
 https://blogs.msdn.microsoft.com/timid/2009/09/10/powershell-one-liner-decrypt-securestring/
 ```
 and it was a ```powershell``` task.
@@ -247,22 +265,6 @@ $SecureFlag = ConvertTo-SecureString -String $encrytedFlag -Key $key
 ```
 
 
-## Crypto object
-
-The code on the ribbon is:
-```
-GMODCDOOKCDBIOYDRMKDPQLDPVWYOIVRVSEOV
-```
-Which means nothing, so I rot13'd it 'til the letters looked right (Conatins F, L, A and G).
-```
-WCETSTEEASTRYEOTHCATFGBTFLMOEYLHLIUEL
-```
-But that didn't do much, until I stumbled on scytale coding.
-
-With 3 turns we get:
-```
-WELCOMETOTHESCYTALETHEFLAGISBUTTERFLY
-```
 
 # RE
 
