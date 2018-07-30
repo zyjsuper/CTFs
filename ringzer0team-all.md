@@ -340,10 +340,30 @@ But since stderr is redirected I had to redirect again to sth else, like stdin (
 ![jail3](https://user-images.githubusercontent.com/22657154/43360268-1a5cf43c-92b3-11e8-8dc6-b44f63ee5ce8.png)
 
 ## bash jail 4
+Since a lot of characters are not allowed, stdout/stderr redirection is not working anymore.
+<br>
+And regarding < /dev/null: This is mostly used to detach a process from a tty.
+<br>
+That means we are allowed to launch some daemons. After some try & failure I thought of starting some web server
+<Br> 
+and then "downloading" the flag file using a GET request.
 
 ![jail5](https://user-images.githubusercontent.com/22657154/43361356-44a3fba6-92d5-11e8-9b73-4d1a5e529000.png)
 
 ## bash jail 5 
+- Use bash magic voodoo
+```assembly
+┌─[✗]─[root@parrot]─[~/CTFs]
+└──╼ #`echo echo {o..q}ython\\;`
+oython; python; qython;
+┌─[root@parrot]─[~/CTFs]
+└──╼ #eval `echo echo {o..q}ython\\;`
+oython
+Python 2.7.15 (default, May  1 2018, 05:55:50) 
+[GCC 7.3.0] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+```
 
 ![screenshot_20180729_011221](https://user-images.githubusercontent.com/22657154/43361354-2b9f7c20-92d5-11e8-928a-c812857a2cd9.png)
 
