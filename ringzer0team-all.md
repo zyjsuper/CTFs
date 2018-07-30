@@ -571,3 +571,6 @@ using ```vimdiff``` we can easly revail the flag..
 
 ![screenshot at 2018-07-30 23-03-09](https://user-images.githubusercontent.com/22657154/43423430-b6b9a54c-944c-11e8-91bb-80434878814b.png)
 
+## Why not?
+
+![whynot](https://user-images.githubusercontent.com/22657154/43423564-0ec5662c-944d-11e8-85d3-a0e62613296b.png)
