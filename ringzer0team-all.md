@@ -442,3 +442,8 @@ now use grep recursively to find the flag.
 askldj3lkj234.php:Hey this is a flag FLAG-GehFMsqCeNvof5szVpB2Dmjx
 
 ```
+
+## 1 / 3 Do not waste the environment
+
+![screenshot at 2018-07-30 20-00-08](https://user-images.githubusercontent.com/22657154/43414534-53884e42-9433-11e8-9ba2-34b0d0c26366.png)
+
