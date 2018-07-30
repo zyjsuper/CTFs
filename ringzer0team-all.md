@@ -367,3 +367,17 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 ![screenshot_20180729_011221](https://user-images.githubusercontent.com/22657154/43361354-2b9f7c20-92d5-11e8-928a-c812857a2cd9.png)
 
+# Forensics 
+
+## I made a dd of Agent Smith usb key
+
+```assembly
+┌─[root@parrot]─[~/Downloads]
+└──╼ #file 86b265d37d1fc10b721a2accae04a60d 
+86b265d37d1fc10b721a2accae04a60d: Linux rev 1.0 ext2 filesystem data (mounted or unclean), UUID=91c0fd20-bd3d-44e3-bfbb-1c18a9c0a20b
+┌─[root@parrot]─[~/Downloads]
+└──╼ #strings 86b265d37d1fc10b721a2accae04a60d | grep -i flag
+FLAG-ggmgk05096
+```
+
+## 
