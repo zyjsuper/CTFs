@@ -121,8 +121,25 @@ the combination between 17.png and 25.png gives the flag.
 
 
 ## Martian message part 2
-decrypte with Vigenere cipher
+This is a classic example of a Vigenère cipher.
+<br>
+We know right off the bat it must be a polyalphabetic cipher because it comes with a key! 
+<br>
+The term Polyalphabetic means it uses multiple ciphers, one for each letter given in the key. That way a stream of "AAAAAA" would not just be translated "NNNNNN" 
+<br>
+So, knowing what type of cipher it is, we can go and use any online decryption tool..
+
 ![screenshot_20180727_151604](https://user-images.githubusercontent.com/22657154/43322849-966308a6-91b8-11e8-8e41-2b2d703389d9.png)
+
+
+## Public key recovery
+no need to explain..
+
+```
+openssl rsa -in priv.rsa -pubout 2> /dev/null | grep -v "^-" | tr -d '\n' | md5sum | cut -d "-" -f 1
+```
+![screenshot_20180727_164800](https://user-images.githubusercontent.com/22657154/43327881-465c9400-91c5-11e8-9ff1-467fec4cd3ed.png)
+
 
 ## Martian message part 3
 ```python
@@ -162,13 +179,6 @@ back to terminal..
 └──╼ #gpp-decrypt PCXrmCkYWyRRx3bf+zqEydW9/trbFToMDx6fAvmeCDw 2> /dev/null
 LocalRoot!
 ```
-
-## Public key recovery
-
-```
-openssl rsa -in priv.rsa -pubout 2> /dev/null | grep -v "^-" | tr -d '\n' | md5sum | cut -d "-" -f 1
-```
-![screenshot_20180727_164800](https://user-images.githubusercontent.com/22657154/43327881-465c9400-91c5-11e8-9ff1-467fec4cd3ed.png)
 
 ## Encrypted ZIP
 we don't have to use known plain text attack, just use rockyou!
