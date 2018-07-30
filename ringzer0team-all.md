@@ -436,5 +436,9 @@ export all HTTP objects from the pcap file
 
 now use grep recursively to find the flag.
 
+```assembly
+┌─[root@parrot]─[~/Downloads/flag]
+└──╼ #grep -R -i flag
+askldj3lkj234.php:Hey this is a flag FLAG-GehFMsqCeNvof5szVpB2Dmjx
 
-![screenshot at 2018-07-30 19-45-57](https://user-images.githubusercontent.com/22657154/43413758-329366f6-9431-11e8-9e25-1ccf094d6c00.png)
+```
