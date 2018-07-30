@@ -447,6 +447,66 @@ askldj3lkj234.php:Hey this is a flag FLAG-GehFMsqCeNvof5szVpB2Dmjx
 
 ![screenshot at 2018-07-30 20-00-08](https://user-images.githubusercontent.com/22657154/43414534-53884e42-9433-11e8-9ba2-34b0d0c26366.png)
 
+## 2 / 3 Did you see my desktop?
+
+```assembly
+┌─[root@parrot]─[~]
+└──╼ #volatility -f dump imageinfo
+Volatility Foundation Volatility Framework 2.6
+INFO    : volatility.debug    : Determining profile based on KDBG search...
+          Suggested Profile(s) : Win7SP1x86_23418, Win7SP0x86, Win7SP1x86
+                     AS Layer1 : IA32PagedMemory (Kernel AS)
+                     AS Layer2 : FileAddressSpace (/root/dump)
+                      PAE type : No PAE
+                           DTB : 0x185000L
+                          KDBG : 0x82920be8L
+          Number of Processors : 1
+     Image Type (Service Pack) : 0
+                KPCR for CPU 0 : 0x82921c00L
+             KUSER_SHARED_DATA : 0xffdf0000L
+           Image date and time : 2014-03-09 20:57:55 UTC+0000
+     Image local date and time : 2014-03-09 13:57:55 -0700
+```
+```assembly
+┌─[root@parrot]─[~]
+└──╼ #volatility -f dump --profile=Win7SP0x86 screenshot --dump-dir ./
+Volatility Foundation Volatility Framework 2.6
+WARNING : volatility.debug    : 0\Service-0x0-3e4$\Default has no windows
+
+Wrote ./session_0.Service-0x0-3e5$.Default.png
+Wrote ./session_0.msswindowstation.mssrestricteddesk.png
+Wrote ./session_0.WinSta0.Default.png
+WARNING : volatility.debug    : 0\WinSta0\Disconnect has no windows
+
+WARNING : volatility.debug    : 0\WinSta0\Winlogon has no windows
+
+Wrote ./session_0.Service-0x0-3e7$.Default.png
+Wrote ./session_1.WinSta0.Default.png
+Wrote ./session_1.WinSta0.Disconnect.png
+Wrote ./session_1.WinSta0.Winlogon.png
+```
+
+![session_1 winsta0 default](https://user-images.githubusercontent.com/22657154/43421496-3552c768-9447-11e8-84fc-115bd15f91d2.png)
+
+```assembly
+┌─[root@parrot]─[~]
+└──╼ #volatility -f dump --profile=Win7SP0x86 cmdline | grep NOTEPAD
+Volatility Foundation Volatility Framework 2.6
+Command line : "C:\Windows\system32\NOTEPAD.EXE" C:\Users\flag\Desktop\F$L%A^G-5bd2510a83e82d271b7bf7fa4e0970d1.txt
+```
+
+## 3 / 3 Suspicious account password?
+
+```assembly
+┌─[root@parrot]─[~]
+└──╼ #volatility -f dump --profile=Win7SP0x86 hashdump
+Volatility Foundation Volatility Framework 2.6
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+flag:1000:aad3b435b51404eeaad3b435b51404ee:3008c87294511142799dca1191e69a0f:::
+```
+
+![screenshot at 2018-07-30 22-38-16](https://user-images.githubusercontent.com/22657154/43422195-4062af04-9449-11e8-8aae-ba7942180e0d.png)
 
 # Steganography
 
@@ -492,3 +552,8 @@ the given poem is diffrent from the original ```http://www.lieder.net/lieder/get
 using ```vimdiff``` we can easly revail the flag..
 
 ![screenshot at 2018-07-30 21-44-24](https://user-images.githubusercontent.com/22657154/43419629-ba088ebc-9441-11e8-98a4-126e29eff870.png)
+
+## A ghost sound
+
+![screenshot_20180729_224009](https://user-images.githubusercontent.com/22657154/43419819-5c911eba-9442-11e8-9be7-34f5c39d7df7.png)
+
