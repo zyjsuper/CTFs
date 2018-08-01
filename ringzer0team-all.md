@@ -291,6 +291,27 @@ $SecureFlag = ConvertTo-SecureString -String $encrytedFlag -Key $key
 
 ![arm](https://user-images.githubusercontent.com/22657154/43360111-f0cc44fe-92af-11e8-9872-0951635796ee.png)
 
+## Crackme 1 
+Executing the binary only shows some message about Windows history and then exits.
+Disassembling it reveals that, before showing the message, it loads a resource and writes it to a file.
+
+![crackme1](https://user-images.githubusercontent.com/22657154/43521729-63ab4d8c-9597-11e8-89ec-af383dfbb66c.png)
+
+Opening the file in PE-Studio shows only one resource file
+Dump it to a file and open this one in PE-Studio. This reveals, that it's a DLL.
+
+![crackme1-2](https://user-images.githubusercontent.com/22657154/43521955-0e440680-9598-11e8-9f88-b73e1913d5a9.png)
+
+![crackme1-](https://user-images.githubusercontent.com/22657154/43521999-32acdd62-9598-11e8-8974-d3b232cd582a.png)
+
+It exports only one symbol [DisplayMessage], calling this one directly reveals the flag
+```
+rundll32 dump.dll,DisplayMessage
+```
+
+![v](https://user-images.githubusercontent.com/22657154/43522120-a5fe787a-9598-11e8-8481-ac7f1e99c264.png)
+
+
 # Jail Escaping
 ```
 http://blog.dornea.nu/2016/06/20/ringzer0-ctf-jail-escaping-bash/
@@ -574,3 +595,4 @@ using ```vimdiff``` we can easly revail the flag..
 ## Why not?
 
 ![whynot](https://user-images.githubusercontent.com/22657154/43423564-0ec5662c-944d-11e8-85d3-a0e62613296b.png)
+
