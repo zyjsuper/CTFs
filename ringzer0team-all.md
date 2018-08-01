@@ -570,7 +570,7 @@ FLAG-5jk682aqoepoi582r940oow
 ## Victor reloaded
 the given poem is diffrent from the original ```http://www.lieder.net/lieder/get_text.html?TextId=8562```
 <br>
-using ```vimdiff``` we can easly revail the flag..
+using ```vimdiff``` we can easly reveal  the flag..
 
 ![screenshot at 2018-07-30 21-44-24](https://user-images.githubusercontent.com/22657154/43419629-ba088ebc-9441-11e8-98a4-126e29eff870.png)
 
