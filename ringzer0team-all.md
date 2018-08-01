@@ -288,8 +288,77 @@ $SecureFlag = ConvertTo-SecureString -String $encrytedFlag -Key $key
 ![4-2](https://user-images.githubusercontent.com/22657154/43360109-efb11f5e-92af-11e8-8b6d-cc4ea3c75b2f.png)
 
 ## Introduction to ARM
+this was a very basic arm challenge you can just decompile it with ida and combine the two strings you have
 
 ![arm](https://user-images.githubusercontent.com/22657154/43360111-f0cc44fe-92af-11e8-9872-0951635796ee.png)
+
+but there is more intersting way..
+<br>
+first install retdec decompiler, you can follow these instractions here : ```blog.simos.info/installing-retdec-on-ubuntu/```
+<br>
+decompile and modify the C source you got the recompile it using ```gcc -m32 source.c```
+<br>
+here is my C source 
+```C
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(int argc, char ** argv) {
+    int * mem = malloc(12);
+    int v1 = (int)mem;
+    *mem = (int)malloc(10);
+    memset((int *)*mem, 0, 10);
+    int * mem2 = malloc(10);
+    int * str2 = (int *)(v1 + 4);
+    *str2 = (int)mem2;
+    memset((int *)*str2, 0, 10);
+    int * mem3 = malloc(12);
+    int * str = (int *)(v1 + 8);
+    *str = (int)mem3;
+    memset((int *)*str, 0, 12);
+    int *str3 = malloc(100) ;
+    scanf("%s", &str3);
+    memcpy((int *)*mem, (int *)"AEe04", 6);
+    memcpy((int *)*str2, (int *)"fgB37", 6);
+    strcpy((char *)*str, (char *)*mem);
+    strcat((char *)*str, (char *)*str2);
+    int strcmp_rc = strcmp((char *)*str, (char *)&str3);
+    int re = strcmp_rc; // fix error
+
+    if (strcmp_rc == 0) {
+        printf("FLAG-3jk3%s\n",(char *)*str);
+    } else {
+        printf("Wrong Password!\n");
+    }
+    free(mem);
+    return 0;
+}
+```
+```assembly
+┌─[root@parrot]─[~/Downloads]
+└──╼ #./arm.bin 
+testtest
+Wrong Password!
+┌─[root@parrot]─[~/Downloads]
+└──╼ #ltrace ./arm.bin 
+....                                      
+memcpy(0x57ffc170, "AEe04\0", 6)                                                                        = 0x57ffc170
+memcpy(0x57ffc180, "fgB37\0", 6)                                                                        = 0x57ffc180
+strcpy(0x57ffc190, "AEe04")                                                                             = 0x57ffc190
+strcat("AEe04", "fgB37")                                                                                = "AEe04fgB37"
+strcmp("AEe04fgB37", "1234")                                                                            = 1
+puts("Wrong Password!"Wrong Password!
+)                                                                                 = 16
+free(0x57ffc160)                                                                                        = <void>
++++ exited (status 0) +++
+┌─[root@parrot]─[~/Downloads]
+└──╼ #./arm.bin 
+AEe04fgB37
+FLAG-3jk3AEe04fgB37
+```
+
 
 ## Crackme 1 
 Executing the binary only shows some message about Windows history and then exits.
