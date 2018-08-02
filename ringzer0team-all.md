@@ -432,6 +432,25 @@ int  main (void){
 
 ![repel](https://user-images.githubusercontent.com/22657154/43524591-f5fae38e-959f-11e8-864d-9a9b51eed13e.png)
 
+# Wrong byte!
+Nothing intersting inside the binary, just assigning values to local variables then calling ```rax``` register and printing some random values..
+<br>
+using bash and python we can get the xor key and decode the flag
+
+```bash
+./chl.bin | hexdump -C | cut -d " " -f2- | cut -d '|' -f1 |  grep -v 00000 | tr -d '\n'  | sed 's/ / 0x/g' | sed 's/0x //g' | sed 's/0x$//g' | sed 's/^ //g' | sed 's/ /,/g' | sed 's/,$//g' ; echo
+```
+
+```python
+arr = [0x1f,0x15,0x18,0x1e,0x74,0x1c,0x30,0x0d,0x14,0x23,0x2c,0x33,0x16,0x29,0x17,0x2e,0x00,0x1a,0x3c,0x3c,0x2b,0x2f,0x08,0x14,0xf,0x36,0x3d,0x69,0x31,0x34,0x03,0x11,0x1a,0x19,0x00,0x7f]
+flag = ""
+
+for i in arr:
+    flag += chr(i ^ 89)
+print flag
+```
+![screenshot at 2018-08-02 21-14-12](https://user-images.githubusercontent.com/22657154/43606051-92690048-969a-11e8-836d-4198c373571f.png)
+
 
 # Jail Escaping
 ```
