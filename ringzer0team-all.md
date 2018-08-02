@@ -451,6 +451,15 @@ print flag
 ```
 ![screenshot at 2018-08-02 21-14-12](https://user-images.githubusercontent.com/22657154/43606051-92690048-969a-11e8-836d-4198c373571f.png)
 
+# Heap allocator
+You can read this writeup for more details ```blog.dornea.nu/2016/11/30/ringzer0-ctf-binaries-heap-allocator/```
+<br>
+using static analysis we can figure out that function ```__libc_csu_ctor``` will print the flag if ```al``` is equal to ```0xcc``` 
+open up ```radare2``` and get the flag
+
+![screenshot at 2018-08-02 22-10-02](https://user-images.githubusercontent.com/22657154/43609372-181d7968-96a4-11e8-99a3-c94b99574edf.png)
+
+![screenshot at 2018-08-02 22-27-41](https://user-images.githubusercontent.com/22657154/43609376-1b22cdac-96a4-11e8-9ee2-b42040973621.png)
 
 # Jail Escaping
 ```
