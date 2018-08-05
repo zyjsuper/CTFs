@@ -296,7 +296,7 @@ but there is more intersting way..
 <br>
 first install retdec decompiler, you can follow these instractions here : ```blog.simos.info/installing-retdec-on-ubuntu/```
 <br>
-decompile and modify the C source you got the recompile it using ```gcc -m32 source.c```
+decompile and modify the C source you got, then recompile it using ```gcc -m32 source.c```
 <br>
 here is my C source 
 ```C
