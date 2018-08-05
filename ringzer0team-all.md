@@ -461,6 +461,81 @@ open up ```radare2``` and get the flag
 
 ![screenshot at 2018-08-02 22-27-41](https://user-images.githubusercontent.com/22657154/43609376-1b22cdac-96a4-11e8-9ee2-b42040973621.png)
 
+## Windows API for the win 
+After solving the challenge i found this write up which explains the whole idea behind the binary just using static analysis
+<br>
+so i'm just going to copy paste it.
+```assembly
+There are actually 2 (at least) ways to do the challenge, the lazy way (olly anti-anti-debug patched)
+or with analysis of what's actually happening, I'll show you the latter
+~~~
+Opening the file in IDA, checking for some interesting functions, I saw strlen, so I jumped there (0x401588)
+and saw there that before that, 6 characters are collected through 6 different functions, that our
+6-character password is xored with these six characters, and that the result is compared, through the
+strcmp function, with another value - that we'll find later - stored in memory.
+
+About the 6 characters, in IDA I can see 6 functions, _GetK1 till _GetK2, calling WinAPI, and stocking the 
+result on stack, and there will be the xor key for our input.
+
+*_GetK1 :
+	The function calls SetThreadContext(0, NULL) - which is invalid - and gets the error value in eax (with GetLastError).
+	You can debug this part, or search a bit to find that the function will fail because the handle sent as parameter is
+	0, which is an invalid handle, so the error should be ERROR_INVALID_HANDLE, or 0x06. After, 2 is added, to give
+	the first character of the key (0x08).
+
+*_GetK2 :
+	The function calls IsDebuggerPresent(). Obviously, we want the result to be no, which is 0x0. Anyways, the result is
+	meaningless. The next function called is GetLastError(), and because IsDebuggerPresent() hasn't caused any error, the
+	error code should still be 0x06. Then, the operation 0x06-0x3E is done to give 0xFFFFFFC8, then C8 is the second character.
+
+*_GetK3 :
+	This function does basically the same thing as _GetK1, but instead of calling SetThreadContext(0, NULL) it calls
+	GetThreadContext(0, NULL). After, it adds 0x12 to the returned error value (0x06), to give 0x18 as the 3rd character.
+
+*_GetK4 :
+	Again, this function calls GlobalFree(NULL), where NULL is obviously an invalid handle, and GetLastError() then returns
+	0x06. If 0x22 is added to it, then the 4th character is 0x28.
+
+*_GetK5 :
+	This function calls IsBadCodePtr(NULL) - which is, by the way, a terrible function - and GetLastError() returns also
+	0x06, ERROR_INVALID_HANDLE. The 5th character is then 0x06-0x4E = 0xFFFFFFB8 => B8.
+
+*_GetK6 :
+	Finally, again, GlobalHandle(NULL) is called, which is invalid, thus having the error code 0x06, thus having the 6th
+	character to be 0x06-0x1E = 0xFFFFFFE8 => E8.
+
+Thus, the xor key is : 0x08 0xC8 0x18 0x28 0xB8 0xE8. Now, we need to find the special value with which our input will be 
+compared with, to find the real password to enter : XORED_PASSWD (we'll find) ^ XOR_KEY (we have) = PASSWD (good input).
+
+Concerning the "secret" value, used as input in strcmp, we can see at addresses 0x4014E5-0x4014F8, that 7 characters are
+copied from address 0x403065, which contains 0x3B 0xFC 0x73 0x69 0xF9 0xDA 0x00 (wasn't that secret finally...).
+
+Finally, we can find the input required! We xor this with the 6 characters found previously :
+	0x08 0xC8 0x18 0x28 0xB8 0xE8
+^	0x3B 0xFC 0x73 0x69 0xF9 0xDA
+--------------------------------------
+	0x33 0x34 0x6B 0x41 0x41 0x32
+
+Which gives (in ASCII) : 34kAA2
+
+We then enter this as the password and get :
+
+---------------------------------
+Password:34kAA2
+FLAG-l2nxcas98q23m6spoqy32k12pa
+---------------------------------
+
+Got it!
+
+@pwndr3
+```
+the other way that he didn't discuss so i will, is how to get the key using dynamic analysis
+<br>
+which can be summed up in just a picture.
+
+![untitled](https://user-images.githubusercontent.com/22657154/43682609-261d0998-987a-11e8-984b-0a9066cc0f96.png)
+
+
 # Jail Escaping
 ```
 http://blog.dornea.nu/2016/06/20/ringzer0-ctf-jail-escaping-bash/
