@@ -535,6 +535,39 @@ which can be summed up in just a picture.
 
 ![untitled](https://user-images.githubusercontent.com/22657154/43682609-261d0998-987a-11e8-984b-0a9066cc0f96.png)
 
+## RingZer0 Authenticator
+```python
+#!/usr/bin/python2
+
+i = 0
+c = [ [] for x in range(5) ]
+for s in "\x98\x97\x78\x0f\x15":
+    for x0 in range(0, 10):
+        for x1 in range(0, 10):
+            for x2 in range(0, 10):
+                b = (186*x0 - x1 + 13*x2 + 48) & 0xff
+                if (b == ord(s)):
+                    c[i].append(str(x0) + str(x1) + str(x2))
+    i += 1
+
+for a0 in c[0]:
+    for a1 in c[1]:
+        for a2 in c[2]:
+            for a3 in c[3]:
+                for a4 in c[4]:
+                    print a0 + a1 + a2 + a3 + a4
+
+
+'''
+ - username = "RingZer0"
+ - auth code length is 15 characters
+ - auth code characters are only numbers
+ - auth code string is divided into five 3-char blocks: {1,2,3},{4,5,6},{7,8,9},{10,11,12},{13,14,15}
+ - each block is validated against checksums 0x98, 0x97, 0x78, 0x0f, 0x15, respectively.
+ - checksum is calculated as the low byte of the linear combination (186 * x0 - x1 + 13 * x2 + 48) for each blocks represented as {x0, x1, x2}.
+ - auth code is accepted if and only if the checksums are matching.
+'''
+```
 
 # Jail Escaping
 ```
