@@ -861,3 +861,35 @@ Flag : _VQLG1160_VTEPI_AVTG_3093_
 
 ### PE DotNet - 0 protection
 ![pe 0 protection](https://user-images.githubusercontent.com/22657154/37649751-7852c0be-2c3b-11e8-8dba-2fddf03409c8.png)
+
+## ELF ARM - Basic Crackme
+the program is taking string with length 6 then compare each character to a specific condition
+<br>
+it was easy to reverse using static analysis since we know that s[3] is equal 'r' but i used ```z3```
+
+
+```python
+from z3 import *
+
+s = [BitVec("s[%d]" % i,32)for i in range(0,6)]
+z3_solver = Solver()
+flag = ""
+for i in range(0,len(s)):
+   z3_solver.add(s[i] >= 0x41 , s[i] <= 0xff)
+   z3_solver.add( s[0] == s[5] )
+   z3_solver.add( s[0] + 1 == s[1] )
+   z3_solver.add( s[3] + 1 == s[0] )
+   z3_solver.add( s[2] + 4 == s[5] )
+   z3_solver.add( s[4] + 2 == s[2] )
+   z3_solver.add((s[3] ^ 0x72) == 0)
+
+   if z3_solver.check() == sat:
+      sol = z3_solver.model()
+      for i in range(6):
+         flag += chr(int(str(sol[s[i]])))
+      break
+
+print flag
+```
+
+![screenshot at 2018-08-06 17-34-55](https://user-images.githubusercontent.com/22657154/43726856-9173c854-99a0-11e8-8bb2-9b95ae95d2a4.png)
