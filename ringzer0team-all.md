@@ -866,6 +866,7 @@ using ```vimdiff``` we can easly reveal  the flag..
 
 ## SysAdmin Part 3
 
+![sysadmin_3](https://user-images.githubusercontent.com/22657154/43789380-1b759666-9a70-11e8-99fc-adb1e1a5bae5.png)
 
 ```mysql -u arch -p```
 
@@ -883,7 +884,6 @@ using ```vimdiff``` we can easly reveal  the flag..
 
 ## SysAdmin Part 6
 
-![sysadmin_3](https://user-images.githubusercontent.com/22657154/43789380-1b759666-9a70-11e8-99fc-adb1e1a5bae5.png)
 
 ## SysAdmin Part 7
 
