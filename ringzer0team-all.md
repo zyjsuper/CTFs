@@ -884,10 +884,13 @@ using ```vimdiff``` we can easly reveal  the flag..
 
 ## SysAdmin Part 6
 
+![admin_5](https://user-images.githubusercontent.com/22657154/43790526-28fae6ee-9a73-11e8-9a4b-fe46ce97f157.png)
+
 
 ## SysAdmin Part 7
 
 ![admin_7](https://user-images.githubusercontent.com/22657154/43789951-85de7b3e-9a71-11e8-815b-2d19a759cd3a.png)
 
 ## SysAdmin Part 8
+
 
