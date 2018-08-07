@@ -853,3 +853,36 @@ using ```vimdiff``` we can easly reveal  the flag..
 
 ![whynot](https://user-images.githubusercontent.com/22657154/43423564-0ec5662c-944d-11e8-85d3-a0e62613296b.png)
 
+
+# SysAdmin Linux
+
+## SysAdmin Part 1
+
+![sys_admin1](https://user-images.githubusercontent.com/22657154/43788661-474844c0-9a6e-11e8-9efe-8cd4dca05da0.png)
+
+## SysAdmin Part 2
+
+![sys_admin2](https://user-images.githubusercontent.com/22657154/43788709-5c7c76e0-9a6e-11e8-81a6-d4db956d8139.png)
+
+## SysAdmin Part 3
+
+![sysadmin_3](https://user-images.githubusercontent.com/22657154/43789380-1b759666-9a70-11e8-99fc-adb1e1a5bae5.png)
+
+```mysql -u arch -p```
+
+![-002](https://user-images.githubusercontent.com/22657154/43789768-2071751c-9a71-11e8-85bf-fa5927a9453c.png)
+
+## SysAdmin Part 4
+
+![screenshot at 2018-08-07 16-34-11](https://user-images.githubusercontent.com/22657154/43788873-e0f92f58-9a6e-11e8-9902-6708e16a1f4f.png)
+
+![sysadmin4](https://user-images.githubusercontent.com/22657154/43788874-e12ce2c6-9a6e-11e8-905a-ed6426ae9116.png)
+
+## SysAdmin Part 5
+
+## SysAdmin Part 6
+
+## SysAdmin Part 7
+
+## SysAdmin Part 8
+
