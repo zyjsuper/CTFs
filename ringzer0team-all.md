@@ -893,4 +893,44 @@ using ```vimdiff``` we can easly reveal  the flag..
 
 ## SysAdmin Part 8
 
+This challenge dealt with improper file permissions and cronjobs, and was a very fun little challenge :)
+Starting off, we need to find files that mention “cypher” in them. Doing a little find magic and we learn
+that /backup/ca584b15ae397a9ad45b1ff267b55796 contains some interesting cronjob
+information
 
+![-000](https://user-images.githubusercontent.com/22657154/43790756-d0d08860-9a73-11e8-8496-eaeff4a69261.png)
+
+it seems that in var/spool/cron/crontabs/cypher some cronjob was made that runs /tmp/Gathering.py
+That's fishy enough, let's go ahead and check its permissions:
+
+![-001](https://user-images.githubusercontent.com/22657154/43790755-d0675232-9a73-11e8-82a7-5f6dc1564054.png)
+
+oooh happy day! It looks like it's been chmod 777'd! That means we can edit it, but it will still run as
+user cypher.
+Opening it up:
+
+![-002](https://user-images.githubusercontent.com/22657154/43790753-d03aca28-9a73-11e8-9cc3-ef6b2001d624.png)
+
+it seems to just backup the output of ps aux to a tmp file. Let's go ahead and instead have it cat out
+everything in cypher's home dir.To do this, let's first give it a file it can write to:
+
+![-003](https://user-images.githubusercontent.com/22657154/43790752-cfe88df8-9a73-11e8-8843-ddf292d961a9.png)
+
+and now we can update the python script
+
+![-004](https://user-images.githubusercontent.com/22657154/43790751-cfb60e32-9a73-11e8-95d0-b2f42b33ed34.png)
+
+and if we wait a bit we should see the output of cypher's home directory files in /tmp/towelwashere.txt
+Sure enough:
+
+![-005](https://user-images.githubusercontent.com/22657154/43790750-cf87b532-9a73-11e8-9c4f-e3d0c19873c9.png)
+
+So we can see that it's rewritting the Gathering.py file, and there's also a tasty looking base64 string.
+```
+Base64 string:RkxBRy1weXMzZ2ZjenQ5cERrRXoyaW8wUHdkOEtOego=
+```
+```
+decoded goes to:FLAG-pys3gfczt9pDkEz2io0Pwd8KNz
+```
+There's that flag! Just goes to show you, check the file permissions of everything touched by your
+cronjob!
