@@ -1038,6 +1038,41 @@ using ```vimdiff``` we can easly reveal  the flag..
 
 ![whynot](https://user-images.githubusercontent.com/22657154/43423564-0ec5662c-944d-11e8-85d3-a0e62613296b.png)
 
+## Most Secure Crypto Algo
+Code after deobfuscation ..
+```js
+$(".c_submit").click(function(event){
+    var u = $("#cuser")
+      .val();
+    var p = $("#cpass")
+      .val();
+    var t = true;
+
+    var k1 = "d8439507642eb76a4050adb27891d38a"
+    var k2 = "01fdb35ac5309d45a99f89c0a4ca0db6"
+    var ct = "ob1xQz5ms9hRkPTx+ZHbVg=="
+
+    if(u == "h4x0r") {
+      if(!CryptoJS.AES.encrypt(p, CryptoJS.enc.Hex.parse(k1), {iv: CryptoJS.enc.Hex.parse(k2)}) == ct) {
+        t = false;
+      }
+    }
+    else {
+       alert("BAD BOY")
+    }
+    if(t) {
+      if(document.location.href.indexOf("?p=") == -1) {
+        document.location = document.location.href + "?p=" + p;
+      }
+});
+
+// DECRYPTION
+// CryptoJS.enc.Latin1.stringify(CryptoJS.AES.decrypt(ct,CryptoJS.enc.Hex.parse(k1), {iv: CryptoJS.enc.Hex.parse(k2)}))
+//
+```
+
+![cryptaes](https://user-images.githubusercontent.com/22657154/43916170-1b3206dc-9c0d-11e8-91c3-c4d72ab01c12.png)
+
 
 # SysAdmin Linux
 
