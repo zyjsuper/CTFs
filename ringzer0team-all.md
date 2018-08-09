@@ -926,7 +926,7 @@ the job is a python script belongs to cypher user and have writeable permissions
 <br>
 so instead of writing ```ps aux``` output to a file in tmp we will read the flag file inside cypher home directory 
 - NOTE 
-``` if you don't know what is cronjobs is see this video : youtube.com/watch?v=7MFMnsnfBJs```
+``` if you don't know what cronjobs are see this video : youtube.com/watch?v=7MFMnsnfBJs```
 
 ![sys_admin8_1](https://user-images.githubusercontent.com/22657154/43905200-db20061e-9bf0-11e8-9984-c917b703fba7.png)
 
