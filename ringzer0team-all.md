@@ -812,10 +812,22 @@ highlight_file("\\57\\150\\157\\155\\145\\57\\154\\145\\166\\145\\154\\63\\57\\1
 FLAG-D6jg9230H05II3ri5QB7L9166gG73l8H
 ```
 ```assembly
-print join(gzfile(glob("\\57\\150\\157\\155\\145\\57\\154\\145\\166\\145\\154\\63\\57\\146\\154\\141\\147\\56\\164\\170\\164")[0]));
+print join(gzfile("\\57\\150\\157\\155\\145\\57\\154\\145\\166\\145\\154\\63\\57\\146\\154\\141\\147\\56\\164\\170\\164"));
 FLAG-D6jg9230H05II3ri5QB7L9166gG73l8H
-
 ```
+```assembly
+print join(gzfile(glob("*")[0]));
+FLAG-D6jg9230H05II3ri5QB7L9166gG73l8H
+```
+
+## PHP jail 4
+i used hex encoding this time
+
+```assembly
+print join(gzfile(hex2bin(join([2,f,6,8,6,f,6,d,6,5,2,f,6,hex2bin(63),6,5,7,6,6,5,6,hex2bin(63),3,4,2,f,6,6,6,hex2bin(63),6,1,6,7,2,e,7,4,7,8,7,4]))));
+FLAG-X9uF51b0X570f616897kLN3It3K6m63c
+```
+
 
 
 # Forensics 
