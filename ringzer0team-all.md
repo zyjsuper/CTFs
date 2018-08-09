@@ -1073,6 +1073,24 @@ $(".c_submit").click(function(event){
 
 ![cryptaes](https://user-images.githubusercontent.com/22657154/43916170-1b3206dc-9c0d-11e8-91c3-c4d72ab01c12.png)
 
+## Valid key required
+This is a validate-me challenge and since we have the source code and able to debug it we can let the debugger tell us how our input will be manipulated.
+
+![screenshot at 2018-08-09 20-31-03](https://user-images.githubusercontent.com/22657154/43918663-ec429b6e-9c13-11e8-8b00-caed7edcdbad.png)
+
+```assembly
+
+ABC{H}-EFG{K}-IJK{j}-MNO{J}-QRS{T}
+
+[A]{BC} [E]{FG} [I]{JK} [M]{NO} [Q]{RS}
+{BC}[Q] {FG}[M] {JK}[I] {NO}[E] {RS}[A]
+
+-BG -je -M2 -23 -1r
+BG8 jep M2L L23 r1A
+ABG Lje LM2 p23 81r
+
+KEY = ABGH-LjeK-LM2j-p23J-81rT
+```
 
 # SysAdmin Linux
 
