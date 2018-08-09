@@ -1082,14 +1082,17 @@ This is a validate-me challenge and since we have the source code and able to de
 
 ABC{H}-EFG{K}-IJK{j}-MNO{J}-QRS{T}
 
+
 [A]{BC} [E]{FG} [I]{JK} [M]{NO} [Q]{RS}
 {BC}[Q] {FG}[M] {JK}[I] {NO}[E] {RS}[A]
 
--BG -je -M2 -23 -1r
-BG8 jep M2L L23 r1A
-ABG Lje LM2 p23 81r
 
-KEY = ABGH-LjeK-LM2j-p23J-81rT
+BG8 jep M2L L23 r1A
+-BG -je -M2 -L2 -1r
+ABG 3je LM2 pL2 81r
+
+KEY = ABGH-3jeK-LM2j-pL3J-81rT
+
 ```
 
 # SysAdmin Linux
