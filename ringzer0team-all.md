@@ -380,7 +380,7 @@ rundll32 dump.dll,DisplayMessage
 
 ![v](https://user-images.githubusercontent.com/22657154/43522120-a5fe787a-9598-11e8-8481-ac7f1e99c264.png)
 
-# Kernel introduction
+## Kernel introduction
 
 I opened it with IDA, strings are embedded, and some routines pass.
 <br>
@@ -970,6 +970,34 @@ flag:1000:aad3b435b51404eeaad3b435b51404ee:3008c87294511142799dca1191e69a0f:::
 ```
 
 ![screenshot at 2018-07-30 22-38-16](https://user-images.githubusercontent.com/22657154/43422195-4062af04-9449-11e8-8aae-ba7942180e0d.png)
+
+## Dinosaure Survive
+
+![e01](https://user-images.githubusercontent.com/22657154/44037343-6106a3a2-9f14-11e8-90ec-66cfea88fd2b.png)
+
+## Who I am?
+
+https://viewdns.info
+
+![whoami](https://user-images.githubusercontent.com/22657154/44037453-adc2ca68-9f14-11e8-80b3-af4bd1ce072d.png)
+
+## Someone steal my flag!
+
+![steal1](https://user-images.githubusercontent.com/22657154/44038760-cc7a2ec6-9f17-11e8-8dd4-4760ac353b65.png)
+
+```bash
+
+root@DESKTOP-NS9V6J9:/mnt/c/Users/Magdy Moustafa/Downloads# tcpdump -vv -r 6338c3e33776b9844814d2daadf208bc.pcap 'src host 192.168.191.128 and dst host 192.168.191.129 and udp dst port 53'  | cut -d '?' -f 2 | cut -d "." -f 1 | grep -v ":" | uniq | tr -d "\n" | tr -d " " ; echo
+56476870637942706379426849484e6c59334a6c64434230636d4675633231706448526c5a43423061484a766457646f494752756379427864575679655341364b534247544546484c555a554e44646a545667794e6e425865555a5453545a53554664685533493157564a330a
+root@DESKTOP-NS9V6J9:/mnt/c/Users/Magdy Moustafa/Downloads# python
+>>> "56476870637942706379426849484e6c59334a6c64434230636d4675633231706448526c5a43423061484a766457646f494752756379427864575679655341364b534247544546484c555a554e44646a545667794e6e425865555a5453545a53554664685533493157564a330a".decode("hex").decode("base64")
+'This is a secret transmitted through dns query :) FLAG-FT47cMX26pWyFSI6RPWaSr5YRw'
+>>>
+```
+
+
+## We got breached again
+
 
 # Steganography
 
