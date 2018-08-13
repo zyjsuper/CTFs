@@ -981,7 +981,8 @@ using ```SonicVisualiser```
 
 ## You're lost? Use the map
 
-Zoom in on the image and hunting around. You'll find the flag hidden in the image, obscured slightly by another piece of writing in the photo. 
+Zoom in on the image and hunting around. You'll find the flag hidden in the image, obscured slightly by another piece of 
+writing in the photo. 
 
 ![flagzoomed](https://user-images.githubusercontent.com/22657154/43416282-26a0fb18-9438-11e8-9c01-c620268c973c.png)
 
@@ -1226,3 +1227,66 @@ RkxBRy1weXMzZ2ZjenQ5cERrRXoyaW8wUHdkOEtOego=
 morpheus@lxc-sysadmin:/home/cypher$ echo RkxBRy1weXMzZ2ZjenQ5cERrRXoyaW8wUHdkOEtOego= | base64 -d
 FLAG-pys3gfczt9pDkEz2io0Pwd8KNz
 ```
+
+# Pwnage Linux
+
+## Level1 Pwnage Linux Level Up
+
+## Level1 Pwnage Linux Leve2 Up
+
+## Level1 Pwnage Linux Leve3 Up
+
+
+# Web 
+
+## Big Brother is watching
+
+![web1](https://user-images.githubusercontent.com/22657154/44014861-5dface7c-9ece-11e8-9b0e-524b155a7f78.png)
+
+## Looking for password file
+
+![web2](https://user-images.githubusercontent.com/22657154/44014944-c8728704-9ece-11e8-8962-3564111dec54.png)
+
+![web21](https://user-images.githubusercontent.com/22657154/44014946-c89c7956-9ece-11e8-9668-c2886a39882b.png)
+
+## Area 51
+The page hints at “.htaccess”
+<br>
+A quick Google confirms that this is Apaches decentralized configuration solution
+<br>
+Goggling “.htaccess bypass” reveals that it can be bypasses using PUT requests
+<br>
+Once you have your web traffic going through Burp visit the “Area 51” page
+<br>
+Select the GET request for /challenge/48 in Burps ‘Target” tab
+<br>
+Right-click on this GET request and select ‘Send to Repeater’
+<br>
+The “Repeater” tab will light up, select the “Repeater” tab
+<br>
+Here we see the original request
+<br>
+Simply change the GET to a PUT and hit the Go button
+
+![area51](https://user-images.githubusercontent.com/22657154/44015322-b524103a-9ed0-11e8-858f-6f6b2296fb8a.png)
+
+## Headache
+Select the GET request for /challenge/43 in Burps “Target” tab
+Select the Response Tab, and look for the ‘Flag’ header
+
+![headeck](https://user-images.githubusercontent.com/22657154/44015752-7f43073a-9ed2-11e8-8277-4d14e0dcd698.png)
+
+## Words mean something?
+The request includes a cookie called ‘flag’
+<br>
+Right-click in Burp and send this request to the Burp Repeater tool
+<br>
+Repeater lets you change the flag value from 0 to 1 and resend the request
+
+![words1](https://user-images.githubusercontent.com/22657154/44016020-8cb83b64-9ed3-11e8-9cbe-c435c8fc7512.png)
+
+![words2](https://user-images.githubusercontent.com/22657154/44016022-8ce510c6-9ed3-11e8-9463-d9cae644376e.png)
+
+## Password reset
+
+## Security thru obscurity!
