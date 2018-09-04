@@ -132,3 +132,59 @@ drwxr-xr-x 2 root root 4.0K Sep  4 19:16 worker
 And after running the binary file beside opening ```app/index.html``` using any browser, beside the previous information we've got we can say that all we need to solve this challenge is located inside ```app``` directory.
 
 ![screenshot at 2018-09-04 19-30-30](https://user-images.githubusercontent.com/22657154/45047334-0e2a8880-b079-11e8-88c2-44c538364e17.png)
+
+Since we are dealing with some sort of malicious application we must have some sort of communications between the attacker and its victim's machine, so i started looking for any useful IP addresses or Domain names 
+
+```assembly
+┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64/resources/app]
+└──╼ #grep -Ri "http" -w | cut -d "(" -f 2 | cut -d ")" -f 1 | grep "^http"
+http://nodejs.org/
+http://api.jquery.com/
+http://babeljs.io/
+http://browserify.org/
+http://requirejs.org/docs/whyamd.html
+http://142.93.106.129/0000    # 0
+http://142.93.106.129/0001    # 1 
+http://142.93.106.129/0010    # 2
+http://142.93.106.129/0011    # 3 
+http://142.93.106.129/0100    # 4 
+http://142.93.106.129/0101    # 5 
+http://142.93.106.129/0110    # 6 
+http://142.93.106.129/0111    # 7
+http://142.93.106.129/1000    # 8
+http://142.93.106.129/1001    # 9 
+https://git-scm.com
+```
+
+After visiting each binary encoded directory there was no real functionality just giving ```Ok``` as a static response for any GET type requests, we are not able to use any other methods like POST too.
+
+```bash
+┌─[✗]─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64/resources/app]
+└──╼ #for i in $(cat index.html | grep "142.93.106.129" | cut -d "(" -f 2  | cut -d ")" -f 1) ; do echo -n "$i - " ; curl $i 2> /dev/null ; echo ; done
+http://142.93.106.129/0000 - OK
+http://142.93.106.129/0001 - OK
+http://142.93.106.129/0010 - OK
+http://142.93.106.129/0011 - OK
+http://142.93.106.129/0100 - OK
+http://142.93.106.129/0101 - OK
+http://142.93.106.129/0110 - OK
+http://142.93.106.129/0111 - OK
+http://142.93.106.129/1000 - OK
+http://142.93.106.129/1001 - OK
+```
+
+```html
+┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64/resources/app]
+└──╼ #curl --data "test" http://142.93.106.129/0011
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Error</title>
+</head>
+<body>
+<pre>Cannot POST /0011</pre>
+</body>
+</html>
+```
+
