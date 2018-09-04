@@ -1,0 +1,92 @@
+## Using ls verbose recursively listing we can figure out the directory structure
+
+```assembly
+┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64]
+└──╼ #ls -lahR
+.:
+total 121M
+drwxr-xr-x 4 root root 4.0K Sep  3 17:04 .
+drwxr-xr-x 3 root root  12K Sep  4 18:52 ..
+-rw-r--r-- 1 root root  27K Sep  3 17:04 blink_image_resources_200_percent.pak
+-rw-r--r-- 1 root root   15 Sep  3 17:04 content_resources_200_percent.pak
+-rw-r--r-- 1 root root 8.4M Sep  3 17:04 content_shell.pak
+-rwxr-xr-x 1 root root  78M Sep  3 17:04 electron-tutorial-app
+-rw-r--r-- 1 root root 9.8M Sep  3 17:04 icudtl.dat
+-rwxr-xr-x 1 root root 2.7M Sep  3 17:04 libffmpeg.so
+-rwxr-xr-x 1 root root  19M Sep  3 17:04 libnode.so
+-rw-r--r-- 1 root root 1.1K Sep  3 17:04 LICENSE
+-rw-r--r-- 1 root root 1.8M Sep  3 17:04 LICENSES.chromium.html
+drwxr-xr-x 2 root root 4.0K Sep  3 17:04 locales
+-rw-r--r-- 1 root root 217K Sep  3 17:04 natives_blob.bin
+-rw-r--r-- 1 root root 161K Sep  3 17:04 pdf_viewer_resources.pak
+drwxr-xr-x 2 root root 4.0K Sep  3 17:04 resources
+-rw-r--r-- 1 root root 1.5M Sep  3 17:04 snapshot_blob.bin
+-rw-r--r-- 1 root root 149K Sep  3 17:04 ui_resources_200_percent.pak
+-rw-r--r-- 1 root root    6 Sep  3 17:04 version
+-rw-r--r-- 1 root root  57K Sep  3 17:04 views_resources_200_percent.pak
+
+./locales:
+total 360K
+drwxr-xr-x 2 root root 4.0K Sep  3 17:04 .
+drwxr-xr-x 4 root root 4.0K Sep  3 17:04 ..
+-rw-r--r-- 1 root root 6.0K Sep  3 17:04 am.pak
+-rw-r--r-- 1 root root 5.5K Sep  3 17:04 ar.pak
+-rw-r--r-- 1 root root 6.5K Sep  3 17:04 bg.pak
+-rw-r--r-- 1 root root 8.5K Sep  3 17:04 bn.pak
+-rw-r--r-- 1 root root 4.0K Sep  3 17:04 ca.pak
+-rw-r--r-- 1 root root 3.9K Sep  3 17:04 cs.pak
+-rw-r--r-- 1 root root 3.6K Sep  3 17:04 da.pak
+-rw-r--r-- 1 root root 4.0K Sep  3 17:04 de.pak
+-rw-r--r-- 1 root root 7.1K Sep  3 17:04 el.pak
+-rw-r--r-- 1 root root 3.4K Sep  3 17:04 en-GB.pak
+-rw-r--r-- 1 root root 3.4K Sep  3 17:04 en-US.pak
+-rw-r--r-- 1 root root 4.1K Sep  3 17:04 es-419.pak
+-rw-r--r-- 1 root root 4.2K Sep  3 17:04 es.pak
+-rw-r--r-- 1 root root 3.7K Sep  3 17:04 et.pak
+-rw-r--r-- 1 root root 5.9K Sep  3 17:04 fake-bidi.pak
+-rw-r--r-- 1 root root 5.6K Sep  3 17:04 fa.pak
+-rw-r--r-- 1 root root 4.2K Sep  3 17:04 fil.pak
+-rw-r--r-- 1 root root 3.7K Sep  3 17:04 fi.pak
+-rw-r--r-- 1 root root 4.4K Sep  3 17:04 fr.pak
+-rw-r--r-- 1 root root 8.2K Sep  3 17:04 gu.pak
+-rw-r--r-- 1 root root 4.4K Sep  3 17:04 he.pak
+-rw-r--r-- 1 root root 7.7K Sep  3 17:04 hi.pak
+-rw-r--r-- 1 root root 3.8K Sep  3 17:04 hr.pak
+-rw-r--r-- 1 root root 4.4K Sep  3 17:04 hu.pak
+-rw-r--r-- 1 root root 3.5K Sep  3 17:04 id.pak
+-rw-r--r-- 1 root root 4.0K Sep  3 17:04 it.pak
+-rw-r--r-- 1 root root 4.8K Sep  3 17:04 ja.pak
+-rw-r--r-- 1 root root 9.2K Sep  3 17:04 kn.pak
+-rw-r--r-- 1 root root 3.8K Sep  3 17:04 ko.pak
+-rw-r--r-- 1 root root 4.0K Sep  3 17:04 lt.pak
+-rw-r--r-- 1 root root 4.2K Sep  3 17:04 lv.pak
+-rw-r--r-- 1 root root  11K Sep  3 17:04 ml.pak
+-rw-r--r-- 1 root root 7.9K Sep  3 17:04 mr.pak
+-rw-r--r-- 1 root root 3.7K Sep  3 17:04 ms.pak
+-rw-r--r-- 1 root root 3.5K Sep  3 17:04 nb.pak
+-rw-r--r-- 1 root root 3.7K Sep  3 17:04 nl.pak
+-rw-r--r-- 1 root root 3.9K Sep  3 17:04 pl.pak
+-rw-r--r-- 1 root root 3.9K Sep  3 17:04 pt-BR.pak
+-rw-r--r-- 1 root root 3.9K Sep  3 17:04 pt-PT.pak
+-rw-r--r-- 1 root root 4.2K Sep  3 17:04 ro.pak
+-rw-r--r-- 1 root root 6.1K Sep  3 17:04 ru.pak
+-rw-r--r-- 1 root root 4.0K Sep  3 17:04 sk.pak
+-rw-r--r-- 1 root root 3.8K Sep  3 17:04 sl.pak
+-rw-r--r-- 1 root root 6.0K Sep  3 17:04 sr.pak
+-rw-r--r-- 1 root root 3.4K Sep  3 17:04 sv.pak
+-rw-r--r-- 1 root root 3.9K Sep  3 17:04 sw.pak
+-rw-r--r-- 1 root root  11K Sep  3 17:04 ta.pak
+-rw-r--r-- 1 root root 9.7K Sep  3 17:04 te.pak
+-rw-r--r-- 1 root root 7.5K Sep  3 17:04 th.pak
+-rw-r--r-- 1 root root 3.8K Sep  3 17:04 tr.pak
+-rw-r--r-- 1 root root 6.3K Sep  3 17:04 uk.pak
+-rw-r--r-- 1 root root 4.6K Sep  3 17:04 vi.pak
+-rw-r--r-- 1 root root 3.4K Sep  3 17:04 zh-CN.pak
+-rw-r--r-- 1 root root 3.4K Sep  3 17:04 zh-TW.pak
+
+./resources:
+total 3.4M
+drwxr-xr-x 2 root root 4.0K Sep  3 17:04 .
+drwxr-xr-x 4 root root 4.0K Sep  3 17:04 ..
+-rw-r--r-- 1 root root 3.2M Sep  3 17:04 app.asar
+-rw-r--r-- 1 root root 251K Sep  3 17:04 electron.asar
