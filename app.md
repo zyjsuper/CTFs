@@ -234,7 +234,8 @@ At this point we've answered two of three of the questions we should answer.
 ```
 Short answer
 ```
-the app is actually a fake login application interacting with a malicious web server reciving data from the attacker and giving the attacker some useful data included User-agent and IP that could be used in later attacks, nothing is really malicious but the behaviour itself is malicious and in real senarious this could be dangerous. 
+the app is actually a fake login application interacting with a malicious web server,
+reciving data from the attacker and send the attacker some useful data included User-agent and IP that could be used in later attacks, nothing is really malicious but the behaviour itself is malicious and in real senarious this could be dangerous. 
 ```
 
 for the last question or "task" i should say, we have to improve the work of the malicious script.
@@ -295,3 +296,10 @@ pin : 123
 == ENTER PIN CODE TO LOGIN ==
 pin : 
 ```
+
+Note that in such a situation we have to use a compiled not interpreted language to do this job
+so i should link the main project with the qt c++ version of the same obfuscator.
+
+- https://github.com/rebe11ion/CryptNote
+
+EOF
