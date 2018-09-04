@@ -188,3 +188,38 @@ http://142.93.106.129/1001 - OK
 </html>
 ```
 
+Nothing interesting about the application itself too, just interacting with the previous URLs based on a given input from range 0-9 
+
+![screenshot at 2018-09-04 19-52-31](https://user-images.githubusercontent.com/22657154/45048666-cdcd0980-b07c-11e8-880d-1410d1ca3744.png)
+
+
+the same as the server, no special services or direcotirs that could revial any other informations 
+
+```assembly
+┌─[✗]─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64]
+└──╼ #nmap -sS -p- -T4 142.93.106.129 
+
+Not shown: 65533 filtered ports
+PORT    STATE  SERVICE
+80/tcp  open   http
+443/tcp closed https
+┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64]
+└──╼ #nmap -sS -p 80 -sV -T4 142.93.106.129 
+
+PORT   STATE SERVICE VERSION
+80/tcp open  http    nginx 1.10.3 (Ubuntu)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64]
+└──╼ #searchsploit nginx 1.
+------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------
+ Exploit Title                                                                                                                 |  Path
+                                                                                                                               | (/usr/share/exploitdb/)
+------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------
+Nginx 0.7.0 < 0.7.61 / 0.6.0 < 0.6.38 / 0.5.0 < 0.5.37 / 0.4.0 < 0.4.14 - Denial of Service (PoC)                              | exploits/linux/dos/9901.txt
+Nginx 1.1.17 - URI Processing SecURIty Bypass                                                                                  | exploits/multiple/remote/38846.txt
+Nginx 1.3.9 < 1.4.0 - Chuncked Encoding Stack Buffer Overflow (Metasploit)                                                     | exploits/linux/remote/25775.rb
+Nginx 1.3.9 < 1.4.0 - Denial of Service (PoC)                                                                                  | exploits/linux/dos/25499.py
+Nginx 1.3.9/1.4.0 (x86) - Brute Force                                                                                          | exploits/linux_x86/remote/26737.pl
+Nginx 1.4.0 (Generic Linux x64) - Remote Overflow                                                                              | exploits/linux_x86-64/remote/32277.txt
+------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------
+Shellcodes: No Result
