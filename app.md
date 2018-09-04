@@ -1,4 +1,4 @@
-## Using ls verbose recursively listing we can figure out the directory structure
+Using ls verbose recursively listing we can figure out the directory structure
 
 ```assembly
 ┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64]
@@ -193,7 +193,7 @@ Nothing interesting about the application itself too, just interacting with the 
 ![screenshot at 2018-09-04 19-52-31](https://user-images.githubusercontent.com/22657154/45048666-cdcd0980-b07c-11e8-880d-1410d1ca3744.png)
 
 
-the same as the server, no special services or direcotirs that could revial any other informations 
+the same as the server, no special services or directories that could reveal any other informations
 
 ```assembly
 ┌─[✗]─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64]
@@ -223,3 +223,27 @@ Nginx 1.3.9/1.4.0 (x86) - Brute Force                                           
 Nginx 1.4.0 (Generic Linux x64) - Remote Overflow                                                                              | exploits/linux_x86-64/remote/32277.txt
 ------------------------------------------------------------------------------------------------------------------------------- ----------------------------------------
 Shellcodes: No Result
+```
+
+At this point we've answered two of three of the questions we should answer.
+
+```assembly 
+- Find out what is going on wrong with the downloaded app
+- Write a writeup about the malicious functionality and how did you find about it
+
+```
+Short answer
+```
+the app is actually a fake login application interacting with a malicious web server reciving data from the attacker and giving the attacker some useful data included User-agent and IP that could be used in later attacks, nothing is really malicious but the behaviour itself is malicious and in real senarious this could be dangerous. 
+```
+
+for the last question or "task" i should say, we have to improve the work of the malicious script.
+
+```assembly
+- Bounce on improving the malicious script 
+```
+
+this kind of tasks aims to slow down the analyst and mostly based on obfuscation and encryption
+so as an improvement i've wrote this bash equivalent script based on my own text obfuscation algorithm ```MDR1```.
+
+```bash
