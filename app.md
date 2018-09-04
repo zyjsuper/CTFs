@@ -158,7 +158,7 @@ https://git-scm.com
 
 After visiting each binary encoded directory there was no real functionality just giving ```Ok``` as a static response for any GET type requests, we are not able to use any other methods like POST too.
 
-```bash
+```assembly
 ┌─[✗]─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64/resources/app]
 └──╼ #for i in $(cat index.html | grep "142.93.106.129" | cut -d "(" -f 2  | cut -d ")" -f 1) ; do echo -n "$i - " ; curl $i 2> /dev/null ; echo ; done
 http://142.93.106.129/0000 - OK
@@ -173,7 +173,7 @@ http://142.93.106.129/1000 - OK
 http://142.93.106.129/1001 - OK
 ```
 
-```html
+```assembly
 ┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64/resources/app]
 └──╼ #curl --data "test" http://142.93.106.129/0011
 <!DOCTYPE html>
