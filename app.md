@@ -90,3 +90,45 @@ drwxr-xr-x 2 root root 4.0K Sep  3 17:04 .
 drwxr-xr-x 4 root root 4.0K Sep  3 17:04 ..
 -rw-r--r-- 1 root root 3.2M Sep  3 17:04 app.asar
 -rw-r--r-- 1 root root 251K Sep  3 17:04 electron.asar
+```
+
+Using `md5sum` we can ensure the integrity of the binary files and focus on the resources we've got
+
+![md5sum](https://user-images.githubusercontent.com/22657154/45045997-1e406900-b075-11e8-9886-254fe4e42855.png)
+
+After extracting ```app.asar``` and ```electron.asar``` using ```asar``` command
+
+```assembly
+┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64/resources]
+└──╼ #asar extract app.asar app
+┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64/resources]
+└──╼ #asar extract electron.asar electron
+┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64/resources]
+└──╼ #ls -lah app
+total 1.5M
+drwxr-xr-x 3 root root 4.0K Sep  4 19:16 .
+drwxr-xr-x 4 root root 4.0K Sep  4 19:16 ..
+-rw-r--r-- 1 root root 1.4M Sep  4 19:16 bg.jpg
+-rw-r--r-- 1 root root   31 Sep  4 19:16 .gitignore
+-rw-r--r-- 1 root root 1.7K Sep  4 19:16 index.html
+-rw-r--r-- 1 root root 6.4K Sep  4 19:16 LICENSE.md
+-rw-r--r-- 1 root root 1.8K Sep  4 19:16 main.js
+drwxr-xr-x 4 root root 4.0K Sep  4 19:16 node_modules
+-rw-r--r-- 1 root root  422 Sep  4 19:16 package.json
+-rw-r--r-- 1 root root  66K Sep  4 19:16 package-lock.json
+-rw-r--r-- 1 root root 2.3K Sep  4 19:16 README.md
+-rw-r--r-- 1 root root  171 Sep  4 19:16 renderer.js
+-rw-r--r-- 1 root root 2.1K Sep  4 19:16 style.css
+┌─[root@Rebe11ion]─[~/Downloads/electron-tutorial-app-linux-x64/resources]
+└──╼ #ls -lah electron
+total 24K
+drwxr-xr-x 6 root root 4.0K Sep  4 19:16 .
+drwxr-xr-x 4 root root 4.0K Sep  4 19:16 ..
+drwxr-xr-x 3 root root 4.0K Sep  4 19:16 browser
+drwxr-xr-x 3 root root 4.0K Sep  4 19:16 common
+drwxr-xr-x 5 root root 4.0K Sep  4 19:16 renderer
+drwxr-xr-x 2 root root 4.0K Sep  4 19:16 worker
+```
+And after running the binary file beside opening ```app/index.html``` using any browser, beside the previous information we've got we can say that all we need to solve this challenge is located inside ```app``` directory.
+
+![screenshot at 2018-09-04 19-30-30](https://user-images.githubusercontent.com/22657154/45047334-0e2a8880-b079-11e8-88c2-44c538364e17.png)
