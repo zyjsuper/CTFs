@@ -32,7 +32,7 @@ fd@ubuntu:~$ python -c 'print 0x1234'
 fd@ubuntu:~$ ./fd  4660
 LETMEWIN
 good job :)
-mommy! I think I know what a file descriptor is!!     //auth flag
+mommy! I think I know what a file descriptor is!!     //Got auth flag!
 
 --------------------------------------------------------------------------------------------------------------------------------------
 	
