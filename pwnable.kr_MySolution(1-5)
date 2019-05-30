@@ -431,7 +431,7 @@ Dump of assembler code for function login:
    0x080485cc <+104>:   jne    0x80485f1 <login+141>               
    0x080485ce <+106>:   cmp    DWORD PTR [ebp-0xc],0xcc07c9	   // Condition Jump. passcode2 == 13371337
    0x080485d5 <+113>:   jne    0x80485f1 <login+141>               
-   0x080485d7 <+115>:   mov    DWORD PTR [esp],0x80487a5           //We could overwirte this address for system() function.if the stack fullfill to this address,the binary will be executed successfully.
+   0x080485d7 <+115>:   mov    DWORD PTR [esp],0x80487a5           //We could overwirte this address for system function calling later.if the stack fullfill to this address,the binary will be executed successfully.
    0x080485de <+122>:   call   0x8048450 <puts@plt>                //0x080485de and 0x080485e3 we could overwrite too,they could call system function to execute system("/bin/cat flag").
    0x080485e3 <+127>:   mov    DWORD PTR [esp],0x80487af           
    0x080485ea <+134>:   call   0x8048460 <system@plt>              // The plt for system() funtion.
