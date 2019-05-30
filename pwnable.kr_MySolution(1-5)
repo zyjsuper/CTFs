@@ -504,7 +504,7 @@ passcode@prowl:~$ exit
 4> Create a payload for this binary.
 
 Target:
-      Overwirte the fflush function use system function.
+      Overwirte the fflush function before system function calling.
 1. Fullfilling name buffer.                             //"A"*96
 2. Find the address of fflush() funciton.               //0x0804a004
 3. Find location call of system() function.             //0x080485ea
